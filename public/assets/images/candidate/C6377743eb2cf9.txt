@@ -1,0 +1,154 @@
+<?php $this->load->view('include/header'); ?>
+<?php $this->load->view('include/sidebar'); ?>
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <a href="<?php echo base_url('Vehicle/index') ?>" class="btn btn-info btn-sm"><i class="fa fa-plus"></i> Add New Vehicle</a>
+       
+          </div><!-- /.col -->
+        
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
+
+    <!-- Main content -->
+    <section class="content">
+      <!-- Small boxes (Stat box) -->
+      <div class="row">
+        <div class="col-md-12 col-xs-12">
+  <div class="card card-info">
+            <div class="card-header">
+              Vehicles
+            </div>
+            <div class="card-body">
+			<div class="table-responsive">
+              <table id="manageTable" class="table table-bordered table-striped table-sm nowrap">
+                <thead>
+                <tr>
+             
+                  <th>Sr. No.</th>
+                  <th>Vehicle Type</th>
+                  <th>Vehicle Owner</th>
+                  <th>Vehicle Number</th>
+                  <th>Made.</th>
+                  <th>Model</th>
+                  <th>No of tyres</th>
+                  <th>Body type</th>
+                  <th>Chasis Number</th>
+                  <th>Engine Number</th>
+                  <th>Reg Date</th>
+    
+                  <th>Action</th>
+            
+                </tr>
+                </thead>
+                <tbody>
+<?php $x=1; foreach($vehicleMaster as $value) {?>
+  <tr>
+              <td><?php echo $x; ?></td>
+              <td><?php echo $value->vehicle_type; ?></td>
+              <td><?php echo $value->vehicle_owner; ?></td>
+              <td><?php echo $value->vehicle_no; ?></td>
+              <td><?php echo $value->vehicle_made; ?></td>
+              <td><?php echo $value->vehicle_model; ?></td>
+              <td><?php echo $value->num_of_tyres ?></td>
+              <td><?php echo $value->body_type; ?></td>     
+              <td><?php echo $value->chasis_number; ?></td>
+              <td><?php echo $value->engine_number; ?></td>
+              <td><?php echo $value->reg_number; ?></td>
+            
+              <td class="text-nowrap">
+       
+                <a href="<?php echo base_url('vehicle/editvehicle/'.base64_encode($value->id)); ?>" type="button" class="btn btn-success btn-sm"><i class="fa fa-edit"></i></a>
+           
+                <button type="button" class="btn btn-danger btn-sm" onclick="removeFunc(<?php echo $value->id ?>)" ><i class="fa fa-trash"></i></button>
+             
+              </td>
+                  <?php $x++; } ?>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+			</div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+        </div>
+        <!-- col-md-12 -->
+      </div>
+      <!-- /.row -->
+      
+
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+
+
+
+
+<!-- remove brand modal -->
+<div class="modal fade" tabindex="-1" role="dialog" id="removeModal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Remove Customer</h4>
+		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>        
+      </div>
+
+      <form role="form" action="<?php echo  base_url('vehicle/vehicleremove/')  ?>" method="post" id="removeForm">
+        <div class="modal-body">
+          <p>Do you really want to remove?</p>
+        </div>
+        <input type="hidden" id="d_c_id" name="id">
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Save changes</button>
+        </div>
+      </form>
+
+
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<script>
+
+$(document).ready(function() {
+  $("#li-master").addClass('menu-open');
+    $("#link-master").addClass('active');
+   $('#vehicle').addClass('active');
+  $('#manageTable').DataTable({});
+});
+ 
+
+      function viewFunc(id)
+      { 
+         base = '<?php echo base_url(); ?>';
+        $.ajax({
+          url: base+"general/get_payment_trans?ACCCODE="+id,
+          type:"GET",
+          dataType:'',
+          data:'data',          
+          success: function(response) {
+            // console.log(response);
+            $('.payroll').html(response);
+          },
+          error: function(response) {
+            
+          }
+        });
+      };
+function removeFunc(id)
+{
+    $("#d_c_id").val(id);
+    $('#removeModal').modal('show');
+}
+
+</script>
+</div>
+<?php $this->load->view('include/footer'); ?>

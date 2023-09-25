@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en" class="h-100">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="keywords" content="">
+    <meta name="author" content="DHT Solutions">
+    <meta name="robots" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+ <!-- <?php 
+    $settingsvalue = $this->settings_model->GetSettingsValue();
+  ?>
+    
+    <title><?php echo $settingsvalue->sitetitle; ?></title> -->
+    
+    <!-- FAVICONS ICON -->
+    <link rel="shortcut icon" type="image/png" href="/assests/images/favicon.png">
+    <link href="/assests/css/style.css" rel="stylesheet">
+
+</head>
+<style>
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #0a1744;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+  }
+
+  .container1 {
+    background-color: white;
+    padding: 20px;
+    width: 300px;
+    height: 470;
+    border: none;
+  }
+
+    .container2 {
+    background-color: #0a1744;
+/*    padding: 20px;*/
+    
+    max-width: 50%;
+    width: 300px;
+    border: none;
+    display: none;
+  }
+    @media (min-width: 1601px) {
+    .font {
+      font-size: 12px;
+      height: 40px;
+      width: 250px;
+    }
+  }
+
+  @media (min-width: 992px) {
+    .container2 {
+      display: block;
+    }
+  }
+
+  @media (max-width: 991px) and (orientation: landscape) {
+
+    .container2 {
+      display: none;
+    }
+  }
+
+@media (max-width: 991px) and (orientation: landscape) {
+
+    .container1 {
+     padding-top: 60px;
+     padding-bottom: 50px;
+    }
+  }
+
+  .container1, .container2 {
+    height: 470px; 
+    overflow: hidden;
+  }
+</style>
+</head>
+<body>
+  <div class="container1">
+    <img src="/assests/images/complogo.jpeg" alt="" class="mCS_img_loaded" style="max-width: 50%;"><br>
+    <span style="color: #ff564B; font-size: 35px; font-weight: 550;">welcome back</span><br><br>
+    <span class="font" style="color: #413230;">Thank you for getting back, please login to your<br>account by filling these form:</span><br><br>
+    <div class="tab-pane fade show active" id="nav-personal" role="tabpanel" aria-labelledby="nav-personal-tab">
+        <form class="dez-form pb-3" method="post" action="/loginUser">
+            <div class="dez-separator-outer m-b5">
+                <div class="dez-separator bg-primary style-liner"></div>
+            </div>
+            
+            <div class="form-group col-md-12">
+                <input type="text" class="form-control smaller-height" name="email" placeholder="Email Address" required>
+            </div>
+            <div class="form-group col-md-12">
+                <input type="password" class="form-control smaller-height" placeholder="Password" name="password" autocomplete="off" required>
+            </div>
+            <div class="form-group">
+                <button class="btn btn-sm" style="background-color: #ff564B; color: white;">Login</button>
+            
+                 <!-- <a href="Login/index_forgotPassword" style="color: blue;margin-left: 90px;">Forgot Password?</a>  -->
+            </div>
+        </form>
+        <div class="text-center bottom col-md-12">
+            <a class="btn button-md btn-block font" style="background-color: #ff564B; color: white;" id="nav-sign-tab" href="/candidate">
+                Candidate Sign Up
+            </a>
+        </div>
+    </div>
+</div>
+  
+  <div class="container2">
+    <img class="img-fluid" src="/assests/images/bg9.jpeg" style="height: 470px;">
+  </div>
+</body>
+</html>
