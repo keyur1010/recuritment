@@ -26,8 +26,10 @@ require('../recruit_portal/config/database')
 
 const clientRoutes=require('./routes/clientRoutes')
 const loginRoutes = require('./routes/loginRoutes')
+const adminRoutes=require('./routes/adminRoutes')
 app.use('/', loginRoutes)
 app.use('/client',clientRoutes)
+app.use('/admin',adminRoutes)
 app.listen(port, () => {
     console.log(`http://localhost:${port}`)
 })

@@ -30,7 +30,9 @@ db.Sequelize=Sequelize
 db.sequelize=sequelize
 
 db.loginModel=require('../app/model/loginModel')(sequelize,DataTypes)
-
+db.clientModel=require('../app/model/clientModel')(sequelize,DataTypes)
+db.clientMultiModel=require('../app/model/clientMultiModel')(sequelize,DataTypes)
+db.departmentModel=require('../app/model/departmentModel')(sequelize,DataTypes)
 
 // db.userModel.hasOne(db.hrModel,{foreignKey:"user_id",as:'users'})
 // db.hrModel.belongsTo(db.userModel, { foreignKey: "user_id",as:'users' })

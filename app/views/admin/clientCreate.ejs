@@ -1,0 +1,663 @@
+<%- include( '../main/header.ejs' ) %> <%- include( '../main/sidebar.ejs' ) %>
+<div class="content-body">
+  <div class="container-fluid">
+    <div class="row page-titles">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item active">
+          <a href="javascript:void(0)">Clients</a>
+        </li>
+        <li class="breadcrumb-item">
+          <a href="javascript:void(0)">Add New Client</a>
+        </li>
+      </ol>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <div class="card card-outline-info">
+          <div class="card-header">
+            <button type="button" class="btn btn-primary btn-sm">
+              <i class="fa fa-arrow-left"></i
+              ><a href="/clients" class="text-white"
+                ><i class="" aria-hidden="true"></i> Customer List</a
+              >
+            </button>
+            <!-- <button type="button" class="btn btn-primary btn-sm"><i class="fa fa-arrow-left"></i><a href="<?php echo base_url(); ?>clients" class="text-white"><i class="" aria-hidden="true"></i>  Customer List</a></button> -->
+          </div>
+          <div class="card-body">
+            <form
+              role="form"
+              action="/admin/newclientcreate"
+              method="post"
+              class="form-valide-with-icon needs-validation"
+            >
+              <div class="row">
+                <div class="form-group col-md-4">
+                  <label>Client Name</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="client_name"
+                    name="client_name"
+                    placeholder="Enter Client name"
+                    autocomplete="off"
+                    required=""
+                  />
+                </div>
+                <div class="form-group col-md-4">
+                  <label>Type</label>
+                  <select
+                    name="type"
+                    id="type"
+                    class="default-select form-control wide mb-2"
+                    required
+                  >
+                    <option value="">-Select-</option>
+                    <option value="Head Office">Head Office</option>
+                    <option value="Subsidary">Subsidary</option>
+                  </select>
+                </div>
+                <div class="form-group col-md-4">
+                  <label>Registered Address</label>
+                  <textarea
+                    class="form-control"
+                    id="registered_address"
+                    name="registered_address"
+                    placeholder="Enter  Address"
+                    autocomplete="off"
+                  ></textarea>
+                </div>
+
+                <h6 class="text-info"><u>Contract Contact Details</u></h6>
+                <div class="form-group col-md-4">
+                  <label>Name</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="contract_name"
+                    name="contract_name"
+                    autocomplete="off"
+                  />
+                </div>
+                <div class="form-group col-md-4">
+                  <label>Position</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="contract_position"
+                    name="contract_position"
+                    autocomplete="off"
+                  />
+                </div>
+                <div class="form-group col-md-4">
+                  <label>Number</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="contract_number"
+                    name="contract_number"
+                    autocomplete="off"
+                  />
+                </div>
+                <div class="form-group col-md-4">
+                  <label>Mobile</label>
+                  <input
+                    type="tel"
+                    class="form-control"
+                    id="contract_mobile"
+                    name="contract_mobile"
+                    autocomplete="off"
+                  />
+                </div>
+                <div class="form-group col-md-4">
+                  <label>Email</label>
+                  <input
+                    type="email"
+                    class="form-control"
+                    id="contract_email"
+                    name="contract_email"
+                    autocomplete="off"
+                  />
+                </div>
+
+                <h6 class="text-info"><u>Other Details</u></h6>
+                <div class="form-group col-md-4">
+                  <label>Website</label>
+                  <input
+                    type="url"
+                    class="form-control"
+                    id="website"
+                    name="website"
+                    autocomplete="off"
+                  />
+                </div>
+                <div class="form-group col-md-4">
+                  <label>Industry</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="industry"
+                    name="industry"
+                    autocomplete="off"
+                  />
+                </div>
+                <div class="form-group col-md-4">
+                  <label>VAT Number</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="vat_number"
+                    name="vat_number"
+                    autocomplete="off"
+                  />
+                </div>
+                <div class="form-group col-md-4">
+                  <label>Company Registration Number</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="registration_no"
+                    name="registration_no"
+                    autocomplete="off"
+                  />
+                </div>
+
+                <div class="form-group col-md-2">
+                  <label>Client Logo</label>
+                  <input
+                    type="file"
+                    class="form-file-input form-control"
+                    id="client_logo"
+                    name="client_logo"
+                    accept="image/*"
+                    onChange="img_pathUrl(this);"
+                  />
+                </div>
+                <div class="col-md-2">
+                  <img
+                    src=""
+                    id="img_url"
+                    class="img_url"
+                    height="150px"
+                    width="180px"
+                  /><br />
+                </div>
+
+                <div class="form-group col-md-4">
+                  <label>Subscription level agreed</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="subscrption_level_agreed"
+                    name="subscrption_level_agreed"
+                    autocomplete="off"
+                  />
+                </div>
+
+                <div class="form-group col-md-4">
+                  <label>Payroll Facility Subscribed</label>
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      name="payroll_subsribe "
+                      value="Y"
+                      required
+                    />
+                    <label class="form-check-label"> YES </label>
+                  </div>
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      name="payroll_subsribe "
+                      value="N"
+                      required
+                    />
+                    <label class="form-check-label"> NO </label>
+                  </div>
+                </div>
+                <div class="form-group col-md-4">
+                  <label>Employment contract supplied if no payroll</label>
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      name="employement_contract"
+                      value="Y"
+                      required
+                    />
+                    <label class="form-check-label"> YES </label>
+                  </div>
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      name="employement_contract"
+                      value="N"
+                      required
+                    />
+                    <label class="form-check-label"> NO </label>
+                  </div>
+                </div>
+
+                <div class="form-group table-responsive col-md-12">
+                  <h5 class="text-info">
+                    <u>Service Details (Multiple if required) </u>
+                  </h5>
+                  <div class="form-check custom-checkbox mb-3">
+                    <input
+                      type="checkbox"
+                      class="form-check-input copytobillingkk"
+                      value="service"
+                      id="copytoservice"
+                      name="service"
+                    />
+                    <label class="form-check-label" for="copytoservice"
+                      >Same As Contract</label
+                    >
+                  </div>
+                  <table
+                    class="table table-bordered"
+                    id="contact_table"
+                    width="100%"
+                  >
+                    <thead>
+                      <tr>
+                        <th>Name</th>
+                        <th>Position</th>
+                        <th>Number</th>
+                        <th>Mobile No</th>
+                        <th>Email Id</th>
+                        <th>Address</th>
+                        <th>
+                          <button
+                            type="button"
+                            id="add_row"
+                            class="btn btn-info shadow btn-xs sharp me-1"
+                          >
+                            <i class="fa fa-plus"></i>
+                          </button>
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr id="row_1">
+                        <td>
+                          <input
+                            type="text"
+                            style="min-width: 100px"
+                            name="service_name[]"
+                            id="service_name_1"
+                            class="form-control"
+                            required=""
+                          />
+                        </td>
+                        <td>
+                          <input
+                            type="text"
+                            style="min-width: 100px"
+                            name="service_position[]"
+                            id="service_position_1"
+                            class="form-control"
+                          />
+                        </td>
+                        <td>
+                          <input
+                            type="text"
+                            style="min-width: 100px"
+                            name="service_number[]"
+                            id="service_number_1"
+                            class="form-control"
+                          />
+                        </td>
+                        <td>
+                          <input
+                            type="tel"
+                            style="min-width: 100px"
+                            name="service_mobile[]"
+                            id="service_mobile_1"
+                            class="form-control"
+                          />
+                        </td>
+                        <td>
+                          <input
+                            type="email"
+                            style="min-width: 100px"
+                            name="service_email[]"
+                            id="service_email_1"
+                            class="form-control"
+                          />
+                        </td>
+                        <td>
+                          <textarea
+                            style="min-width: 150px"
+                            name="service_address[]"
+                            id="service_address_1"
+                            class="form-control"
+                          ></textarea>
+                        </td>
+                        <td>
+                          <button
+                            type="button"
+                            class="btn btn-danger shadow btn-xs sharp me-1"
+                            onclick="removeRow('1')"
+                          >
+                            <i class="fa fa-trash"></i>
+                          </button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <h6 class="text-info"><u>Finance Contact Details</u></h6>
+                <div class="form-check custom-checkbox mb-3">
+                  <input
+                    type="checkbox"
+                    class="form-check-input copytobillingkk"
+                    value="finance"
+                    id="copytofinance"
+                  />
+                  <label class="form-check-label" for="copytofinance"
+                    >Same As Contract</label
+                  >
+                </div>
+                <div class="form-group col-md-4">
+                  <label>Name</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="finance_name"
+                    name="finance_name"
+                    autocomplete="off"
+                  />
+                </div>
+                <div class="form-group col-md-4">
+                  <label>Position</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="finance_position"
+                    name="finance_position"
+                    autocomplete="off"
+                  />
+                </div>
+                <div class="form-group col-md-4">
+                  <label>Number</label>
+                  <input
+                    type="number"
+                    class="form-control"
+                    id="finance_number"
+                    name="finance_number"
+                    autocomplete="off"
+                  />
+                </div>
+                <div class="form-group col-md-4">
+                  <label>Mobile</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="finance_mobile"
+                    name="finance_mobile"
+                    autocomplete="off"
+                  />
+                </div>
+                <div class="form-group col-md-4">
+                  <label>Email</label>
+                  <input
+                    type="email"
+                    class="form-control"
+                    id="finance_email"
+                    name="finance_email"
+                    autocomplete="off"
+                  />
+                </div>
+                <div class="form-group col-md-4">
+                  <label>Credit Limit</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="finance_credit_limit"
+                    name="finance_credit_limit"
+                    autocomplete="off"
+                  />
+                </div>
+                <div class="form-group col-md-4">
+                  <label>Direct Debit Details (TBC) </label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="finance_debit_details"
+                    name="finance_debit_details"
+                    autocomplete="off"
+                  />
+                </div>
+
+                <h6 class="text-info"><u>Billing Contact Details</u></h6>
+                <div class="form-check custom-checkbox mb-3">
+                  <input
+                    type="checkbox"
+                    class="form-check-input copytobillingkk"
+                    value="billing"
+                    id="copytobilling"
+                    name="copytobilling"
+                  />
+                  <label class="form-check-label" for="copytobilling"
+                    >Same As Contract</label
+                  >
+                </div>
+                <div class="form-group col-md-4">
+                  <label>Name</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="billing_name"
+                    name="billing_name"
+                    autocomplete="off"
+                  />
+                </div>
+                <div class="form-group col-md-4">
+                  <label>Position</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="billing_position"
+                    name="billing_position"
+                    autocomplete="off"
+                  />
+                </div>
+                <div class="form-group col-md-4">
+                  <label>Number</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="billing_number"
+                    name="billing_number"
+                    autocomplete="off"
+                  />
+                </div>
+                <div class="form-group col-md-4">
+                  <label>Mobile</label>
+                  <input
+                    type="tel"
+                    class="form-control"
+                    id="billing_mobile"
+                    name="billing_mobile"
+                    pattern="[0-9]{10}"
+                    autocomplete="off"
+                  />
+                </div>
+                <div class="form-group col-md-4">
+                  <label>Email</label>
+                  <input
+                    type="email"
+                    class="form-control"
+                    id="billing_email"
+                    name="billing_email"
+                    autocomplete="off"
+                  />
+                </div>
+              </div>
+
+              <hr />
+              <div class="form-group col-md-12">
+                <button style="float: right;" id="btnSubmit"  onClick="return validateForm()"    type="submit" class="btn btn-primary btn-sm">Save Client</button>
+               
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include( '../main/footer.ejs' ) %>
+
+
+
+<script>
+  function fillstatecode() {
+    var gstnum = $("#gst_no").val();
+    stcode = gstnum.substring(0, 2);
+    $("#state_code").val(stcode);
+
+    pan_no = gstnum.substring(2, 12);
+    $("#pan_no").val(pan_no);
+  }
+</script>
+
+<script>
+  $(document).ready(function () {
+    $("#li-clients").addClass("active");
+    $("#masterMain").addClass("active");
+    $("#masterMain").addClass("show");
+  });
+
+  function img_pathUrl(input) {
+    $("#img_url")[0].src = (window.URL ? URL : webkitURL).createObjectURL(
+      input.files[0]
+    );
+  }
+
+  function validateForm() {
+    return confirm("Are you sure to submit data");
+  }
+
+  $(".copytobillingkk").click(function () {
+    var name = $("#contract_name").val();
+    var position = $("#contract_position").val();
+    var number = $("#contract_number").val();
+    var mobile = $("#contract_mobile").val();
+    var email = $("#contract_email").val();
+    var address = $("#registered_address").val();
+
+    var type = this.value;
+
+    if (this.checked) {
+      $("#" + type + "_name").val(name);
+      $("#" + type + "_position").val(position);
+      $("#" + type + "_number").val(number);
+      $("#" + type + "_mobile").val(mobile);
+      $("#" + type + "_email").val(email);
+
+      $("#" + type + "_name_1").val(name);
+      $("#" + type + "_position_1").val(position);
+      $("#" + type + "_number_1").val(number);
+      $("#" + type + "_mobile_1").val(mobile);
+      $("#" + type + "_email_1").val(email);
+    } else {
+      $("#" + type + "_name").val("");
+      $("#" + type + "_position").val("");
+      $("#" + type + "_number").val("");
+      $("#" + type + "_mobile").val("");
+      $("#" + type + "_email").val("");
+
+      $("#" + type + "_name_1").val("");
+      $("#" + type + "_position_1").val("");
+      $("#" + type + "_number_1").val("");
+      $("#" + type + "_mobile_1").val("");
+      $("#" + type + "_email_1").val("");
+    }
+  });
+</script>
+
+<script>
+  var base_url = "<?php echo base_url(); ?>";
+  $(document).ready(function () {
+    $("#add_row")
+      .unbind("click")
+      .bind("click", function () {
+        var table = $("#contact_table");
+        var count_table_tbody_tr = $("#contact_table tbody tr").length;
+        var row_id = count_table_tbody_tr + 1;
+
+        var html =
+          '<tr id="row_' +
+          row_id +
+          '">' +
+          '<td><input type="text" style="min-width: 100px;" name="service_name[]"  id="service_name_' +
+          row_id +
+          '"  class="form-control" required="" ></td>' +
+          '<td><input type="text" style="min-width: 100px;" name="service_position[]"  id="service_position_' +
+          row_id +
+          '"  class="form-control"  ></td>' +
+          '<td><input type="text" style="min-width: 100px;" name="service_number[]"  id="service_number_' +
+          row_id +
+          '"  class="form-control"  ></td>' +
+          '<td><input type="text" style="min-width: 100px;" name="service_mobile[]"  id="service_mobile_' +
+          row_id +
+          '"  class="form-control"  ></td>' +
+          '<td><input type="text" style="min-width: 100px;" name="service_email[]"  id="service_email_' +
+          row_id +
+          '"  class="form-control"  ></td>' +
+          '<td><textarea style="min-width: 150px;" name="service_address[]"  id="service_address_' +
+          row_id +
+          '"  class="form-control"  ></textarea></td>' +
+          '<td><button type="button" class="btn btn-danger shadow btn-xs sharp me-1" onclick="removeRow(' +
+          row_id +
+          ')"><i class="fa fa-trash"></i></button></td>' +
+          "</tr>";
+
+        if (count_table_tbody_tr >= 1) {
+          $("#contact_table tbody tr:last").after(html);
+        } else {
+          $("#contact_table tbody").html(html);
+        }
+        return false;
+      });
+  });
+
+  function removeRow(tr_id) {
+    $("#contact_table tbody tr#row_" + tr_id).remove();
+  }
+</script>
+<script>
+  $(document).ready(function() {
+      $('#contract_mobile').on('input', function() {
+          // Get the input value
+          var inputValue = $(this).val();
+          
+          // Use a regular expression to allow only numeric input
+          var numericInput = inputValue.replace(/\D/g, '');
+          
+          // Update the input field with the numeric value
+          $(this).val(numericInput);
+      });
+  });
+  </script>
+  
+
+<!--   <script>
+    $(document).ready(function() {
+      $('#btnSubmit').click(function() {
+        $.ajax({
+          url: '<?php echo site_url('Candidate/send_mail'); ?>',
+          method: 'POST',
+          success: function(response) {
+            alert(response);
+          }
+        });
+      });
+    });
+  </script> -->
