@@ -33,6 +33,13 @@ db.loginModel=require('../app/model/loginModel')(sequelize,DataTypes)
 db.clientModel=require('../app/model/clientModel')(sequelize,DataTypes)
 db.clientMultiModel=require('../app/model/clientMultiModel')(sequelize,DataTypes)
 db.departmentModel=require('../app/model/departmentModel')(sequelize,DataTypes)
+db.companyModel=require('../app/model/companyModel')(sequelize,DataTypes)
+db.fin_yearsModel=require('../app/model/fin_yearsModel')(sequelize,DataTypes)
+db.g_jobModel=require('../app/model/g_jobModel')(sequelize,DataTypes)
+db.g_industryModel=require('../app/model/g_industryModel')(sequelize,DataTypes)
+db.skillModel=require('../app/model/skillModel')(sequelize,DataTypes)
+db.advert_refModel=require('../app/model/advert_refModel')(sequelize,DataTypes)
+
 
 // db.userModel.hasOne(db.hrModel,{foreignKey:"user_id",as:'users'})
 // db.hrModel.belongsTo(db.userModel, { foreignKey: "user_id",as:'users' })

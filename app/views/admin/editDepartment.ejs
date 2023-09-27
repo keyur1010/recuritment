@@ -19,19 +19,19 @@
                                 <h4 class="m-b-0">Add Department</h4>
                             </div>
                             <div class="card-body">
-                                    <form method="post" action="/admin/m_department" >
+                                    <form method="post" action="/admin/editDepartment1/<%=editData.id%>" >
                                         <div class="form-body">
                                             <div class="row ">
                                                     <div class="col-md-12">
                                                 <div class="form-group">
                                                         <label class="control-label">Department Code</label>
-                                                        <input type="text" name="dep_code" id="dep_code"  class="form-control" placeholder="Department Code">
+                                                        <input type="text" name="dep_code" id="dep_code"  class="form-control" value="<%= editData.dep_code%>" placeholder="Department Code">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-12">
                                                     <div class="form-group">
                                                         <label class="control-label">Departname Name</label>
-                                                        <input type="text" name="department_name" id="department_name" class="form-control" placeholder="Department Name"  required>
+                                                        <input type="text" name="department_name" id="department_name" class="form-control" value="<%= editData.department_name%>" placeholder="Department Name"  required>
                                                     </div>
                                                 </div>
                                                 
@@ -40,7 +40,7 @@
                                             <!--/row-->
                                         </div>
                                         <div class="form-actions">
-                                            <button type="submit" class="btn btn-info btn-sm"> <i class="fa fa-check"></i> Save</button>
+                                            <button type="submit" class="btn btn-info btn-sm"> <i class="fa fa-check"></i> Update</button>
                                             <button type="button" class="btn btn-info btn-sm">Cancel</button>
                                         </div>
                                     </form>

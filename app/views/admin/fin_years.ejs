@@ -1,0 +1,107 @@
+<%- include( '../main/header.ejs' ) %>
+<%- include( '../main/sidebar.ejs' ) %>
+<div class="content-body">
+    <div class="container-fluid">
+        
+        <div class="row page-titles">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item active"><a href="javascript:void(0)">Master</a></li>
+                <li class="breadcrumb-item"><a href="javascript:void(0)">Financial Year</a></li>
+            </ol>
+        </div>    
+                <div class="row">
+                    <div class="col-lg-5">
+                                            
+
+                        <div class="card card-outline-info">
+                            <div class="card-header">
+                                <h4 class="m-b-0 ">Add Financial Year</h4>
+                            </div>
+                            <div class="card-body">
+                                
+                                    <form method="post" action="/admin/Save_fin_year">
+                                        <div class="form-body">
+                                            <div class="row ">
+                                               
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label class="control-label">Financial Year Name</label>
+                                                        <input type="text" name="year_name" id="year_name"  class="form-control"   required>
+                                                    </div>
+                                                </div>
+                                                 <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label class="control-label">Financial Year Start</label>
+                                                        <input type="date" name="year_start_date" id="year_start_date"  class="form-control datepicker"   required>
+                                                    </div>
+                                                </div>
+                                                 <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label class="control-label">Financial Year End</label>
+                                                        <input type="date" name="year_end_date" id="year_end_date"  class="form-control datepicker"  required>
+                                                    </div>
+                                                </div>
+                                                <!--/span-->
+                                            </div>
+                                            <!--/row-->
+                                        </div>
+                                        <div class="form-actions">
+                                            <button type="submit" class="btn btn-info btn-sm"> <i class="fa fa-check"></i> Save</button>
+                                            <button type="button" class="btn btn-info btn-sm">Cancel</button>
+                                        </div>
+                                    </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-7">
+                        <div class="card card-outline-info">
+                            <div class="card-header">
+                                <h4 class="m-b-0 "> Financial Year List</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive ">
+                                   <table id="example3" class="table table-bordered table-sm" >
+                                        <thead>
+                                            <tr>
+                                              
+                                                <th>Year Name</th>
+                                                <th>Start From</th>
+                                                <th>End To</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        
+                                        
+                                        <tbody>
+                                            <% year_Data.forEach(function(data) { %>
+
+                                            <tr>
+                                               
+                                                <td><%=data.year_name%></td>
+                                                <td><%=data.year_start_date%></td>
+                                                <td><%=data.year_end_date%></td>
+                                                <td class="jsgrid-align-center ">
+                                                    <a href="/admin/edit_fin_year/<%=data.id%>" title="Edit" class="btn btn-sm btn-primary "><i class="fa fa-edit"></i></a>
+                                                    <a onclick="return confirm('Are you sure to delete this data?')" href="/admin/Delete_fin_year/<%=data.id%>" title="Delete" class="btn btn-sm btn-danger "><i class="fa fa-trash"></i></a>
+                                                </td>
+                                            </tr>
+                                            <%})%>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+<%- include( '../main/footer.ejs' ) %>
+
+    <script>
+$(document).ready(function() {
+   $("#li-fin_years").addClass('active');
+$("#masterMain").addClass('active');
+$('#masterMain').addClass('show');
+});
+</script>
