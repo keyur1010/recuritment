@@ -533,6 +533,10 @@ exports.Delete_m_skills=async(req,res)=>{
 
 
 
+
+
+
+
 exports.ad_ref_page=async(req,res)=>{
   try {
     const data=await advert_refModel.findAll({where:{status:1}})
@@ -545,12 +549,65 @@ exports.ad_ref_page=async(req,res)=>{
 
 
 
+exports.Save_m_advert_ref=async(req,res)=>{
+  try {
+    console.log('skilll post --------->',req.body)
+    const data=await advert_refModel.findOne({where:{ad_ref_name:req.body.ad_ref_name}})
+    if(!data){
+      const addAdvRef=await advert_refModel.create({
+        ad_ref_name:req.body.ad_ref_name
+      })
+      return res.redirect('/admin/ad_ref_page')
+    }else{
+      console.log('industry not added')
+      return res.send("data already in database or some other problem")
+    }
+  } catch (error) {
+    console.log(error)
+  }
+}
 
 
 
 
+exports.edit_m_advertPage=async(req,res)=>{
+  try {
+    const data=await advert_refModel.findAll({where:{status:1}})
+    const adv=await advert_refModel.findOne({where:{id:req.params.id}})
+    return res.render('./general/advPageEdit.ejs',{data:data,adv:adv})
+  } catch (error) {
+    console.log(error)
+  }
+}
 
 
+exports.edit_m_advert_ref=async(req,res)=>{
+  try {
+    const newData=req.body
+    const data=await advert_refModel.findOne({where:{id:req.params.id}})
+    if (data) {
+      const updateData = await advert_refModel.update(newData, { where: { id: req.params.id } })
+      return res.redirect('/admin/ad_ref_page')
+  }else{
+      console.log('data not submited')
+      return res.redirect('/admin/ad_ref_page')
+  }
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+
+
+
+exports.Delete_m_advert_ref=async(req,res)=>{
+  try {
+    const data=await advert_refModel.destroy({where:{id:req.params.id}})
+    return res.redirect('/admin/ad_ref_page')
+  } catch (error) {
+    console.log(error)
+  }
+}
 
 
 

@@ -20,14 +20,14 @@
                                 <h4 class="m-b-0">Add Advert Reference</h4>
                             </div>
                             <div class="card-body">
-                                    <form method="post" action="/admin/Save_m_advert_ref" >
+                                    <form method="post" action="/admin/edit_m_advert_ref/<%=adv.id%>" >
                                             <div class="row ">
                                                 <div class="form-group col-md-8">
                                                         <label class="control-label">Advert Reference</label>
-                                                        <input type="text" name="ad_ref_name" id="ad_ref_name" class="form-control" placeholder="Enter Advert Reference Name" required minlength="2">
+                                                        <input type="text" name="ad_ref_name" id="ad_ref_name" value="<%=adv.ad_ref_name%>" class="form-control" placeholder="Enter Advert Reference Name" required minlength="2">
                                                 </div>
                                                 <div class="form-group mt-4 col-md-4">
-                                                <button type="submit" class="btn btn-primary btn-sm"> <i class="fa fa-check"></i> Save</button>
+                                                <button type="submit" class="btn btn-primary btn-sm"> <i class="fa fa-check"></i> Update</button>
                                                 </div>
                                               
                                             </div>

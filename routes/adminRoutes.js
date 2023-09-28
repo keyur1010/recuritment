@@ -66,4 +66,20 @@ router.get('/Delete_m_skills/:id',adminController.Delete_m_skills)
 
 
 
+router.get('/ad_ref_page',adminController.ad_ref_page)
+router.post('/Save_m_advert_ref',adminController.Save_m_advert_ref)
+router.get('/edit_m_advertPage/:id',adminController.edit_m_advertPage)
+router.post('/edit_m_advert_ref/:id',adminController.edit_m_advert_ref)
+router.get('/Delete_m_advert_ref/:id',adminController.Delete_m_advert_ref)
+
+
+
+
+
+
+
+
+
+
+
 module.exports=router
