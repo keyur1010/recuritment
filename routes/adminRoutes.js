@@ -17,16 +17,19 @@ router.get('/deleteDepartment/:id',adminController.deleteDepartment)
 
 router.get('/addCompany',adminController.addCompany)
 router.post('/saveAddCompany',adminController.saveAddCompany)
-
+router.get('editCompany/:id',adminController.editCompany)
 router.get('/companyList',adminController.companyList)
 router.get('/editCompany/:id',adminController.editCompany)
 router.post('/editCompany1/:id',adminController.editCompany1)
+
+
 
 router.get('/fin_years',adminController.fin_years)
 router.post('/Save_fin_year',adminController.Save_fin_year)
 
 router.get('/edit_fin_year/:id',adminController.edit_fin_year)
-// exports.post('/edit_fin_year1/:id',adminController.edit_fin_year1)
+router.post('/edit_fin_year1/:id',adminController.edit_fin_year1)
+router.get('/Delete_fin_year/:id',adminController.Delete_fin_year)
 
 
 
@@ -71,6 +74,41 @@ router.post('/Save_m_advert_ref',adminController.Save_m_advert_ref)
 router.get('/edit_m_advertPage/:id',adminController.edit_m_advertPage)
 router.post('/edit_m_advert_ref/:id',adminController.edit_m_advert_ref)
 router.get('/Delete_m_advert_ref/:id',adminController.Delete_m_advert_ref)
+
+
+
+
+
+
+router.get('/adminEmployee',adminController.adminEmployee)
+router.get('/adminAddEmployee',adminController.adminAddEmployee)
+router.post('/AdminAddEmployee1',adminController.AdminAddEmployee1)
+router.get('/employeeView/:id',adminController.employeeView)
+
+
+
+router.get('/candidateList',adminController.candidateList)
+
+router.get('/clientList',adminController.clientList)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -1,8 +1,7 @@
 
 <%- include( '../main/header.ejs' ) %>
 <%- include( '../main/sidebar.ejs' ) %>
-<?php $this->load->view('inc/header'); ?>
-<?php $this->load->view('inc/sidebar'); ?>
+
 <div class="content-body">
     <div class="container-fluid">
         <br>
@@ -18,7 +17,7 @@
                             <div class="card-header border-bottom">
                                 <h4 class="m-b-0"><i class="fa fa-user-o" aria-hidden="true"></i> User List</h4>
 
-                                <button type="button" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i><a href="/employee/Add_employee" class="text-white"><i class="" aria-hidden="true"></i> Add User</a></button>
+                                <button type="button" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i><a href="/admin/adminAddEmployee" class="text-white"><i class="" aria-hidden="true"></i> Add User</a></button>
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive ">
@@ -49,19 +48,21 @@
                                         </tfoot>
                                         <tbody>
                                             <tr>
-                                                      
-                                                <td><?php echo $value->em_username; ?></td>
-                                                <td title="<?php echo $value->first_name .' '.$value->last_name; ?>"><?php echo $value->first_name .' '.$value->last_name; ?></td>       
-                                                <td><?php echo $value->em_email; ?></td>
-                                                <td><?php echo $value->em_phone; ?></td>
-                                                <td><?php echo $value->em_address; ?></td>
-                                                <td><?php echo $value->department_name; ?></td>
-                                                <td><?php echo $value->em_role; ?></td>
-                                                <td>
-                                                <div class="d-flex">
-                                                    <a href="/employee/view" title="View"  class="btn btn-primary shadow btn-xs sharp me-1"><i class="fa fa-eye"></i></a>
-                                                </div>
-                                                </td>
+                                                <% EmpData.forEach(function(d,index){ %>
+
+                                                    <td><%=d.em_username %></td>
+                                                    <td title="<%= d.fname + ' ' + d.lname %>"> <%= d.fname + ' ' + d.lname %></td>   
+                                                    <td><%=d.email%></td>
+                                                    <td><%= d.contact%></td>
+                                                    <td><%=d.em_address%></td>
+                                                    <td><%=d.department_name%></td>
+                                                    <td><%=d.role%></td>
+                                                    <td>
+                                                        <div class="d-flex">
+                                                            <a href="/admin/employeeView/<%= d.id %>" title="View"  class="btn btn-primary shadow btn-xs sharp me-1"><i class="fa fa-eye"></i></a>
+                                                        </div>
+                                                    </td>
+                                                    <% }) %>     
                                             </tr>
                                         </tbody>
                                     </table>

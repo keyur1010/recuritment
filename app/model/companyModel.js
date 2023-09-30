@@ -24,13 +24,19 @@ module.exports=(sequelize,DataTypes)=>{
         email2:{
             type:DataTypes.STRING,
         },
+        pin_code:{
+            type:DataTypes.INTEGER,
+        },
+        place:{
+            type:DataTypes.STRING,
+        },
         state:{
             type:DataTypes.STRING,
         },
         state_code:{
             type:DataTypes.STRING,
         },
-        address:{
+        company_address:{
             type:DataTypes.STRING,
         },
         gst_applicable:{
@@ -54,8 +60,34 @@ module.exports=(sequelize,DataTypes)=>{
         password:{
             type:DataTypes.STRING,
         },
-      
-      
+        wp_api_key:{
+            type:DataTypes.STRING
+        },
+        distance_api_key:{
+            type:DataTypes.STRING,
+        },
+        smtp_host:{
+            type:DataTypes.STRING,
+        },
+        smtp_port:{
+            type:DataTypes.STRING,
+        },
+        smtp_sender_id:{
+            type:DataTypes.STRING,
+        },
+        smtp_password:{
+            type:DataTypes.STRING,
+        },
+        smtp_secure:{
+            type:DataTypes.STRING,
+        },
+        smtp_name:{
+            type:DataTypes.STRING,
+        },
+        default_cc_mailid:{
+            type:DataTypes.STRING,
+        },
+        
 
     });
     return companyModel

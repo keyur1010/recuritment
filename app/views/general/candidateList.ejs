@@ -1,0 +1,260 @@
+
+<%- include( '../main/header.ejs' ) %>
+<%- include( '../main/sidebar.ejs' ) %>
+<div class="content-body">
+    <div class="container-fluid">
+
+        <div class="d-sm-flex d-block justify-content-between align-items-center mb-4">
+            <div class="card-action coin-tabs mt-3 mt-sm-0">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" data-bs-toggle="tab" href="#AllStatus">All Status</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="tab" href="#pending">Pending</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="tab" href="#approved">Approved</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="tab-content">
+                    <div class="tab-pane fade show active" id="AllStatus">
+                        <div class="table-responsive">
+                            <table class="table display mb-4 dataTablesCard order-table card-table text-black application" id="application-tbl1">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Candidate Name</th>
+                                        <th>Mobile No</th>
+                                        <th>Email Id</th>
+                                        <th>Advert Ref.</th>
+                                        <th>Current Position</th>
+                                        <th>Status</th>
+                                        <th>Add On</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php foreach ($list_all as $value) { ?>
+                                        <tr>
+                                            <td>#<?php echo $value->candidate_id; ?></td>
+                                            <td><?php echo $value->candidate_name; ?></td>
+                                            <td class="wspace-no">
+                                                <span class="text-secoundry fs-14 font-w600">
+                                                    <i class="fas fa-phone-alt me-2"></i>
+                                                    <?php echo $value->mobile_number; ?>
+                                                </span>
+                                            </td>
+                                            <td><?php echo $value->email_id; ?></td>
+                                            <td><?php echo $value->advert_ref ?></td>
+                                            <td><?php echo $value->current_position; ?></td>
+                                            <td>
+                                                <span class="btn bgl-secondary light btn-rounded btn-sm"><?php echo $value->admin_status; ?></span>
+                                            </td>
+                                            <td><?php echo $value->insert_on; ?></td>
+                                            <td>
+                                                <div class="dropdown text-center">
+                                                    <div class="btn-link" data-bs-toggle="dropdown">
+                                                        <i class="fa fa-ellipsis-h"></i>
+                                                    </div>
+                                                    <div class="dropdown-menu dropdown-menu-right">
+                                                        <a class="dropdown-item text-success" href="<?php echo base_url('candidate/profile/' . base64_encode($value->candidate_id)); ?>">
+                                                            <i class="far fa-eye me-1 text-success"></i>View Profile
+                                                        </a>
+                                                        <?php if ($value->confirm_status = 'Pending') { ?>
+                                                            <a class="dropdown-item text-black" href="<?php echo base_url('candidate/Approve_accept_candidate/' . base64_encode($value->candidate_id)); ?>">
+                                                                <i class="far fa-check-circle me-1 text-success"></i>Accept Application
+                                                            </a>
+                                                            <a class="dropdown-item text-black" href="<?php echo base_url('candidate/Reject_accept_candidate/' . base64_encode($value->candidate_id)); ?>">
+                                                                <i class="far fa-times-circle me-1 text-danger"></i>Reject Application
+                                                            </a>
+                                                        <?php } ?>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    <?php } ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="pending">
+                        <div class="table-responsive">
+                            <table class="table display mb-4 dataTablesCard order-table card-table text-black application" id="application-tbl1">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Candidate Name</th>
+                                        <th>Mobile No</th>
+                                        <th>Email Id</th>
+                                        <th>Advert Ref.</th>
+                                        <th>DOB</th>
+                                        <th>Current Position</th>
+                                        <th>Current Pay Status</th>
+                                        <th>Notice Period</th>
+                                        <th>Status</th>
+                                        <th>Add On</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php foreach ($list_pend as $value) { ?>
+                                        <tr>
+                                            <td>#<?php echo $value->candidate_id; ?></td>
+                                            <td><?php echo $value->candidate_name; ?></td>
+                                            <td class="wspace-no">
+                                                <span class="text-secoundry fs-14 font-w600">
+                                                    <i class="fas fa-phone-alt me-2"></i>
+                                                    <?php echo $value->mobile_number; ?>
+                                                </span>
+                                            </td>
+                                            <td><?php echo $value->email_id; ?></td>
+                                            <td><?php echo $value->advert_ref ?></td>
+                                            <td><?php echo $value->candidate_dob; ?></td>
+                                            <td><?php echo $value->current_position; ?></td>
+                                            <td><?php echo $value->current_pay_status; ?></td>
+                                            <td><?php echo $value->notice_period; ?></td>
+                                            <td>
+                                                <span class="btn bgl-secondary light btn-rounded btn-sm"><?php echo $value->admin_status; ?></span>
+                                            </td>
+                                            <td><?php echo $value->insert_on; ?></td>
+                                            <td>
+                                                <div class="dropdown text-center">
+                                                    <div class="btn-link" data-bs-toggle="dropdown">
+                                                        <i class="fa fa-ellipsis-h"></i>
+                                                    </div>
+                                                    <div class="dropdown-menu dropdown-menu-right">
+                                                        <a class="dropdown-item text-success" href="<?php echo base_url('candidate/profile/' . base64_encode($value->candidate_id)); ?>">
+                                                            <i class="far fa-eye me-1 text-success"></i>View Profile
+                                                        </a>
+                                                        <?php if ($value->admin_status != 'Approved') { ?>
+                                                            <a class="dropdown-item text-black accept-button" href="<?php echo base_url('candidate/Approve_accept_candidate/' . base64_encode($value->candidate_id)); ?>">
+                                                                <i class="far fa-check-circle me-1 text-success"></i>Accept Application
+                                                            </a>
+                                                            <a class="dropdown-item text-black reject-button" href="<?php echo base_url('candidate/Reject_accept_candidate/' . base64_encode($value->candidate_id)); ?>">
+                                                                <i class="far fa-times-circle me-1 text-danger"></i>Reject Application
+                                                            </a>
+                                                        <?php } ?>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    <?php } ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="approved">
+                        <div class="table-responsive">
+                            <table class="table display mb-4 dataTablesCard order-table card-table text-black application" id="application-tbl1">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Candidate Name</th>
+                                        <th>Mobile No</th>
+                                        <th>Email Id</th>
+                                        <th>Advert Ref.</th>
+                                        <th>DOB</th>
+                                        <th>Current Position</th>
+                                        <th>Current Pay Status</th>
+                                        <th>Notice Period</th>
+                                        <th>Status</th>
+                                        <th>Add On</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php foreach ($list_approved as $value) { ?>
+                                        <tr>
+                                            <td>#<?php echo $value->candidate_id; ?></td>
+                                            <td><?php echo $value->candidate_name; ?></td>
+                                            <td class="wspace-no">
+                                                <span class="text-secoundry fs-14 font-w600">
+                                                    <i class="fas fa-phone-alt me-2"></i>
+                                                    <?php echo $value->mobile_number; ?>
+                                                </span>
+                                            </td>
+                                            <td><?php echo $value->email_id; ?></td>
+                                            <td><?php echo $value->advert_ref ?></td>
+                                            <td><?php echo $value->candidate_dob; ?></td>
+                                            <td><?php echo $value->current_position; ?></td>
+                                            <td><?php echo $value->current_pay_status; ?></td>
+                                            <td><?php echo $value->notice_period; ?></td>
+                                            <td>
+                                                <span class="btn bgl-secondary light btn-rounded btn-sm"><?php echo $value->admin_status; ?></span>
+                                            </td>
+                                            <td><?php echo $value->insert_on; ?></td>
+                                            <td>
+                                                <div class="dropdown text-center">
+                                                    <div class="btn-link" data-bs-toggle="dropdown">
+                                                        <i class="fa fa-ellipsis-h"></i>
+                                                    </div>
+                                                    <div class="dropdown-menu dropdown-menu-right  viewButton">
+                                                        <a class="dropdown-item text-success" href="<?php echo base_url('candidate/profile/' . base64_encode($value->candidate_id)); ?>">
+                                                            <i class="far fa-eye me-1 text-success"></i>View Profile
+                                                        </a>
+                                                        <?php if ($value->admin_status != 'Approved') { ?>
+                                                            <a class="dropdown-item text-black accept-button" href="<?php echo base_url('candidate/Approve_accept_candidate/' . base64_encode($value->candidate_id)); ?>">
+                                                                <i class="far fa-check-circle me-1 text-success"></i>Accept Application
+                                                            </a>
+                                                            <a class="dropdown-item text-black reject-button" href="<?php echo base_url('candidate/Reject_accept_candidate/' . base64_encode($value->candidate_id)); ?>">
+                                                                <i class="far fa-times-circle me-1 text-danger"></i>Reject Application
+                                                            </a>
+                                                        <?php } ?>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    <?php } ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<%- include( '../main/footer.ejs' ) %>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $("#li-list_pend").addClass('active');
+        $("#li-candidate").addClass('active');
+        $('#li-candidate').addClass('show');
+    });
+</script>
+<script>
+    function hideButtonsBasedOnStatus() {
+        var statusElements = document.querySelectorAll('.btn-rounded');
+
+        statusElements.forEach(function(element) {
+            var status = element.innerText.trim().toLowerCase();
+            var acceptButton = element.parentElement.querySelector('.accept-button');
+            var rejectButton = element.parentElement.querySelector('.reject-button');
+            // var rejectButton = element.parentElement.querySelector('.viewButton');
+
+            if (status === 'approved') {
+                acceptButton.style.display = 'none';
+                rejectButton.style.display = 'none';
+                // viewButton.style.display = 'none';
+            } else {
+                acceptButton.style.display = 'block';
+                rejectButton.style.display = 'block';
+                // viewButton.style.display = 'block';
+            }
+        });
+    }
+
+    hideButtonsBasedOnStatus();
+</script>

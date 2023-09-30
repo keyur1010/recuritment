@@ -39,7 +39,7 @@ db.g_jobModel=require('../app/model/g_jobModel')(sequelize,DataTypes)
 db.g_industryModel=require('../app/model/g_industryModel')(sequelize,DataTypes)
 db.skillModel=require('../app/model/skillModel')(sequelize,DataTypes)
 db.advert_refModel=require('../app/model/advert_refModel')(sequelize,DataTypes)
-
+db.EmployeeModel=require('../app/model/EmployeeModel')(sequelize,DataTypes)
 
 // db.userModel.hasOne(db.hrModel,{foreignKey:"user_id",as:'users'})
 // db.hrModel.belongsTo(db.userModel, { foreignKey: "user_id",as:'users' })

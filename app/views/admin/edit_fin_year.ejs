@@ -19,7 +19,7 @@
                             </div>
                             <div class="card-body">
                                 
-                                    <form method="post" action="/admin/edit_fin_year/<%=fin_year_data.id%>">
+                                    <form method="post" action="/admin/edit_fin_year1/<%=fin_year_data.id%>">
                                         <div class="form-body">
                                             <div class="row ">
                                                
@@ -32,13 +32,13 @@
                                                  <div class="col-md-12">
                                                     <div class="form-group">
                                                         <label class="control-label">Financial Year Start</label>
-                                                        <input type="date" name="year_start_date" id="year_start_date" value="<%= fin_year_data.year_start_date%>"    class="form-control datepicker" placeholder=""  required>
+                                                        <input type="date" name="year_start_date" id="year_start_date" value="<%= fin_year_data.year_start_date ? fin_year_data.year_start_date.toISOString().split('T')[0] : '' %>"  class="form-control datepicker" placeholder=""  required>
                                                     </div>
                                                 </div>
                                                  <div class="col-md-12">
                                                     <div class="form-group">
                                                         <label class="control-label">Financial Year End</label>
-                                                        <input type="date" name="year_end_date" id="year_end_date"  value="<%= fin_year_data.year_end_date%>"   class="form-control datepicker" placeholder=""  required>
+                                                        <input type="date" name="year_end_date" id="year_end_date" value="<%= fin_year_data.year_end_date ? fin_year_data.year_end_date.toISOString().split('T')[0] : '' %>"   class="form-control datepicker" placeholder=""  required>
                                                     </div>
                                                 </div>
                                                 <!--/span-->
@@ -46,7 +46,7 @@
                                             <!--/row-->
                                         </div>
                                         <div class="form-actions">
-                                            <button type="submit" class="btn btn-info btn-sm"> <i class="fa fa-check"></i> Save</button>
+                                            <button type="submit" class="btn btn-info btn-sm"> <i class="fa fa-check"></i> Update</button>
                                             <button type="button" class="btn btn-info btn-sm">Cancel</button>
                                         </div>
                                     </form>
@@ -79,7 +79,7 @@
                                             <tr>
                                                
                                                 <td><%=d.year_name%></td>
-                                                <td><%=d.year_start_date%></td>
+                                                <td><%= d.year_start_date%></td>
                                                 <td><%=d.year_end_date%></td>
                                                 <td class="jsgrid-align-center ">
                                                     <a href="/admin/edit_fin_year/<%=d.id%>" title="Edit" class="btn btn-sm btn-primary "><i class="fa fa-edit"></i></a>
@@ -104,4 +104,11 @@ $(document).ready(function() {
 $("#masterMain").addClass('active');
 $('#masterMain').addClass('show');
 });
+</script>
+<script>
+    function formatDate(dateString) {
+        const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
+        const date = new Date(dateString);
+        return date.toLocaleDateString('en-IN', options);
+    }
 </script>

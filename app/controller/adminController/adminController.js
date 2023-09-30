@@ -12,7 +12,7 @@ const g_jobModel=db.g_jobModel
 const g_industryModel=db.g_industryModel
 const skillModel=db.skillModel
 const advert_refModel=db.advert_refModel
-
+const EmployeeModel=db.EmployeeModel
 
 
 
@@ -98,6 +98,8 @@ exports.newClientCreate = async (req, res) => {
 };
 
 
+// department controller start
+
 
 exports.adminDepartment=async(req,res)=>{
   try {
@@ -108,6 +110,7 @@ exports.adminDepartment=async(req,res)=>{
     console.log(error)
   }
 }
+
 exports.Save_m_departments=async(req,res)=>{
   try {
     const {dep_code,department_name}=req.body
@@ -137,6 +140,7 @@ exports.Save_m_departments=async(req,res)=>{
     console.log(error)
   }
 }
+
 exports.editDepartment=async(req,res)=>{
   try {
     const editData=await departmentModel.findOne({where:{id:req.params.id}})
@@ -147,6 +151,7 @@ exports.editDepartment=async(req,res)=>{
     console.log(error)
   }
 }
+
 exports.editDepartment1=async(req,res)=>{
   try {
     const newData=req.body
@@ -173,6 +178,7 @@ exports.deleteDepartment=async(req,res)=>{
   }
 }
 
+// department controller start
 
 
 
@@ -184,6 +190,7 @@ exports.addCompany=async(req,res)=>{
     console.log(error)
   }
 }
+
 exports.saveAddCompany=async(req,res)=>{
   try {
     const companyData=req.body
@@ -219,8 +226,6 @@ exports.saveAddCompany=async(req,res)=>{
   }
 }
 
-
-
 exports.companyList=async(req,res)=>{
   try {
     const data=await companyModel.findAll() 
@@ -234,20 +239,22 @@ exports.companyList=async(req,res)=>{
 exports.editCompany=async(req,res)=>{
   try {
     const findCompany=await companyModel.findOne({where:{id:req.params.id}})
-    return res.render('./admin/companyEdit.ejs',{findCompany:findCompany})
+    return res.render('./admin/editCompany.ejs',{findCompany:findCompany})
   } catch (error) {
     console.log(error)
   }
 }
 
-
 exports.editCompany1=async(req,res)=>{
   try {
     const newData=req.body
     const data=await companyModel.findOne({where:{id:req.params.id}})
+    console.log('company post api----------->',data)
+    console.log('company post api----------->',req.body)
     if (data) {
+      console.log('this is company post api');
       const updateData = await companyModel.update(newData, { where: { id: req.params.id } })
-      return res.redirect('/admin/companyList')
+      return res.send('/admin/companyList',updateData)
   }else{
       console.log('data not submited')
       return res.redirect('/admin/companyList')
@@ -258,6 +265,8 @@ exports.editCompany1=async(req,res)=>{
 }
 
 
+// fin_years controller start
+
 
 exports.fin_years=async(req,res)=>{
   try {
@@ -267,6 +276,7 @@ exports.fin_years=async(req,res)=>{
     console.log(error)
   }
 }
+
 exports.Save_fin_year=async(req,res)=>{
   try {
     const yearBody=req.body
@@ -289,6 +299,7 @@ exports.Save_fin_year=async(req,res)=>{
   console.log(error)    
   }
 }
+
 exports.edit_fin_year=async(req,res)=>{
   try {
     const data=await fin_yearsModel.findAll({where:{status:1}})
@@ -302,8 +313,35 @@ exports.edit_fin_year=async(req,res)=>{
 }
 
 
+exports.edit_fin_year1=async(req,res)=>{
+  try {
+    const newData=req.body
+    const data=await fin_yearsModel.findOne({where:{id:req.params.id}})
+    if (data) {
+      const updateData = await fin_yearsModel.update(newData, { where: { id: req.params.id } })
+      return res.redirect('/admin/fin_years')
+  }else{
+      console.log('data not submited')
+      return res.redirect('/admin/fin_years')
+  }
+  } catch (error) {
+    console.log(error)
+  }
+}
+exports.Delete_fin_year=async(req,res)=>{
+  try {
+    const data=await fin_yearsModel.destroy({where:{id:req.params.id}})
+    return res.redirect('/admin/fin_years')
+  } catch (error) {
+    console.log(error)
+  }
+}
+// fin_years controller end
 
 
+
+
+// job controller start
 
 
 exports.g_jobpage=async(req,res)=>{
@@ -366,11 +404,11 @@ exports.Delete_jobtitles=async(req,res)=>{
   }
 }
 
+// job controller end
 
 
 
-
-
+// advert_ref controller start
 
 
 
@@ -382,8 +420,6 @@ exports.m_industry=async(req,res)=>{
     console.log(error)    
   }
 }
-
-
 
 exports.Save_m_industry=async(req,res)=>{
   try {
@@ -402,7 +438,6 @@ exports.Save_m_industry=async(req,res)=>{
   }
 }
 
-
 exports.edit_m_industry=async(req,res)=>{
   try {
     const data=await g_industryModel.findAll({where:{status:1}})
@@ -412,8 +447,6 @@ exports.edit_m_industry=async(req,res)=>{
     console.log(error)
   }
 }
-
-
 
 exports.g_industryEdit=async(req,res)=>{
   try {
@@ -430,6 +463,7 @@ exports.g_industryEdit=async(req,res)=>{
     console.log(error)
   }
 }
+
 exports.Delete_m_industry=async(req,res)=>{
   try {
     const data=await g_industryModel.destroy({where:{id:req.params.id}})
@@ -439,21 +473,12 @@ exports.Delete_m_industry=async(req,res)=>{
   }
 }
 
+// advert_ref controller end
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
+// Skill controller start
 
 exports.m_skillPage=async(req,res)=>{
   try {
@@ -463,8 +488,6 @@ exports.m_skillPage=async(req,res)=>{
     console.log(error)    
   }
 }
-
-
 
 exports.Save_m_skills=async(req,res)=>{
   try {
@@ -484,8 +507,6 @@ exports.Save_m_skills=async(req,res)=>{
   }
 }
 
-
-
 exports.edit_m_skills=async(req,res)=>{
   try {
     const data=await skillModel.findAll({where:{status:1}})
@@ -495,9 +516,6 @@ exports.edit_m_skills=async(req,res)=>{
     console.log(error)
   }
 }
-
-
-
 
 exports.edit_m_skills1=async(req,res)=>{
   try {
@@ -515,8 +533,6 @@ exports.edit_m_skills1=async(req,res)=>{
   }
 }
 
-
-
 exports.Delete_m_skills=async(req,res)=>{
   try {
     const data=await skillModel.destroy({where:{id:req.params.id}})
@@ -526,15 +542,12 @@ exports.Delete_m_skills=async(req,res)=>{
   }
 }
 
+// Skill controller end
 
 
 
 
-
-
-
-
-
+// advert_ref controller start
 
 
 exports.ad_ref_page=async(req,res)=>{
@@ -545,9 +558,6 @@ exports.ad_ref_page=async(req,res)=>{
     console.log(error)    
   }
 }
-
-
-
 
 exports.Save_m_advert_ref=async(req,res)=>{
   try {
@@ -567,9 +577,6 @@ exports.Save_m_advert_ref=async(req,res)=>{
   }
 }
 
-
-
-
 exports.edit_m_advertPage=async(req,res)=>{
   try {
     const data=await advert_refModel.findAll({where:{status:1}})
@@ -579,7 +586,6 @@ exports.edit_m_advertPage=async(req,res)=>{
     console.log(error)
   }
 }
-
 
 exports.edit_m_advert_ref=async(req,res)=>{
   try {
@@ -597,9 +603,6 @@ exports.edit_m_advert_ref=async(req,res)=>{
   }
 }
 
-
-
-
 exports.Delete_m_advert_ref=async(req,res)=>{
   try {
     const data=await advert_refModel.destroy({where:{id:req.params.id}})
@@ -608,6 +611,137 @@ exports.Delete_m_advert_ref=async(req,res)=>{
     console.log(error)
   }
 }
+
+
+// advert_ref controller end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Employee controller start
+
+
+
+exports.adminEmployee=async(req,res)=>{
+  try {
+    const EmpData=await EmployeeModel.findAll({where:{status:1}})
+    return res.render('./admin/adminEmployee.ejs',{EmpData:EmpData})
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+exports.adminAddEmployee=async(req,res)=>{
+  try {
+    const EmpData=await EmployeeModel.findAll({where:{status:1}})
+    return res.render('./admin/adminAddEmployee.ejs',{EmpData:EmpData})
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+exports.AdminAddEmployee1=async(req,res)=>{
+  try {
+    const employeeBody=req.body
+    const checkEmployee=await EmployeeModel.findOne({where:{email:employeeBody.email}})
+    if(!checkEmployee){
+      const data=await EmployeeModel.create({
+        fname:employeeBody.fname,
+        lname:employeeBody.lname,
+        em_username:employeeBody.em_username,
+        contact:employeeBody.contact,
+        em_address:employeeBody.em_address,
+        email:employeeBody.email,
+        dep_id:employeeBody.dep_id,
+        is_report_auth:employeeBody.is_report_auth,
+        manager_id:employeeBody.manager_id,
+        role:employeeBody.role,
+        password:employeeBody.password,
+        image_url:employeeBody.image_url,
+      })
+      console.log('employeeData--------->',data)
+      return res.redirect('/admin/adminAddEmployee')
+    }else{
+      console.log('data already added')
+      return res.redirect('/admin/adminAddEmployee')
+    }
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+exports.employeeView=async(req,res)=>{
+  try {
+    const data=await EmployeeModel.findOne({where:{id:req.params.id}})
+    return res.render('/.general/employeeView.ejs',{data:data})
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+// Employee controller start
+
+
+
+
+
+exports.candidateList=async(req,res)=>{
+  try {
+    return res.render('./general/candidateList.ejs')
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+
+
+
+exports.clientList=async(req,res)=>{
+  try {
+   return res.render('./general/clientList.ejs')
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
