@@ -1,11 +1,14 @@
 const express =require('express')
 const router=express.Router()
+const auth=require('../app/middleware/auth')
 const adminController=require('../app/controller/adminController/adminController')
 router.get('/admindashboard',adminController.adminDashboard)
 
 router.get('/newclient',adminController.newClient)      //new client create by admin
 router.post('/newclientcreate',adminController.newClientCreate)
+router.get('/clientDelete/:id',adminController.clientDelete)
 
+// router.get('/findData',adminController.findData)
 
 router.get('/adminDepartment',adminController.adminDepartment)
 router.post('/m_department',adminController.Save_m_departments)
@@ -91,12 +94,12 @@ router.get('/candidateList',adminController.candidateList)
 
 router.get('/clientList',adminController.clientList)
 
+router.get('/clientEdit/:id',adminController.clientEdit)
 
-
-
-
-
-
+router.get('/approveBtn/:id',adminController.approveBtn)
+router.post('/clientEdit1/:id',adminController.clientEdit1)
+router.post('/clientEdit2/:id',adminController.clientEdit2)
+router.post('/clientEdit3/:id',adminController.clientEdit3)
 
 
 

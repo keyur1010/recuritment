@@ -98,8 +98,37 @@ module.exports=(sequelize,DataTypes)=>{
         billing_email:{
             type:DataTypes.STRING
         },
-      
-
+        services:{
+            type:DataTypes.JSON,
+        },
+        insertOn:{
+            type:DataTypes.DATE
+        },
+        insertBy:{
+            type:DataTypes.INTEGER
+        },
+        updateOn:{
+            type:DataTypes.DATE
+        },
+        updateBy:{
+            type:DataTypes.STRING
+        },
+        approveOn:{
+            type:DataTypes.DATE
+        },
+        approveBy:{
+            type:DataTypes.STRING
+        },
+        isDeleted:{
+            type:DataTypes.BOOLEAN,
+            defaultValue:false
+        },
+        admin_status:{
+            type:Sequelize.ENUM('Approved','Pending',"Rejected"),
+            defaultValue:"Pending"
+        },
+        
+        
     });
     return clientModel
 }

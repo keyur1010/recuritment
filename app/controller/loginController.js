@@ -5,7 +5,9 @@ const loginModel = db.loginModel;
 exports.loginPage = async (req, res) => {
   try {
     console.log("login page");
-    return res.render("./login.ejs");
+    const data=await loginModel.findOne({where:{role:"Super Admin"}})
+    // console.log(data)
+    return res.render("./login.ejs",{data});
   } catch (error) {
     console.log(error);
   }
@@ -14,27 +16,32 @@ exports.loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
     const checkUser = await loginModel.findOne({ where: { email: email } });
-
+    req.session.user=checkUser
+    console.log(req.session.user)
     if (!checkUser) {
       console.log("invaild user email and password");
       return res.redirect("/login");
     } else {
-        if(checkUser.role=="Supar Admin"){
-            console.log('this is supar admin')
-        }
-        else if (checkUser.role=="Admin"){
-            console.log('this is a admin')
-        }else if(checkUser.role=='Client'){
-            console.log('This is a Client')
-        }else if(checkUser.role=='Candidate'){
-            console.log('This is a Candidate')
-        }else{
-            console.log('here nobody mention this ')
-        }
+       if(checkUser.role=="Super Admin"){
+                console.log('this is super admin')
+                return res.redirect('/admin/admindashboard')
+            }
+            else if (checkUser.role=="Admin"){
+                console.log('this is a admin')
+                return res.redirect('/m_admin/admin')
+            }else if(checkUser.role=='Client'){
+                console.log('This is a Client')
+                return res.redirect('/client/client')
+            }else if(checkUser.role=='Candidate'){
+                console.log('This is a Candidate')
+                return res.redirect('/candidate/candidate')
+            }else{
+                console.log('here nobody mention this ')
+            }
 
     }
     console.log("created data -------------->", checkUser);
-    return res.send(checkUser);
+    // return res.send(checkUser);
   } catch (error) {
     console.log(error);
   }

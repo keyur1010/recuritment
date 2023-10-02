@@ -1,7 +1,8 @@
-const { Sequelize, DataTypes } = require("sequelize");
+const { Sequelize, DataTypes, DATE } = require("sequelize");
 
 const db = require("../../../config/database");
 const { doesNotMatch } = require("assert");
+const loginModel = require("../../model/loginModel");
 
 const clientModel = db.clientModel;
 const clientMultiModel=db.clientMultiModel
@@ -38,9 +39,18 @@ exports.newClientCreate = async (req, res) => {
 
   try {
     const {
-      client_name,type,registered_address,contract_name,contract_position,contract_number,contract_mobile,contract_email,website,industry,vat_number,registration_no,client_logo,img_url,subscrption_level_agreed,payroll_subsribe,employement_contract,service,finance_name,finance_position,finance_number,finance_mobile,finance_email,finance_credit_limit,finance_debit_details,billing_name,billing_position,billing_number,billing_mobile,billing_email,
+      client_name,type,registered_address,contract_name,contract_position,contract_number,contract_mobile,contract_email,website,industry,vat_number,registration_no,client_logo,img_url,subscrption_level_agreed,payroll_subsribe,employement_contract,service,services,finance_name,finance_position,finance_number,finance_mobile,finance_email,finance_credit_limit,finance_debit_details,billing_name,billing_position,billing_number,billing_mobile,billing_email,
     } = req.body;
-
+    const allServices={
+        service_name:req.body.service_name,
+        service_position:req.body.service_position,
+        service_number:req.body.service_number,
+        service_mobile:req.body.service_mobile,
+        service_email:req.body.service_email,
+        service_address:req.body.service_email,
+      }
+      const serviceDataJSON = JSON.stringify(allServices);
+      const insertOn=new Date()
     const data = await clientModel.create({
       client_name: client_name,
       type: type,
@@ -72,30 +82,131 @@ exports.newClientCreate = async (req, res) => {
       billing_number: billing_number,
       billing_mobile: billing_mobile,
       billing_email: billing_email,
+      services:serviceDataJSON,
+      insertOn:insertOn,
+      insertBy:req.session.user.id,
+      // updateOn:updateON,
+      // updateBy:updateBy,
+      // approveOn:approveON,
+      // approveBy:approveBy,
     });
-    // console.log("this is req.body ---------->",req.body)
     // console.log("data---------->", data);
-    const candidateEducationData = req.body;
-
-        
-    // const emailCheck=await candidateEducationModel.findOne({where:{email:req.body.email,hr_id:req.session.user.hr_id}})
-    // if(!emailCheck){
-    for (let i = 0; i < candidateEducationData.service_name.length; i++) {
-        const CandidateEdu = await clientMultiModel.create({
-          service_name: candidateEducationData.service_name[i],
-          service_position: candidateEducationData.service_position[i],
-          service_number: candidateEducationData.service_number[i],
-          service_mobile:candidateEducationData.service_mobile[i],
-          service_email:candidateEducationData.service_email[i],
-          service_address:candidateEducationData.service_address[i],
-        });
-        console.log('--------candidate----->',CandidateEdu)
-    }
-    return res.send(data);
+    
+    return res.redirect('/admin/clientList');
   } catch (error) {
     console.log(error);
   }
 };
+
+
+exports.clientList=async(req,res)=>{
+  try {
+    const clientData=await clientModel.findAll({where:{isDeleted:0}})
+   return res.render('./general/clientList.ejs',{clientData:clientData})
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+
+
+
+exports.clientEdit=async(req,res)=>{
+  try {
+    const data=await clientModel.findOne({where:{id:req.params.id}})
+    console.log('data-------------------------->',data)
+    const service_data=JSON.parse(data.dataValues.services)
+    console.log(service_data)
+    const json_data=JSON.parse(service_data)
+    console.log(json_data)
+      
+      console.log('data',json_data)
+      return res.render('./general/clientEdit.ejs',{data:data,json_data:json_data})
+  } catch (error) {
+    console.log(error)
+  }
+}
+exports.clientDelete=async(req,res)=>{
+  try {
+    const data=await clientModel.update({isDeleted:1},{where:{id:req.params.id}})
+    return res.redirect('/admin/clientList')
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+
+
+
+    
+
+
+
+exports.approveBtn=async(req,res)=>{
+  try {
+    const data=await clientModel.findOne({where:{id:req.params.id}})
+    if(data.admin_status=="Pending"){
+      const updatebtn=await clientModel.update({admin_status:"Approved"},{where:{
+        id:req.params.id
+      }})  
+      return res.redirect('/admin/clientList')
+
+    }  
+    else if(data.admin_status=="Approved"){
+      const updatebtn=await clientModel.update({admin_status:"Pending"},{where:{
+        id:req.params.id
+      }})  
+      return res.redirect('/admin/clientList')
+
+   
+    }  
+    else{
+      console.log('error on update')
+      return res.redirect('/admin/clientList')
+    }  
+  } catch (error) {
+    console.log(error)
+  }  
+}  
+
+exports.clientEdit1=async(req,res)=>{
+  try {
+    const newBody=req.body
+    const data=await clientModel.findOne({where:{id:req.params.id}})
+    console.log('client edit 1------------->',data)
+    const updateForm1=await clientModel.update(newBody,{ where: { id: req.params.id } })
+    return res.redirect(`/admin/clientEdit/${req.params.id}`)
+  } catch (error) {
+    console.log(error)
+  }
+}
+exports.clientEdit2=async(req,res)=>{
+  try {
+    const newData=req.body
+    const data=await clientModel.findOne({where:{id:req.params.id}})
+    console.log('data2------------------>',data)
+    const updateForm2=await clientModel.update(newData,{where:{id:req.params.id}})
+    return res.redirect(`/admin/clientEdit/${req.params.id}`)
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+
+exports.clientEdit3=async(req,res)=>{
+  try {
+    const newData=req.body
+    const data=await clientModel.findOne({where:{id:req.params.id}})
+    console.log('data3------------------>',data)
+    const updateForm2=await clientModel.update(newData,{where:{id:req.params.id}})
+    return res.redirect(`/admin/clientEdit/${req.params.id}`)
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+
+
 
 
 // department controller start
@@ -108,8 +219,8 @@ exports.adminDepartment=async(req,res)=>{
     return res.render('./admin/adminDepartment.ejs',{data:data})
   } catch (error) {
     console.log(error)
-  }
-}
+  }  
+}  
 
 exports.Save_m_departments=async(req,res)=>{
   try {
@@ -119,15 +230,15 @@ exports.Save_m_departments=async(req,res)=>{
         [Sequelize.Op.or]: [
           { dep_code: dep_code },
           { department_name: department_name },
-        ],
-      },
-    });
+        ],  
+      },  
+    });  
     console.log('department_Check--------------->',department_Check)
     if(!department_Check){
       const data=await departmentModel.create({
         dep_code:dep_code,
         department_name:department_name
-      })
+      })  
       // console.log("department_data---------->",data)
       return res.redirect('/admin/adminDepartment')
 
@@ -135,11 +246,11 @@ exports.Save_m_departments=async(req,res)=>{
       console.log('this department already in the database ')
       // alert('already in database')
       return res.redirect('/admin/adminDepartment')
-    }
+    }  
   } catch (error) {
     console.log(error)
-  }
-}
+  }  
+}  
 
 exports.editDepartment=async(req,res)=>{
   try {
@@ -149,8 +260,8 @@ exports.editDepartment=async(req,res)=>{
     return res.render('./admin/editDepartment.ejs',{editData:editData,data:data})
   } catch (error) {
     console.log(error)
-  }
-}
+  }  
+}  
 
 exports.editDepartment1=async(req,res)=>{
   try {
@@ -159,14 +270,14 @@ exports.editDepartment1=async(req,res)=>{
     if (data) {
       const updateData = await departmentModel.update(newData, { where: { id: req.params.id } })
       return res.redirect('/admin/adminDepartment')
-  }else{
+  }else{  
       console.log('data not submited')
       return res.redirect('/admin/adminDepartment')
-  }
+  }    
   } catch (error) {
     console.log(error)
-  }
-}
+  }  
+}  
 
 
 exports.deleteDepartment=async(req,res)=>{
@@ -175,8 +286,8 @@ exports.deleteDepartment=async(req,res)=>{
     return res.redirect('/admin/adminDepartment')
   } catch (error) {
     console.log(error)
-  }
-}
+  }  
+}  
 
 // department controller start
 
@@ -188,8 +299,8 @@ exports.addCompany=async(req,res)=>{
     return res.render('./admin/companyProfile.ejs')
   } catch (error) {
     console.log(error)
-  }
-}
+  }  
+}  
 
 exports.saveAddCompany=async(req,res)=>{
   try {
@@ -214,17 +325,17 @@ exports.saveAddCompany=async(req,res)=>{
         website:companyData.website,
         company_logo:companyData.company_logo,
         password:companyData.password,
-      })
+      })  
       console.log('new company Data--------->',newCompany)
       return res.redirect('/admin/admindashboard')
     }else{
       console.log('data not saved')
       return res.redirect('/admin/addCompany')
-    }
+    }  
   } catch (error) {
     console.log(error)
-  }
-}
+  }  
+}  
 
 exports.companyList=async(req,res)=>{
   try {
@@ -233,8 +344,8 @@ exports.companyList=async(req,res)=>{
     return res.render('./admin/companyList.ejs',{data:data})
   } catch (error) {
     console.log(error)
-  }
-}
+  }  
+}  
 
 exports.editCompany=async(req,res)=>{
   try {
@@ -242,27 +353,27 @@ exports.editCompany=async(req,res)=>{
     return res.render('./admin/editCompany.ejs',{findCompany:findCompany})
   } catch (error) {
     console.log(error)
-  }
-}
+  }  
+}  
 
 exports.editCompany1=async(req,res)=>{
   try {
     const newData=req.body
     const data=await companyModel.findOne({where:{id:req.params.id}})
     console.log('company post api----------->',data)
-    console.log('company post api----------->',req.body)
+    console.log('company post api1----------->',req.body)
     if (data) {
       console.log('this is company post api');
       const updateData = await companyModel.update(newData, { where: { id: req.params.id } })
-      return res.send('/admin/companyList',updateData)
-  }else{
+      return res.redirect('/admin/companyList')
+  }else{  
       console.log('data not submited')
       return res.redirect('/admin/companyList')
-  }
+  }    
   } catch (error) {
     console.log(error)
-  }
-}
+  }  
+}  
 
 
 // fin_years controller start
@@ -274,8 +385,8 @@ exports.fin_years=async(req,res)=>{
     return res.render('./admin/fin_years.ejs',{year_Data:year_Data})
   } catch (error) {
     console.log(error)
-  }
-}
+  }  
+}  
 
 exports.Save_fin_year=async(req,res)=>{
   try {
@@ -288,17 +399,17 @@ exports.Save_fin_year=async(req,res)=>{
         year_start_date:yearBody.year_start_date,
         year_end_date:yearBody.year_end_date,
 
-      })
+      })  
       console.log('finYear added;')
       return res.redirect('/admin/fin_years')
     }else{
       console.log('data not added')
       return res.send('data not added')
-    }
+    }  
   } catch (error) {
-  console.log(error)    
+  console.log(error)      
   }
-}
+}  
 
 exports.edit_fin_year=async(req,res)=>{
   try {
@@ -309,8 +420,8 @@ exports.edit_fin_year=async(req,res)=>{
     return res.render('./admin/edit_fin_year.ejs',{data:data,fin_year_data:fin_year_data})
   } catch (error) {
     console.log(error)
-  }
-}
+  }  
+}  
 
 
 exports.edit_fin_year1=async(req,res)=>{
@@ -320,22 +431,22 @@ exports.edit_fin_year1=async(req,res)=>{
     if (data) {
       const updateData = await fin_yearsModel.update(newData, { where: { id: req.params.id } })
       return res.redirect('/admin/fin_years')
-  }else{
+  }else{  
       console.log('data not submited')
       return res.redirect('/admin/fin_years')
-  }
+  }    
   } catch (error) {
     console.log(error)
-  }
-}
+  }  
+}  
 exports.Delete_fin_year=async(req,res)=>{
   try {
     const data=await fin_yearsModel.destroy({where:{id:req.params.id}})
     return res.redirect('/admin/fin_years')
   } catch (error) {
     console.log(error)
-  }
-}
+  }  
+}  
 // fin_years controller end
 
 
@@ -350,8 +461,8 @@ exports.g_jobpage=async(req,res)=>{
     return res.render('./general/jobTitle.ejs',{data:data})
   } catch (error) {
     console.log(error)
-  }
-}
+  }  
+}  
 
 exports.g_jobAdd=async(req,res)=>{
   try {
@@ -359,16 +470,16 @@ exports.g_jobAdd=async(req,res)=>{
     if(!data){
       const addJob=await g_jobModel.create({
         job_title_name:req.body.job_title_name
-      })
+      })  
       return res.redirect('/admin/g_jobpage')
     }else{
       console.log('job not added')
       return res.send("data already in database or some other problem")
-    }
+    }  
   } catch (error) {
     console.log(error)
-  }
-}
+  }  
+}  
 
 exports.jobTItleEdit=async(req,res)=>{
   try {
@@ -377,8 +488,8 @@ exports.jobTItleEdit=async(req,res)=>{
     return res.render('./general/jobTItleEdit.ejs',{data:data,editJob:editJob})
   } catch (error) {
     console.log(error)
-  }
-}
+  }  
+}  
 
 exports.g_jobEdit=async(req,res)=>{
   try {
@@ -387,22 +498,22 @@ exports.g_jobEdit=async(req,res)=>{
     if (data) {
       const updateData = await g_jobModel.update(newData, { where: { id: req.params.id } })
       return res.redirect('/admin/g_jobpage')
-  }else{
+  }else{  
       console.log('data not submited')
       return res.redirect('/admin/g_jobpage')
-  }
+  }    
   } catch (error) {
     console.log(error)
-  }
-}
+  }  
+}  
 exports.Delete_jobtitles=async(req,res)=>{
   try {
     const data=await g_jobModel.destroy({where:{id:req.params.id}})
     return res.redirect('/admin/g_jobpage')
   } catch (error) {
     console.log(error)
-  }
-}
+  }  
+}  
 
 // job controller end
 
@@ -418,8 +529,8 @@ exports.m_industry=async(req,res)=>{
     return res.render('./general/industry.ejs',{data:data})
   } catch (error) {
     console.log(error)    
-  }
-}
+  }  
+}  
 
 exports.Save_m_industry=async(req,res)=>{
   try {
@@ -427,16 +538,16 @@ exports.Save_m_industry=async(req,res)=>{
     if(!data){
       const addIndustry=await g_industryModel.create({
         industry_name:req.body.industry_name
-      })
+      })  
       return res.redirect('/admin/m_industry')
     }else{
       console.log('industry not added')
       return res.send("data already in database or some other problem")
-    }
+    }  
   } catch (error) {
     console.log(error)
-  }
-}
+  }  
+}  
 
 exports.edit_m_industry=async(req,res)=>{
   try {
@@ -445,8 +556,8 @@ exports.edit_m_industry=async(req,res)=>{
     return res.render('./general/industryEdit.ejs',{data:data,editInd:editInd})
   } catch (error) {
     console.log(error)
-  }
-}
+  }  
+}  
 
 exports.g_industryEdit=async(req,res)=>{
   try {
@@ -455,14 +566,14 @@ exports.g_industryEdit=async(req,res)=>{
     if (data) {
       const updateData = await g_industryModel.update(newData, { where: { id: req.params.id } })
       return res.redirect('/admin/m_industry')
-  }else{
+  }else{  
       console.log('data not submited')
       return res.redirect('/admin/m_industry')
-  }
+  }    
   } catch (error) {
     console.log(error)
-  }
-}
+  }  
+}  
 
 exports.Delete_m_industry=async(req,res)=>{
   try {
@@ -470,8 +581,8 @@ exports.Delete_m_industry=async(req,res)=>{
     return res.redirect('/admin/m_industry')
   } catch (error) {
     console.log(error)
-  }
-}
+  }  
+}  
 
 // advert_ref controller end
 
@@ -486,8 +597,8 @@ exports.m_skillPage=async(req,res)=>{
     return res.render('./general/skillsPage.ejs',{data:data})
   } catch (error) {
     console.log(error)    
-  }
-}
+  }  
+}  
 
 exports.Save_m_skills=async(req,res)=>{
   try {
@@ -496,16 +607,16 @@ exports.Save_m_skills=async(req,res)=>{
     if(!data){
       const addSkill=await skillModel.create({
         skill_name:req.body.skill_name
-      })
+      })  
       return res.redirect('/admin/m_skillPage')
     }else{
       console.log('industry not added')
       return res.send("data already in database or some other problem")
-    }
+    }  
   } catch (error) {
     console.log(error)
-  }
-}
+  }  
+}  
 
 exports.edit_m_skills=async(req,res)=>{
   try {
@@ -514,8 +625,8 @@ exports.edit_m_skills=async(req,res)=>{
     return res.render('./general/skillPageEdit.ejs',{data:data,skill:skill})
   } catch (error) {
     console.log(error)
-  }
-}
+  }  
+}  
 
 exports.edit_m_skills1=async(req,res)=>{
   try {
@@ -524,14 +635,14 @@ exports.edit_m_skills1=async(req,res)=>{
     if (data) {
       const updateData = await skillModel.update(newData, { where: { id: req.params.id } })
       return res.redirect('/admin/m_skillPage')
-  }else{
+  }else{  
       console.log('data not submited')
       return res.redirect('/admin/m_skillPage')
-  }
+  }    
   } catch (error) {
     console.log(error)
-  }
-}
+  }  
+}  
 
 exports.Delete_m_skills=async(req,res)=>{
   try {
@@ -539,8 +650,8 @@ exports.Delete_m_skills=async(req,res)=>{
     return res.redirect('/admin/m_skillPage')
   } catch (error) {
     console.log(error)
-  }
-}
+  }  
+}  
 
 // Skill controller end
 
@@ -556,8 +667,8 @@ exports.ad_ref_page=async(req,res)=>{
     return res.render('./general/advert_ref.ejs',{data:data})
   } catch (error) {
     console.log(error)    
-  }
-}
+  }  
+}  
 
 exports.Save_m_advert_ref=async(req,res)=>{
   try {
@@ -566,16 +677,16 @@ exports.Save_m_advert_ref=async(req,res)=>{
     if(!data){
       const addAdvRef=await advert_refModel.create({
         ad_ref_name:req.body.ad_ref_name
-      })
+      })  
       return res.redirect('/admin/ad_ref_page')
     }else{
       console.log('industry not added')
       return res.send("data already in database or some other problem")
-    }
+    }  
   } catch (error) {
     console.log(error)
-  }
-}
+  }  
+}  
 
 exports.edit_m_advertPage=async(req,res)=>{
   try {
@@ -584,8 +695,8 @@ exports.edit_m_advertPage=async(req,res)=>{
     return res.render('./general/advPageEdit.ejs',{data:data,adv:adv})
   } catch (error) {
     console.log(error)
-  }
-}
+  }  
+}  
 
 exports.edit_m_advert_ref=async(req,res)=>{
   try {
@@ -594,14 +705,14 @@ exports.edit_m_advert_ref=async(req,res)=>{
     if (data) {
       const updateData = await advert_refModel.update(newData, { where: { id: req.params.id } })
       return res.redirect('/admin/ad_ref_page')
-  }else{
+  }else{  
       console.log('data not submited')
       return res.redirect('/admin/ad_ref_page')
-  }
+  }    
   } catch (error) {
     console.log(error)
-  }
-}
+  }  
+}  
 
 exports.Delete_m_advert_ref=async(req,res)=>{
   try {
@@ -609,8 +720,8 @@ exports.Delete_m_advert_ref=async(req,res)=>{
     return res.redirect('/admin/ad_ref_page')
   } catch (error) {
     console.log(error)
-  }
-}
+  }  
+}  
 
 
 // advert_ref controller end
@@ -638,8 +749,8 @@ exports.adminEmployee=async(req,res)=>{
     return res.render('./admin/adminEmployee.ejs',{EmpData:EmpData})
   } catch (error) {
     console.log(error)
-  }
-}
+  }  
+}  
 
 exports.adminAddEmployee=async(req,res)=>{
   try {
@@ -647,8 +758,8 @@ exports.adminAddEmployee=async(req,res)=>{
     return res.render('./admin/adminAddEmployee.ejs',{EmpData:EmpData})
   } catch (error) {
     console.log(error)
-  }
-}
+  }  
+}  
 
 exports.AdminAddEmployee1=async(req,res)=>{
   try {
@@ -668,26 +779,29 @@ exports.AdminAddEmployee1=async(req,res)=>{
         role:employeeBody.role,
         password:employeeBody.password,
         image_url:employeeBody.image_url,
-      })
+      })  
+      // const Login_data=await loginModel.create({
+      //   email:email
+      // })
       console.log('employeeData--------->',data)
       return res.redirect('/admin/adminAddEmployee')
     }else{
       console.log('data already added')
       return res.redirect('/admin/adminAddEmployee')
-    }
+    }  
   } catch (error) {
     console.log(error)
-  }
-}
+  }  
+}  
 
 exports.employeeView=async(req,res)=>{
   try {
     const data=await EmployeeModel.findOne({where:{id:req.params.id}})
-    return res.render('/.general/employeeView.ejs',{data:data})
+    return res.render('./general/employeeView.ejs',{data:data})
   } catch (error) {
     console.log(error)
-  }
-}
+  }  
+}  
 
 // Employee controller start
 
@@ -700,27 +814,8 @@ exports.candidateList=async(req,res)=>{
     return res.render('./general/candidateList.ejs')
   } catch (error) {
     console.log(error)
-  }
-}
-
-
-
-
-exports.clientList=async(req,res)=>{
-  try {
-   return res.render('./general/clientList.ejs')
-  } catch (error) {
-    console.log(error)
-  }
-}
-
-
-
-
-
-
-
-
+  }  
+}  
 
 
 

@@ -12,7 +12,7 @@ module.exports=(sequelize,DataTypes)=>{
             allowNull: false, 
         },
         role:{
-            type:Sequelize.ENUM('Supar Admin',"Admin","Candidate","Client")
+            type:Sequelize.ENUM('Super Admin',"Admin","Candidate","Client")
         }
     });
     return loginModel

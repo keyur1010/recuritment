@@ -41,8 +41,27 @@ db.skillModel=require('../app/model/skillModel')(sequelize,DataTypes)
 db.advert_refModel=require('../app/model/advert_refModel')(sequelize,DataTypes)
 db.EmployeeModel=require('../app/model/EmployeeModel')(sequelize,DataTypes)
 
-// db.userModel.hasOne(db.hrModel,{foreignKey:"user_id",as:'users'})
-// db.hrModel.belongsTo(db.userModel, { foreignKey: "user_id",as:'users' })
+
+
+
+
+
+
+//associate
+
+
+db.loginModel.hasOne(db.clientModel,{foreignKey:"login_id"})
+db.clientModel.belongsTo(db.loginModel, { foreignKey: "login_id"})
+
+
+
+
+
+
+
+
+
+
 
 
 db.sequelize.sync({force:false,alter:true}).then(()=>{

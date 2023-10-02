@@ -1,0 +1,355 @@
+<%- include('../main/header.ejs')%>
+<%- include('../main/sidebar.ejs')%>
+        <div class="content-body">
+            <div class="container-fluid">
+                
+                
+                <div class="row page-titles">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item active"><a href="javascript:void(0)">Users</a></li>
+                        <li class="breadcrumb-item"><a href="javascript:void(0)">View Profile</a></li>
+                    </ol>
+                </div>
+                <!-- row -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="profile card card-body px-3 pt-3 pb-0">
+                            <div class="profile-head">
+                                <div class="photo-content">
+                                    <div class="cover-photo rounded"></div>
+                                </div>
+                                <div class="profile-info">
+                                  
+                                    <div class="profile-details">
+                                        <div class="profile-name px-3 pt-2">
+                                            <h4 class="text-primary mb-0"><%=data.fname %> <%= data.lname %></h4>
+                                            <p><%=data.contact%></p>
+                                        </div>
+                                        <div class="profile-email px-2 pt-2">
+                                            <h4 class="text-muted mb-0"><%=data.email %></h4>
+                                            <p>Email</p>
+                                        </div>
+                                        <div class="dropdown ms-auto">
+                                            <a href="#" class="btn btn-primary light sharp" data-bs-toggle="dropdown" aria-expanded="true"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="18px" height="18px" viewbox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"></rect><circle fill="#000000" cx="5" cy="12" r="2"></circle><circle fill="#000000" cx="12" cy="12" r="2"></circle><circle fill="#000000" cx="19" cy="12" r="2"></circle></g></svg></a>
+                                            <ul class="dropdown-menu dropdown-menu-end">
+                                                <li class="dropdown-item"><i class="fa fa-user-circle text-primary me-2"></i> View profile</li>
+                                                <li class="dropdown-item"><i class="fa fa-users text-primary me-2"></i> Add to btn-close friends</li>
+                                                <li class="dropdown-item"><i class="fa fa-plus text-primary me-2"></i> Add to group</li>
+                                                <li class="dropdown-item"><i class="fa fa-ban text-primary me-2"></i> Block</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xl-4">
+                        <div class="row">
+                            <div class="col-xl-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="profile-statistics">
+                                            <div class="text-center">
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <h3 class="m-b-0">150</h3><span>Follower</span>
+                                                    </div>
+                                                    <div class="col">
+                                                        <h3 class="m-b-0">140</h3><span>Place Stay</span>
+                                                    </div>
+                                                    <div class="col">
+                                                        <h3 class="m-b-0">45</h3><span>Reviews</span>
+                                                    </div>
+                                                </div>
+                                                <div class="mt-4">
+                                                    <a href="javascript:void(0);" class="btn btn-primary mb-1 me-1">Follow</a> 
+                                                    <a href="javascript:void(0);" class="btn btn-primary mb-1" data-bs-toggle="modal" data-bs-target="#sendMessageModal">Send Message</a>
+                                                </div>
+                                            </div>
+                                            <!-- Modal -->
+                                            <div class="modal fade" id="sendMessageModal">
+                                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title">Send Message</h5>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <form class="comment-form">
+                                                                <div class="row"> 
+                                                                    <div class="col-lg-6">
+                                                                        <div class="mb-3">
+                                                                            <label class="text-black font-w600 form-label">Name <span class="required">*</span></label>
+                                                                            <input type="text" class="form-control" value="Author" name="Author" placeholder="Author">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-lg-6">
+                                                                        <div class="mb-3">
+                                                                            <label class="text-black font-w600 form-label">Email <span class="required">*</span></label>
+                                                                            <input type="text" class="form-control" value="Email" placeholder="Email" name="Email">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-lg-12">
+                                                                        <div class="mb-3">
+                                                                            <label class="text-black font-w600 form-label">Comment</label>
+                                                                            <textarea rows="8" class="form-control" name="comment" placeholder="Comment"></textarea>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-lg-12">
+                                                                        <div class="mb-3 mb-0">
+                                                                            <input type="submit" value="Post Comment" class="submit btn btn-primary" name="submit">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="profile-blog">
+                                            <h5 class="text-primary d-inline">Today Highlights</h5>
+                                            <img src="images/profile/1.jpg" alt="" class="img-fluid mt-4 mb-4 w-100">
+                                            <h4><a href="post-details.html" class="text-black">Darwin Creative Agency Theme</a></h4>
+                                            <p class="mb-0">A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="profile-interest">
+                                            <h5 class="text-primary d-inline">Interest</h5>
+                                            <div class="row mt-4 sp4" id="lightgallery">
+                                                <a href="images/profile/2.jpg" data-exthumbimage="images/profile/2.jpg" data-src="images/profile/2.jpg" class="mb-1 col-lg-4 col-xl-4 col-sm-4 col-6">
+                                                    <img src="images/profile/2.jpg" alt="" class="img-fluid">
+                                                </a>
+                                                <a href="images/profile/3.jpg" data-exthumbimage="images/profile/3.jpg" data-src="images/profile/3.jpg" class="mb-1 col-lg-4 col-xl-4 col-sm-4 col-6">
+                                                    <img src="images/profile/3.jpg" alt="" class="img-fluid">
+                                                </a>
+                                                <a href="images/profile/4.jpg" data-exthumbimage="images/profile/4.jpg" data-src="images/profile/4.jpg" class="mb-1 col-lg-4 col-xl-4 col-sm-4 col-6">
+                                                    <img src="images/profile/4.jpg" alt="" class="img-fluid">
+                                                </a>
+                                                <a href="images/profile/3.jpg" data-exthumbimage="images/profile/3.jpg" data-src="images/profile/3.jpg" class="mb-1 col-lg-4 col-xl-4 col-sm-4 col-6">
+                                                    <img src="images/profile/3.jpg" alt="" class="img-fluid">
+                                                </a>
+                                                <a href="images/profile/4.jpg" data-exthumbimage="images/profile/4.jpg" data-src="images/profile/4.jpg" class="mb-1 col-lg-4 col-xl-4 col-sm-4 col-6">
+                                                    <img src="images/profile/4.jpg" alt="" class="img-fluid">
+                                                </a>
+                                                <a href="images/profile/2.jpg" data-exthumbimage="images/profile/2.jpg" data-src="images/profile/2.jpg" class="mb-1 col-lg-4 col-xl-4 col-sm-4 col-6">
+                                                    <img src="images/profile/2.jpg" alt="" class="img-fluid">
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="profile-news">
+                                            <h5 class="text-primary d-inline">Our Latest News</h5>
+                                            <div class="media pt-3 pb-3">
+                                                <img src="images/profile/5.jpg" alt="image" class="me-3 rounded" width="75">
+                                                <div class="media-body">
+                                                    <h5 class="m-b-5"><a href="post-details.html" class="text-black">Collection of textile samples</a></h5>
+                                                    <p class="mb-0">I shared this on my fb wall a few months back, and I thought.</p>
+                                                </div>
+                                            </div>
+                                            <div class="media pt-3 pb-3">
+                                                <img src="images/profile/6.jpg" alt="image" class="me-3 rounded" width="75">
+                                                <div class="media-body">
+                                                    <h5 class="m-b-5"><a href="post-details.html" class="text-black">Collection of textile samples</a></h5>
+                                                    <p class="mb-0">I shared this on my fb wall a few months back, and I thought.</p>
+                                                </div>
+                                            </div>
+                                            <div class="media pt-3 pb-3">
+                                                <img src="images/profile/7.jpg" alt="image" class="me-3 rounded" width="75">
+                                                <div class="media-body">
+                                                    <h5 class="m-b-5"><a href="post-details.html" class="text-black">Collection of textile samples</a></h5>
+                                                    <p class="mb-0">I shared this on my fb wall a few months back, and I thought.</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-8">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="profile-tab">
+                                    <div class="custom-tab-1">
+                                        <ul class="nav nav-tabs">
+                                            <li class="nav-item"><a href="#myprofile" data-bs-toggle="tab" class="nav-link active show">Basic Info</a>
+                                            </li>
+                                             <li class="nav-item"> <a href="#password" data-bs-toggle="tab" class="nav-link "> Change Password</a> </li>
+                                            
+                                        </ul>
+                                        <div class="tab-content">
+                                            <div id="myprofile" class="tab-pane fade active show">
+                                                <div class="my-post-content pt-3">
+                                                    
+                                                    <form id="basic-form" class="row" action="Update" method="post">
+
+
+                                            <div class="form-group col-md-4 m-t-10">
+                                                <label>Username</label>
+                                                <input type="text" class="form-control form-control-line" name="em_username" value="<%=data.em_username%>" readonly minlength="3" required>
+                                            </div>
+
+                                            <div class="form-group col-md-4 m-t-10">
+                                                <label>First Name</label>
+                                                <input type="text" class="form-control form-control-line" placeholder="Your first name" name="fname" value="<%=data.fname%>"  required>
+                                            </div>
+                                            <div class="form-group col-md-4 m-t-10">
+                                                <label>Last Name </label>
+                                                <input type="text" id="" name="lname" class="form-control form-control-line" value="<%=data.lname%>" placeholder="Your last name" >
+                                            </div>
+
+                                            <div class="form-group col-md-4 m-t-10">
+                                                <label>Status</label>
+                                                <select name="status" class="form-control custom-select" required>
+                                                  <% if (data.status === true) { %>
+                                                    <option value="ACTIVE" selected>ACTIVE</option>
+                                                    <option value="INACTIVE">INACTIVE</option>
+                                                  <% } else { %>
+                                                    <option value="ACTIVE">ACTIVE</option>
+                                                    <option value="INACTIVE" selected>INACTIVE</option>
+                                                  <% } %>
+                                                </select>
+                                              </div>
+
+
+                                            <!-- <div class="form-group col-md-4 m-t-10">
+                                                <label>Department</label>
+                                                <select class="form-control" name="dep_id" id="dep_id" required>
+                                                    <option value="">-Select Department-</option>
+                                                    <?php foreach ($departments as $key => $value) : ?>
+                                                        <option value="<?php echo $value->dep_id ?>" <?php if ($basic->dep_id == $value->dep_id) : ?> selected <?php endif ?>><?php echo $value->department_name ?></option>
+                                                    <?php endforeach ?>
+                                                </select>
+                                            </div> -->
+
+                                            <div class="form-group col-md-3 ">
+                                                <label>Have Reporting Authoroty</label><br>
+                                                <input type="checkbox"  name="is_report_auth" <?php if ($basic->is_report_auth == 'Y') { echo "checked";
+                                                 } ?> value="Y">
+                                            </div>
+
+                                            <div class="form-group col-md-4 m-t-20">
+                                                <label>Assign Reporting Manager <span class="text-primary">(Leave Empty If Not Eligible)</span></label>
+                                                <select class="form-control" name="manager_id" id="manager_id">
+                                                    <option value="">-Select Reporting Manager-</option>
+                                                    <?php foreach ($gen_managers as $key => $value) : ?>
+                                                        <option value="<?php echo $value->em_id ?>" <?php if ($value->em_id == $basic->manager_id) : ?> selected <?php endif ?>><?php echo $value->first_name . ' ' . $value->last_name ?></option>
+                                                    <?php endforeach ?>
+                                                </select>
+                                            </div>
+
+                                            <div class="form-group col-md-4 m-t-10">
+                                                <label>Contact Number </label>
+                                                <input type="text" class="form-control" placeholder="" name="contact" <?php if ($this->session->userdata('user_type') == 'EMPLOYEE') { ?> readonly <?php } ?> value="<?php echo $basic->em_phone; ?>" minlength="10" maxlength="15">
+                                            </div>
+                                            <div class="form-group col-md-4 m-t-10">
+                                                <label>Address</label>
+                                                <textarea class="form-control" placeholder="" name="em_address" <?php if ($this->session->userdata('user_type') == 'EMPLOYEE') { ?> readonly <?php } ?>><?php echo $basic->em_address; ?></textarea>
+
+                                            </div>
+                                            <div class="form-group col-md-4 m-t-10">
+                                                <label>Email </label>
+                                                <input type="email" id="email" name="email" class="form-control" placeholder="Ex- name@gmail.com" value="<?php echo $basic->em_email ?>">
+                                            </div>
+                                            <div class="form-group col-md-4 m-t-10">
+                                                <label>Role*</label>
+                                                <select name="role" class="form-control custom-select" required>
+                                                    <option value="<?php echo $basic->em_role ?>"><?php echo $basic->em_role ?></option>
+                                                    <option value="ADMIN">ADMIN</option>
+                                                </select>
+                                            </div>
+
+
+                                            <div class="form-group col-md-12 m-t-10">
+                                                <?php if (!empty($basic->em_image)) { ?>
+                                                    <img src="<?php echo base_url(); ?>assets/images/users/<?php echo $basic->em_image; ?>" class="img-circle" width="150" />
+                                                <?php } else { ?>
+                                                    <img src="<?php echo base_url(); ?>assets/images/users/user.png" class="img-circle" width="150" alt="<?php echo $basic->first_name ?>" title="<?php echo $basic->first_name ?>" />
+                                                <?php } ?>
+                                                <label>Image </label>
+                                                <input type="file" <?php if ($this->session->userdata('user_type') == 'EMPLOYEE') { ?> readonly <?php } ?> name="image_url" class="form-control" value="">
+                                            </div>
+                                            <?php if ($this->session->userdata('user_type') == 'EMPLOYEE') { ?>
+                                            <?php } else { ?>
+                                                <div class="form-actions col-md-12">
+                                                    <input type="hidden" name="emid" value="<?php echo $basic->em_id; ?>">
+                                                    <button type="submit" class="btn btn-info btn-sm"> <i class="fa fa-check"></i> Update</button>
+                                                    <button type="button" class="btn btn-info btn-sm">Cancel</button>
+                                                </div>
+                                            <?php } ?>
+                                        </form>
+                                                   
+                                                </div>
+                                            </div>
+                                            <div id="password1" class="tab-pane fade">
+                                                <form class="row" action="Reset_Password_Hr" method="post" enctype="multipart/form-data">
+                                                <div class="form-group col-md-6 mt-4">
+                                                    <label>Password</label>
+                                                    <input type="text" class="form-control" name="new1" value="" required minlength="6">
+                                                </div>
+                                                <div class="form-group col-md-6 mt-4">
+                                                    <label>Confirm Password</label>
+                                                    <input type="text" id="" name="new2" class="form-control " required minlength="6">
+                                                </div>
+                                                <?php if ($this->session->userdata('user_type') == 'EMPLOYEE') { ?>
+                                                <?php } else { ?>
+                                                    <div class="form-actions col-md-12">
+                                                        <input type="hidden" name="emid" value="<?php echo $basic->em_id; ?>">
+                                                        <button type="submit" class="btn btn-primary btn-sm pull-right"> <i class="fa fa-check"></i> Save</button>
+                                                    </div>
+                                                <?php } ?>
+                                            </form>
+                                            </div>
+
+                                    <div id="password" class="tab-pane fade">
+                                <form class="row mt-4" action="Reset_Password" method="post" enctype="multipart/form-data">
+                                <div class="form-group col-md-6 m-t-20">
+                                    <label>Old Password</label>
+                                    <input type="text" class="form-control" name="old" value="" placeholder="old password" required minlength="6">
+                                </div>
+                                <div class="form-group col-md-6 m-t-20">
+                                    <label>Password</label>
+                                    <input type="text" class="form-control" name="new1" value="" required minlength="6">
+                                </div>
+                                <div class="form-group col-md-6 m-t-20">
+                                    <label>Confirm Password</label>
+                                    <input type="text" id="" name="new2" class="form-control " required minlength="6">
+                                </div>
+                                <div class="form-actions col-md-12">
+                                    <input type="hidden" name="emid" value="<?php echo $basic->em_id; ?>">
+                                    <button type="submit" class="btn btn-info pull-right"> <i class="fa fa-check"></i> Save</button>
+                                </div>
+                            </form>
+                                            </div>
+
+                                            
+                                        </div>
+                                    </div>
+                                   
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+<%- include('../main/footer.ejs')%>

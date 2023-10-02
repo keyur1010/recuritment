@@ -50,7 +50,7 @@
                     id="type"
                     class="default-select form-control wide mb-2"
                     required
-                    >
+                  >
                     <option value="">-Select-</option>
                     <option value="Head Office">Head Office</option>
                     <option value="Subsidary">Subsidary</option>
@@ -199,7 +199,7 @@
                     <input
                       class="form-check-input"
                       type="radio"
-                      name="payroll_subsribe "
+                      name="payroll_subsribe"
                       value="Y"
                       required
                     />
@@ -209,13 +209,14 @@
                     <input
                       class="form-check-input"
                       type="radio"
-                      name="payroll_subsribe "
+                      name="payroll_subsribe"
                       value="N"
                       required
                     />
                     <label class="form-check-label"> NO </label>
                   </div>
                 </div>
+
                 <div class="form-group col-md-4">
                   <label>Employment contract supplied if no payroll</label>
                   <div class="form-check">
@@ -501,8 +502,15 @@
 
               <hr />
               <div class="form-group col-md-12">
-                <button style="float: right;" id="btnSubmit"  onClick="return validateForm()"    type="submit" class="btn btn-primary btn-sm">Save Client</button>
-               
+                <button
+                  style="float: right"
+                  id="btnSubmit"
+                  onClick="return validateForm()"
+                  type="submit"
+                  class="btn btn-primary btn-sm"
+                >
+                  Save Client
+                </button>
               </div>
             </form>
           </div>
@@ -513,8 +521,6 @@
 </div>
 
 <%- include( '../main/footer.ejs' ) %>
-
-
 
 <script>
   function fillstatecode() {
@@ -633,20 +639,19 @@
   }
 </script>
 <script>
-  $(document).ready(function() {
-      $('#contract_mobile').on('input', function() {
-          // Get the input value
-          var inputValue = $(this).val();
-          
-          // Use a regular expression to allow only numeric input
-          var numericInput = inputValue.replace(/\D/g, '');
-          
-          // Update the input field with the numeric value
-          $(this).val(numericInput);
-      });
+  $(document).ready(function () {
+    $("#contract_mobile").on("input", function () {
+      // Get the input value
+      var inputValue = $(this).val();
+
+      // Use a regular expression to allow only numeric input
+      var numericInput = inputValue.replace(/\D/g, "");
+
+      // Update the input field with the numeric value
+      $(this).val(numericInput);
+    });
   });
-  </script>
-  
+</script>
 
 <!--   <script>
     $(document).ready(function() {
