@@ -44,9 +44,7 @@ module.exports=(sequelize,DataTypes)=>{
         client_logo:{
             type:DataTypes.STRING
         },
-        img_url:{
-            type:DataTypes.STRING
-        },
+        
         subscrption_level_agreed:{
             type:DataTypes.STRING
         },

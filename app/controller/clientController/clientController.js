@@ -12,3 +12,10 @@ exports.clientPage = async (req, res) => {
     console.log(error);
   }
 };
+exports.clientLogin=async(req,res)=>{
+  try {
+      const data=await client
+  } catch (error) {
+    
+  }
+}

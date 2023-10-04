@@ -17,7 +17,7 @@
                            
                             <div class="card-body">
 
-                                <form class="row" method="post" action="/admin/editCompany1/<%= findCompany.id%>" >
+                                <form class="row" method="post" action="/admin/editCompany1/<%= findCompany.id%>"  enctype="multipart/form-data">
                                     <!-- <input type="hidden" value="<?php echo $findCompany->comp_id; ?>" name="comp_id"> -->
                                     <div class="form-group col-md-3 m-t-20">
                                         <label>Company Full Name</label>

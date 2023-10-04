@@ -63,7 +63,6 @@ db.clientModel.belongsTo(db.loginModel, { foreignKey: "login_id"})
 
 
 
-
 db.sequelize.sync({force:false,alter:true}).then(()=>{
   console.log('THIS IS SYNC')
 })

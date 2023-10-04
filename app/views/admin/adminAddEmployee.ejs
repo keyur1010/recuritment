@@ -19,7 +19,7 @@
                 </div>
                 <div class="card-body">
 
-                    <form class="row" method="post" action="/admin/AdminAddEmployee1">
+                    <form class="row" method="post" action="/admin/AdminAddEmployee1" enctype="multipart/form-data">
 
                         <div class="form-group col-md-3 ">
                             <label>First Name</label>
@@ -55,24 +55,24 @@
                             <label>Department</label>
                             <select class="form-control" name="dep_id" id="dep_id" >
                                 <option value="">-Select Department-</option>
-                                <!-- <?php foreach ($departments as $key => $value) : ?>
-                                    <option value="<?php echo $value->dep_id ?>"><?php echo $value->department_name ?></option>
-                                <?php endforeach ?> -->
+                                <% department.forEach(function(department,index){%>
+
+                                    <option value="<%=department.id %>"><%=department.department_name %></option>
+                                    <%}) %>
                             </select>
                         </div>
-
-                        <div class="form-group col-md-3 ">
+                        <div class="form-group form-check-lg ">
                             <label>Have Reporting Authoroty</label><br>
-                            <input type="checkbox" class="form-control" name="is_report_auth" value="Y">
+                            <input type="checkbox" class="" name="is_report_auth" value="Y">
                         </div>
 
                         <div class="form-group col-md-3 ">
                         <label>Assign Reporting Manager <span class="text-primary">(Leave Empty If Not Eligible)</span></label>
                         <select class="form-control" name="manager_id" id="manager_id">
                             <option value="">-Select Reporting Manager-</option>
-                            <!-- <?php foreach ($gen_managers as $key => $value) : ?>
-                                <option value="<?php echo $value->em_id ?>"><?php echo $value->first_name . ' ' . $value->last_name ?></option>
-                            <?php endforeach ?> -->
+                            <% employees.forEach(function(emp,index){%>
+                                <option value="<%=emp.id%>"><%=emp.fname%> <%= emp.lname %></option>
+                            <%}) %>
                         </select>
                         </div>
 
@@ -97,7 +97,7 @@
                 </div>
                 <div class="form-group col-md-3 ">
                     <label>Image </label>
-                    <input type="file" name="image_url" class="form-control" value="">
+                    <input type="file" name="image_url" class="form-control" >
                 </div>
 
                 <div class="form-actions col-md-12">

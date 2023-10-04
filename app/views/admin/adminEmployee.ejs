@@ -47,8 +47,8 @@
                                             </tr>
                                         </tfoot>
                                         <tbody>
+                                            <% EmpData.forEach(function(d,index){ %>
                                             <tr>
-                                                <% EmpData.forEach(function(d,index){ %>
 
                                                     <td><%=d.em_username %></td>
                                                     <td title="<%= d.fname + ' ' + d.lname %>"> <%= d.fname + ' ' + d.lname %></td>   
@@ -62,8 +62,8 @@
                                                             <a href="/admin/employeeView/<%= d.id %>" title="View"  class="btn btn-primary shadow btn-xs sharp me-1"><i class="fa fa-eye"></i></a>
                                                         </div>
                                                     </td>
-                                                    <% }) %>     
-                                            </tr>
+                                                </tr>
+                                                <% }) %>     
                                         </tbody>
                                     </table>
                                 </div>

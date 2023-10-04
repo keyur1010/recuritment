@@ -1,8 +1,13 @@
-const { Sequelize, DataTypes, DATE } = require("sequelize");
+const { Sequelize, DataTypes, DATE,Op } = require("sequelize");
 
 const db = require("../../../config/database");
-const { doesNotMatch } = require("assert");
+// const { doesNotMatch } = require("assert");
+const path=require('path')
+const fs = require('fs');
 const loginModel = require("../../model/loginModel");
+const { error } = require("console");
+const { errorMonitor } = require("events");
+require('../../../routes/adminRoutes')
 
 const clientModel = db.clientModel;
 const clientMultiModel=db.clientMultiModel
@@ -35,21 +40,32 @@ exports.newClient = async (req, res) => {
   }
 };
 exports.newClientCreate = async (req, res) => {
-    console.log("this is req.body ---------->",req.body)
+  console.log("this is req.body ---------->",req.body)
 
   try {
     const {
       client_name,type,registered_address,contract_name,contract_position,contract_number,contract_mobile,contract_email,website,industry,vat_number,registration_no,client_logo,img_url,subscrption_level_agreed,payroll_subsribe,employement_contract,service,services,finance_name,finance_position,finance_number,finance_mobile,finance_email,finance_credit_limit,finance_debit_details,billing_name,billing_position,billing_number,billing_mobile,billing_email,
     } = req.body;
-    const allServices={
-        service_name:req.body.service_name,
-        service_position:req.body.service_position,
-        service_number:req.body.service_number,
-        service_mobile:req.body.service_mobile,
-        service_email:req.body.service_email,
-        service_address:req.body.service_email,
-      }
+    const { originalname, filename } = req.file;
+
+    // Save the file details to your Sequelize model
+ 
+    // console.log('fileupload-------------------?>',fileRecord)
+
+      const allServices = {
+        service_name: req.body.service_name,
+        service_position: req.body.service_position,
+        service_number: req.body.service_number,
+        service_mobile: req.body.service_mobile,
+        service_email: req.body.service_email,
+        service_address: req.body.service_address, // Corrected property name
+      };
+      
       const serviceDataJSON = JSON.stringify(allServices);
+      // const clientLogo = req.file;
+
+      // console.log("this ---------->",serviceDataJSON);
+
       const insertOn=new Date()
     const data = await clientModel.create({
       client_name: client_name,
@@ -64,7 +80,7 @@ exports.newClientCreate = async (req, res) => {
       industry: industry,
       vat_number: vat_number,
       registration_no: registration_no,
-      client_logo: client_logo,
+      client_logo:  filename,
       img_url: img_url,
       subscrption_level_agreed: subscrption_level_agreed,
       payroll_subsribe: payroll_subsribe,
@@ -82,15 +98,13 @@ exports.newClientCreate = async (req, res) => {
       billing_number: billing_number,
       billing_mobile: billing_mobile,
       billing_email: billing_email,
-      services:serviceDataJSON,
+      services:allServices,
       insertOn:insertOn,
-      insertBy:req.session.user.id,
-      // updateOn:updateON,
-      // updateBy:updateBy,
-      // approveOn:approveON,
-      // approveBy:approveBy,
+      // insertBy:req.session.user.id,
+    
     });
     // console.log("data---------->", data);
+    
     
     return res.redirect('/admin/clientList');
   } catch (error) {
@@ -115,9 +129,9 @@ exports.clientEdit=async(req,res)=>{
   try {
     const data=await clientModel.findOne({where:{id:req.params.id}})
     console.log('data-------------------------->',data)
-    const service_data=JSON.parse(data.dataValues.services)
-    console.log(service_data)
-    const json_data=JSON.parse(service_data)
+    const json_data=JSON.parse(data.dataValues.services)
+    // console.log(service_data)
+    // const json_data=JSON.parse(service_data)
     console.log(json_data)
       
       console.log('data',json_data)
@@ -171,11 +185,53 @@ exports.approveBtn=async(req,res)=>{
 
 exports.clientEdit1=async(req,res)=>{
   try {
-    const newBody=req.body
+    const {client_name,type,registered_address,contract_name,contract_position,contract_number,contract_mobile,contract_email,website,industry,vat_number,registration_no,client_logo,img_url,subscrption_level_agreed,payroll_subsribe,employement_contract,service,services,finance_name,finance_position,finance_number,finance_mobile,finance_email,finance_credit_limit,finance_debit_details,billing_name,billing_position,billing_number,billing_mobile,billing_email,} = req.body;
+    if(req.file){
+      const {filename,originalname}=req.file
+      const allServices = {
+        service_name: req.body.service_name,
+        service_position: req.body.service_position,
+        service_number: req.body.service_number,
+        service_mobile: req.body.service_mobile,
+        service_email: req.body.service_email,
+        service_address: req.body.service_address, // Corrected property name
+      };
+      
+      const serviceDataJSON = JSON.stringify(allServices);
+      const newBody={
+        client_name: client_name,
+      type: type,
+      registered_address: registered_address,
+      contract_name: contract_name,
+      contract_position: contract_position,
+      contract_number: contract_number,
+      contract_mobile: contract_mobile,
+      contract_email: contract_email,
+      website: website,
+      industry: industry,
+      vat_number: vat_number,
+      registration_no: registration_no,
+      client_logo:  filename,
+      img_url: img_url,
+      subscrption_level_agreed: subscrption_level_agreed,
+      payroll_subsribe: payroll_subsribe,
+      employement_contract: employement_contract,
+      service: service,
+      
+      }
     const data=await clientModel.findOne({where:{id:req.params.id}})
     console.log('client edit 1------------->',data)
     const updateForm1=await clientModel.update(newBody,{ where: { id: req.params.id } })
     return res.redirect(`/admin/clientEdit/${req.params.id}`)
+    }
+    else{
+
+      const newBody=req.body
+      const data=await clientModel.findOne({where:{id:req.params.id}})
+      console.log('client edit 1------------->',data)
+      const updateForm1=await clientModel.update(newBody,{ where: { id: req.params.id } })
+      return res.redirect(`/admin/clientEdit/${req.params.id}`)
+    }
   } catch (error) {
     console.log(error)
   }
@@ -305,6 +361,7 @@ exports.addCompany=async(req,res)=>{
 exports.saveAddCompany=async(req,res)=>{
   try {
     const companyData=req.body
+    const {originalname,filename}=req.file
     const data=await companyModel.findOne({where:{email:companyData.email}})
     if(!data){
       const newCompany=await companyModel.create({
@@ -323,7 +380,7 @@ exports.saveAddCompany=async(req,res)=>{
         gst_no:companyData.gst_no,
         pan_no:companyData.pan_no,
         website:companyData.website,
-        company_logo:companyData.company_logo,
+        company_logo:filename,
         password:companyData.password,
       })  
       console.log('new company Data--------->',newCompany)
@@ -339,7 +396,7 @@ exports.saveAddCompany=async(req,res)=>{
 
 exports.companyList=async(req,res)=>{
   try {
-    const data=await companyModel.findAll() 
+    const data=await companyModel.findAll({}) 
     console.log("companyList---------->",data)
     return res.render('./admin/companyList.ejs',{data:data})
   } catch (error) {
@@ -358,18 +415,68 @@ exports.editCompany=async(req,res)=>{
 
 exports.editCompany1=async(req,res)=>{
   try {
-    const newData=req.body
-    const data=await companyModel.findOne({where:{id:req.params.id}})
-    console.log('company post api----------->',data)
-    console.log('company post api1----------->',req.body)
-    if (data) {
-      console.log('this is company post api');
-      const updateData = await companyModel.update(newData, { where: { id: req.params.id } })
-      return res.redirect('/admin/companyList')
-  }else{  
-      console.log('data not submited')
-      return res.redirect('/admin/companyList')
-  }    
+    const{company_name,shrtname,proprietor,phone,phone2,email,email2,pin_code,place,state,state_code,company_address,gst_applicable,address,gst_no,pan_no,website,password,wp_api_key,distance_api_key,smtp_host,smtp_port,smtp_sender_id,smtp_password,smtp_secure,smtp_name,default_cc_mailid}=req.body
+      if(req.file){
+        const{filename,originalname}=req.file
+        const newData={
+        company_name:company_name,
+        shrtname:shrtname,
+        proprietor:proprietor,
+        phone:phone,
+        phone2:phone2,
+        email:email,
+        email2:email2,
+        state:state,
+        state_code:state_code,
+        address:address,
+        company_logo:filename,
+        gst_applicable:gst_applicable,
+        address:address,
+        gst_no:gst_no,
+        pan_no:pan_no,
+        website:website,
+        password:password,
+        wp_api_key:wp_api_key,
+        distance_api_key:distance_api_key,
+        smtp_host:smtp_host,
+        smtp_port:smtp_port,
+        smtp_sender_id:smtp_sender_id,
+        smtp_password:smtp_password,
+        smtp_secure:smtp_secure,
+        smtp_name:smtp_name,
+        default_cc_mailid:default_cc_mailid,
+        }
+        const data=await companyModel.findOne({where:{id:req.params.id}})
+        console.log('company post api----------->',data)
+        console.log('company post api1----------->',req.body)
+        if (data) {
+          console.log('this is company post api');
+          const updateData = await companyModel.update(newData, { where: { id: req.params.id } })
+          return res.redirect('/admin/companyList')
+        }else{  
+          console.log('data not submited')
+          return res.redirect('/admin/companyList')
+        }    
+      }else{
+        const newData=req.body
+        const data=await companyModel.findOne({where:{id:req.params.id}})
+        console.log('company post api----------->',data)
+        console.log('company post api1----------->',req.body)
+        if (data) {
+          console.log('this is company post api');
+          const updateData = await companyModel.update(newData, { where: { id: req.params.id } })
+          return res.redirect('/admin/companyList')
+      }else{  
+          console.log('data not submited')
+          return res.redirect('/admin/companyList')
+      }    
+
+
+      }
+
+
+
+
   } catch (error) {
     console.log(error)
   }  
@@ -745,7 +852,7 @@ exports.Delete_m_advert_ref=async(req,res)=>{
 
 exports.adminEmployee=async(req,res)=>{
   try {
-    const EmpData=await EmployeeModel.findAll({where:{status:1}})
+    const EmpData=await EmployeeModel.findAll({})
     return res.render('./admin/adminEmployee.ejs',{EmpData:EmpData})
   } catch (error) {
     console.log(error)
@@ -755,7 +862,11 @@ exports.adminEmployee=async(req,res)=>{
 exports.adminAddEmployee=async(req,res)=>{
   try {
     const EmpData=await EmployeeModel.findAll({where:{status:1}})
-    return res.render('./admin/adminAddEmployee.ejs',{EmpData:EmpData})
+    const department=await departmentModel.findAll({where:{status:1}})
+    const employees = await EmployeeModel.findAll({
+      where: {status: 1 ,is_report_auth: 'Y'}
+    });
+    return res.render('./admin/adminAddEmployee.ejs',{EmpData:EmpData,department:department,employees:employees})
   } catch (error) {
     console.log(error)
   }  
@@ -764,6 +875,7 @@ exports.adminAddEmployee=async(req,res)=>{
 exports.AdminAddEmployee1=async(req,res)=>{
   try {
     const employeeBody=req.body
+    const { originalname, filename } = req.file;
     const checkEmployee=await EmployeeModel.findOne({where:{email:employeeBody.email}})
     if(!checkEmployee){
       const data=await EmployeeModel.create({
@@ -778,7 +890,7 @@ exports.AdminAddEmployee1=async(req,res)=>{
         manager_id:employeeBody.manager_id,
         role:employeeBody.role,
         password:employeeBody.password,
-        image_url:employeeBody.image_url,
+        image_url:filename,
       })  
       // const Login_data=await loginModel.create({
       //   email:email
@@ -796,12 +908,67 @@ exports.AdminAddEmployee1=async(req,res)=>{
 
 exports.employeeView=async(req,res)=>{
   try {
-    const data=await EmployeeModel.findOne({where:{id:req.params.id}})
-    return res.render('./general/employeeView.ejs',{data:data})
+    console.log('data')
+    const data = await EmployeeModel.findOne({ where: { id: req.params.id } });
+      console.log("--------------employeeviewdata----------->",data)
+
+      return res.render('./general/employeeView.ejs', { d: data });
   } catch (error) {
     console.log(error)
   }  
 }  
+exports.employeeViewEdit=async(req,res)=>{
+  try {
+    const {status,em_username,fname,lname,is_report_auth,contact,em_address,email,role,image_url,}=req.body
+    if(req.file){
+
+      const{filename}=req.file
+      const newData={
+        status:status,
+        em_username:em_username,
+        fname:fname,
+        lname:lname,is_report_auth:is_report_auth,
+        contact:contact,
+        em_address:em_address,
+        email:email,role:role,
+        image_url:filename
+      }
+      const data=await EmployeeModel.findOne({where:{id:req.params.id}})
+      if (data) {
+        const updateData = await EmployeeModel.update(newData, { where: { id: req.params.id } })
+        return res.redirect('/admin/adminEmployee')
+        
+    }else{  
+        console.log('data not submited')
+        return res.redirect('/admin/adminEmployee')
+    }  
+    }else{
+      const newData={
+        status:status,
+        em_username:em_username,
+        fname:fname,
+        lname:lname,is_report_auth:is_report_auth,
+        contact:contact,
+        em_address:em_address,
+        email:email,role:role,
+      }
+      const data=await EmployeeModel.findOne({where:{id:req.params.id}})
+      if (data) {
+        const updateData = await EmployeeModel.update(newData, { where: { id: req.params.id } })
+        return res.redirect('/admin/adminEmployee')
+        
+    }else{  
+        console.log('data not submited')
+        return res.redirect('/admin/adminEmployee')
+    }  
+    }
+    
+  
+    
+  } catch (error) {
+    console.log(error)
+  }
+}
 
 // Employee controller start
 

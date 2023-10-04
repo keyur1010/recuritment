@@ -1,11 +1,27 @@
 const express =require('express')
 const router=express.Router()
+const multer=require("multer")
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+      cb(null, './public/uploads'); // Specify the upload directory
+    },
+    filename: (req, file, cb) => {
+      cb(null, Date.now() + '-' + file.originalname); // Rename the file
+    },
+  });
+  
+  // Initialize Multer with the storage configuration
+  const upload = multer({ storage: storage });
+
+
+
 const auth=require('../app/middleware/auth')
 const adminController=require('../app/controller/adminController/adminController')
 router.get('/admindashboard',adminController.adminDashboard)
 
 router.get('/newclient',adminController.newClient)      //new client create by admin
-router.post('/newclientcreate',adminController.newClientCreate)
+router.post('/newclientcreate', upload.single('client_logo'), adminController.newClientCreate);
+
 router.get('/clientDelete/:id',adminController.clientDelete)
 
 // router.get('/findData',adminController.findData)
@@ -19,11 +35,11 @@ router.get('/deleteDepartment/:id',adminController.deleteDepartment)
 
 
 router.get('/addCompany',adminController.addCompany)
-router.post('/saveAddCompany',adminController.saveAddCompany)
+router.post('/saveAddCompany',upload.single('company_logo'),adminController.saveAddCompany)
 router.get('editCompany/:id',adminController.editCompany)
 router.get('/companyList',adminController.companyList)
 router.get('/editCompany/:id',adminController.editCompany)
-router.post('/editCompany1/:id',adminController.editCompany1)
+router.post('/editCompany1/:id',upload.single('company_logo'),adminController.editCompany1)
 
 
 
@@ -85,8 +101,9 @@ router.get('/Delete_m_advert_ref/:id',adminController.Delete_m_advert_ref)
 
 router.get('/adminEmployee',adminController.adminEmployee)
 router.get('/adminAddEmployee',adminController.adminAddEmployee)
-router.post('/AdminAddEmployee1',adminController.AdminAddEmployee1)
+router.post('/AdminAddEmployee1',upload.single('image_url'),adminController.AdminAddEmployee1)
 router.get('/employeeView/:id',adminController.employeeView)
+router.post('/employeeViewEdit/:id',upload.single('image_url'),adminController.employeeViewEdit)
 
 
 
@@ -97,7 +114,7 @@ router.get('/clientList',adminController.clientList)
 router.get('/clientEdit/:id',adminController.clientEdit)
 
 router.get('/approveBtn/:id',adminController.approveBtn)
-router.post('/clientEdit1/:id',adminController.clientEdit1)
+router.post('/clientEdit1/:id',upload.single('client_logo'),adminController.clientEdit1)
 router.post('/clientEdit2/:id',adminController.clientEdit2)
 router.post('/clientEdit3/:id',adminController.clientEdit3)
 
