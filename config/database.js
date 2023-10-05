@@ -1,4 +1,4 @@
-const { Sequelize, DataTypes } = require('sequelize');
+const { Sequelize, DataTypes, DATE } = require('sequelize');
 
 
 const sequelize = new Sequelize('recruit_portal', 'root', '', {
@@ -40,10 +40,12 @@ db.g_industryModel=require('../app/model/g_industryModel')(sequelize,DataTypes)
 db.skillModel=require('../app/model/skillModel')(sequelize,DataTypes)
 db.advert_refModel=require('../app/model/advert_refModel')(sequelize,DataTypes)
 db.EmployeeModel=require('../app/model/EmployeeModel')(sequelize,DataTypes)
+db.clientPersonalModel=require('../app/model/clientPersonalModel')(sequelize,DataTypes)
 
+db.m_clientModelIndustry=require('../app/model/m_clientModelIndustry')(sequelize,DataTypes)
+db.m_clientSkillModel=require('../app/model/m_clientSkillModel')(sequelize,DataTypes)
 
-
-
+db.m_clientJobModel=require('../app/model/m_clientJobModel')(sequelize,DataTypes)
 
 
 
@@ -53,6 +55,10 @@ db.EmployeeModel=require('../app/model/EmployeeModel')(sequelize,DataTypes)
 db.loginModel.hasOne(db.clientModel,{foreignKey:"login_id"})
 db.clientModel.belongsTo(db.loginModel, { foreignKey: "login_id"})
 
+
+db.m_clientModelIndustry.belongsTo(db.g_industryModel,{foreignKey:"industry_id",as:"industry1"})
+db.m_clientSkillModel.belongsTo(db.skillModel,{foreignKey:"skill_id",as:"skills"})
+db.m_clientJobModel.belongsTo(db.g_jobModel,{foreignKey:"job_id",as:"jobs"})
 
 
 

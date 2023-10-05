@@ -108,6 +108,11 @@ router.post('/employeeViewEdit/:id',upload.single('image_url'),adminController.e
 
 
 router.get('/candidateList',adminController.candidateList)
+router.get('/Approve_accept_candidate/:id',adminController.Approve_accept_candidate)
+router.get('/Reject_accept_candidate/:id',adminController.Reject_accept_candidate)
+
+
+
 
 router.get('/clientList',adminController.clientList)
 

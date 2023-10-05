@@ -1,14 +1,11 @@
-const { Sequelize, DataTypes, DATE,Op } = require("sequelize");
-
+const { Sequelize, DataTypes, DATE,Op, where } = require("sequelize");
+const nodemailer=require('nodemailer')
 const db = require("../../../config/database");
 // const { doesNotMatch } = require("assert");
 const path=require('path')
 const fs = require('fs');
-const loginModel = require("../../model/loginModel");
-const { error } = require("console");
-const { errorMonitor } = require("events");
 require('../../../routes/adminRoutes')
-
+const loginModel=db.loginModel
 const clientModel = db.clientModel;
 const clientMultiModel=db.clientMultiModel
 const departmentModel=db.departmentModel
@@ -19,7 +16,18 @@ const g_industryModel=db.g_industryModel
 const skillModel=db.skillModel
 const advert_refModel=db.advert_refModel
 const EmployeeModel=db.EmployeeModel
+const clientPersonalModel=db.clientPersonalModel
 
+
+
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  port:587,
+  auth: {
+    user: 'mubdadakeyur@gmail.com',
+    pass: 'wevz nuig tjgk txzd',
+  },
+});
 
 
 exports.adminDashboard = async (req, res) => {
@@ -47,7 +55,24 @@ exports.newClientCreate = async (req, res) => {
       client_name,type,registered_address,contract_name,contract_position,contract_number,contract_mobile,contract_email,website,industry,vat_number,registration_no,client_logo,img_url,subscrption_level_agreed,payroll_subsribe,employement_contract,service,services,finance_name,finance_position,finance_number,finance_mobile,finance_email,finance_credit_limit,finance_debit_details,billing_name,billing_position,billing_number,billing_mobile,billing_email,
     } = req.body;
     const { originalname, filename } = req.file;
-
+    function generateRandomString(length) {
+      const letters = 'abcdefghijklmnopqrstuvwxyz';
+      let randomString = '';
+    
+      for (let i = 0; i < length; i++) {
+        const randomIndex = Math.floor(Math.random() * letters.length);
+        randomString += letters.charAt(randomIndex);
+      }
+    
+      return randomString;
+    }
+    
+    const now = new Date();
+    const dateString = now.toISOString().replace(/[^0-9]/g, '');
+    const randomStringLength = dateString.length;
+    
+    const randomString = generateRandomString(randomStringLength) + dateString;
+    
     // Save the file details to your Sequelize model
  
     // console.log('fileupload-------------------?>',fileRecord)
@@ -100,9 +125,16 @@ exports.newClientCreate = async (req, res) => {
       billing_email: billing_email,
       services:allServices,
       insertOn:insertOn,
+      login_random:randomString
       // insertBy:req.session.user.id,
     
     });
+    const clietLogin=await loginModel.create({
+      email:contract_email,
+      password:"123456",
+      role:"Client",
+      login_random:randomString
+    })
     // console.log("data---------->", data);
     
     
@@ -364,6 +396,23 @@ exports.saveAddCompany=async(req,res)=>{
     const {originalname,filename}=req.file
     const data=await companyModel.findOne({where:{email:companyData.email}})
     if(!data){
+      function generateRandomString(length) {
+        const letters = 'abcdefghijklmnopqrstuvwxyz';
+        let randomString = '';
+      
+        for (let i = 0; i < length; i++) {
+          const randomIndex = Math.floor(Math.random() * letters.length);
+          randomString += letters.charAt(randomIndex);
+        }
+      
+        return randomString;
+      }
+      
+      const now = new Date();
+      const dateString = now.toISOString().replace(/[^0-9]/g, '');
+      const randomStringLength = dateString.length;
+      
+      const randomString = generateRandomString(randomStringLength) + dateString;
       const newCompany=await companyModel.create({
         company_name:companyData.company_name,
         shrtname:companyData.shrtname,
@@ -382,7 +431,15 @@ exports.saveAddCompany=async(req,res)=>{
         website:companyData.website,
         company_logo:filename,
         password:companyData.password,
+        login_random:randomString
       })  
+      const loginCompany=await loginModel.create({
+        email:companyData.email,
+        password:companyData.password,
+        role:"Company",
+        login_random:randomString
+
+      })
       console.log('new company Data--------->',newCompany)
       return res.redirect('/admin/admindashboard')
     }else{
@@ -878,6 +935,24 @@ exports.AdminAddEmployee1=async(req,res)=>{
     const { originalname, filename } = req.file;
     const checkEmployee=await EmployeeModel.findOne({where:{email:employeeBody.email}})
     if(!checkEmployee){
+      function generateRandomString(length) {
+        const letters = 'abcdefghijklmnopqrstuvwxyz';
+        let randomString = '';
+      
+        for (let i = 0; i < length; i++) {
+          const randomIndex = Math.floor(Math.random() * letters.length);
+          randomString += letters.charAt(randomIndex);
+        }
+      
+        return randomString;
+      }
+      
+      const now = new Date();
+      const dateString = now.toISOString().replace(/[^0-9]/g, '');
+      const randomStringLength = dateString.length;
+      
+      const randomString = generateRandomString(randomStringLength) + dateString;
+      
       const data=await EmployeeModel.create({
         fname:employeeBody.fname,
         lname:employeeBody.lname,
@@ -891,10 +966,15 @@ exports.AdminAddEmployee1=async(req,res)=>{
         role:employeeBody.role,
         password:employeeBody.password,
         image_url:filename,
+        login_random:randomString
       })  
-      // const Login_data=await loginModel.create({
-      //   email:email
-      // })
+      const Login_data=await loginModel.create({
+        email:employeeBody.email,
+        password:employeeBody.password,
+        role:'Admin',
+        login_random:randomString
+
+      })
       console.log('employeeData--------->',data)
       return res.redirect('/admin/adminAddEmployee')
     }else{
@@ -978,11 +1058,62 @@ exports.employeeViewEdit=async(req,res)=>{
 
 exports.candidateList=async(req,res)=>{
   try {
-    return res.render('./general/candidateList.ejs')
+    const PData=await clientPersonalModel.findAll({where:{adminStatus:"Pending"}})
+    const AData=await clientPersonalModel.findAll({where:{adminStatus:"Approved"}})
+    const AllData=await clientPersonalModel.findAll({})
+    return res.render('./general/candidateList.ejs',{PData:PData,AData:AData,AllData:AllData})
   } catch (error) {
     console.log(error)
   }  
 }  
+exports.Reject_accept_candidate=async(req,res)=>{
+  try {
+    const data=await clientPersonalModel.findOne({where:{id:req.params.id}})
+    if(data){
+      const approveData=await clientPersonalModel.update({adminStatus:"Rejected"},{where:{id:req.params.id}})
+    }else{
+      console.log('not updated')
+      return res.redirect('/admin/candidateList')
+    }
+    return res.redirect('/admin/candidateList')
+  } catch (error) {
+    
+  }
+}
+exports.Approve_accept_candidate=async(req,res)=>{
+  try {
+    const data=await clientPersonalModel.findOne({where:{id:req.params.id}})
+    if(data){
+      const approveData=await clientPersonalModel.update({adminStatus:"Approved"},{where:{id:req.params.id}})
+      const mailOptions = {
+        from: 'Support <support@gmail.com>',
+        to:data.email_id,
+        subject:"you are approved",
+        text:`your email is ${data.email_id} and your password is 123456`
+      };
+      try {
+        await transporter.sendMail(mailOptions);
+        const passwordAdd=await clientPersonalModel.update({password:'123456'},{where:{id:req.params.id}})
+        const loginData=await loginModel.create({
+          login_random:data.client_random,
+          email:data.email_id,
+          role:"Candidate",
+          password:'123456'
+        })
+        return res.redirect('/admin/candidateList'); // Redirect back to the form page
+      } catch (error) {
+        console.error('Error sending email:', error);
+        res.status(500).send('Error sending email');
+      }
+    }else{
+      console.log('not updated')
+      return res.redirect('/admin/candidateList')
+    }
+    return res.redirect('/admin/candidateList')
+  } catch (error) {
+    
+  }
+}
 
 
 

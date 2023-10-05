@@ -13,6 +13,9 @@ module.exports=(sequelize,DataTypes)=>{
         },
         role:{
             type:Sequelize.ENUM('Super Admin',"Admin","Candidate","Client")
+        },
+        login_random:{
+            type:DataTypes.STRING
         }
     });
     return loginModel

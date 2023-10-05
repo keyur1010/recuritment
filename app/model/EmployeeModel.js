@@ -43,6 +43,9 @@ module.exports=(sequelize,DataTypes)=>{
         status:{
             type:DataTypes.BOOLEAN,
             defaultValue:true
+        },
+        login_random:{
+            type:DataTypes.STRING
         }
     });
     return EmployeeModel

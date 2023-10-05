@@ -125,6 +125,9 @@ module.exports=(sequelize,DataTypes)=>{
             type:Sequelize.ENUM('Approved','Pending',"Rejected"),
             defaultValue:"Pending"
         },
+        login_random:{
+            type:DataTypes.STRING
+        }
         
         
     });

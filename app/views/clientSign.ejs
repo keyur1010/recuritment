@@ -49,16 +49,13 @@
               </style>
               <form
                 role="form"
-                action="/candidate/saveCandidate"
+                action="/client/saveCandidate"
                 method="post"
-                enctype="multipart/form-data"
                 class="form-valide-with-icon needs-validation"
-              >
+                enctype="multipart/form-data">
                 <div class="row">
                   <div class="form-group col-md-3 col-sm-6">
-                    <label class="form-label"
-                      >Name <i class="text-danger">*</i></label
-                    >
+                    <label class="form-label">Name <i class="text-danger">*</i></label>
                     <input
                       type="text"
                       class="form-control"
@@ -67,7 +64,7 @@
                       placeholder="Enter Full name"
                       required
                       autocomplete="off"
-                      value=""
+                      
                     />
                   </div>
 
@@ -77,12 +74,12 @@
                       class="default-select form-control wide mb-2"
                       name="advert_ref"
                       id="advert_ref"
-                      required=""
                     >
                       <option value="">-Select-</option>
-                      <!-- <?php foreach ($list_advref as $key => $value): ?> -->
-                      <!-- <option value="<?php echo $value->id; ?>" <?php echo set_select('advert_ref', $value->id); ?>><?php echo $value->ad_ref_name; ?></option> -->
-                      <!-- <?php endforeach ?> -->
+                      <%advref.forEach(function(adref,index){%>
+                        <option value="<%=adref.id%>" ><%=adref.ad_ref_name%></option>
+
+                      <%}) %>
                     </select>
                   </div>
                   <div class="form-group col-md-3 col-sm-3">
@@ -750,11 +747,7 @@
                     />
                   </div>
 
-                  <!-- <div class="form-group col-md-3 col-sm-6">
-    <label>Mobile Number <i class="text-danger">*</i></label>
-    <input type="text" class="form-control" id="mobile_number" name="mobile_number" placeholder="Enter Mobile Number" autocomplete="off" required="" value="<?php echo set_value('mobile_number'); ?>">
-    <?php echo form_error('mobile_number'); ?>
-</div> -->
+                
                   <div class="form-group col-md-3 col-sm-6">
                     <label>Email Address <i class="text-danger">*</i></label>
                     <input
@@ -819,17 +812,12 @@
 
                   <div class="form-group col-md-3">
                     <label>Passport</label>
-                    <!-- <select class="default-select form-control wide mb-2" name="passport" id="passport" required="" onchange="handlePassportChange()">
-        <option value="">-Select-</option>
-        <option value="UK" <?php echo set_select('passport', 'UK'); ?>>UK</option>
-        <option value="EU" <?php echo set_select('passport', 'EU'); ?>>EU</option>
-        <option value="Other" <?php echo set_select('passport', 'Other'); ?>>Other</option>
-    </select> -->
+                
                     <select
                       class="default-select form-control wide mb-2"
                       name="passport"
                       id="passport"
-                      required=""
+                      required
                       onchange="handlePassportChange()"
                     >
                       <option value="">-Select-</option>
@@ -864,12 +852,7 @@
                       <option value="NO">NO</option>
                       <option value="Yes With No Car">Yes With No Car</option>
                     </select>
-                    <!-- <select class="default-select form-control wide mb-2" name="driver_car_owner" id="driver_car_owner" required="">
-        <option value="">-Select-</option>
-        <option value="Yes With Owner Car" <?php echo set_select('driver_car_owner', 'Yes With Owner Car'); ?>>Yes With Owner Car</option>
-        <option value="NO" <?php echo set_select('driver_car_owner', 'NO'); ?>>NO</option>
-        <option value="Yes With No Car" <?php echo set_select('driver_car_owner', 'Yes With No Car'); ?>>Yes With No Car</option>
-    </select> -->
+                
                   </div>
 
                   <div class="form-group col-md-3 col-sm-6">
@@ -890,7 +873,7 @@
                       class="default-select form-control wide mb-2"
                       name="dbs"
                       id="dbs"
-                      required=""
+                      required
                     >
                       <option value="">-Select-</option>
                       <option value="NO DBS">NO DBS</option>
@@ -902,13 +885,7 @@
                         Registered for online update service
                       </option>
                     </select>
-                    <!-- <select class="default-select form-control wide mb-2" name="dbs" id="dbs" required="">
-        <option value="">-Select-</option>
-        <option value="NO DBS" <?php echo set_select('dbs', 'NO DBS'); ?>>NO DBS</option>
-        <option value="Current DBS Number" <?php echo set_select('dbs', 'Current DBS Number'); ?>>Current DBS Number</option>
-        <option value="Any Disclosures" <?php echo set_select('dbs', 'Any Disclosures'); ?>>Any Disclosures</option>
-        <option value="Registered for online update service" <?php echo set_select('dbs', 'Registered for online update service'); ?>>Registered for online update service</option>
-    </select> -->
+                  
                   </div>
 
                   <div class="form-group col-md-3 col-sm-6">
@@ -935,38 +912,37 @@
                   </div>
 
                   <hr />
-                  <span class="col-12 text-info text-center"
-                    ><h4>CLIENT GROUP EXPERIENCE</h4></span
-                  >
-                  <!-- <?php foreach ($list_indus as $key => $value): ?>
-    <div class="form-group col-md-2 col-sm-4 form-check mb-2">
-        <input type="checkbox" class="form-check-input" name="candidate_industry[]" id="candidate_industry_<?php echo $value->id; ?>" value="<?php echo $value->id; ?>" <?php echo set_checkbox('candidate_industry[]', $value->id); ?>>
-        <label class="form-check-label" for="candidate_industry_<?php echo $value->id; ?>"><?php echo $value->indusry_name; ?></label>
-    </div>
-<?php endforeach; ?> -->
+                  <span class="col-12 text-info text-center">
+                    <h4>CLIENT GROUP EXPERIENCE</h4></span>
+                    <% industry.forEach(function(indust,index){%>
+                      <div class="form-group col-md-2 col-sm-4 form-check mb-2">
+                        <input type="checkbox" class="form-check-input" name="clientIndustry[]" id="client_skill_<%= indust.id %>" value="<%=indust.id%>">
+                        <label class="form-check-label" for="client_skill_<%=indust.id%>"><%=indust.industry_name%></label>
+                      </div>
+                    <%}) %>
 
                   <hr />
                   <span class="col-12 text-info text-center"
                     ><h4>SKILLS</h4></span
                   >
-                  <!-- <?php foreach ($list_skills as $key => $value): ?>
-    <div class="form-group col-md-2 col-sm-4 form-check mb-2">
-        <input type="checkbox" class="form-check-input" name="candidate_skills[]" id="candidate_skills_<?php echo $value->id; ?>" value="<?php echo $value->id; ?>" <?php echo set_checkbox('candidate_skills[]', $value->id); ?>>
-        <label class="form-check-label" for="candidate_skills_<?php echo $value->id; ?>"><?php echo $value->skill_name; ?></label>
-    </div>
-<?php endforeach; ?> -->
+                  <% skills.forEach(function(skill,index){%>
+                    <div class="form-group col-md-2 col-sm-4 form-check mb-2">
+                      <input type="checkbox" class="form-check-input" name="client_skills[]" id="client_skills_<%= skill.id %>" value="<%=skill.id%>">
+                      <label class="form-check-label" for="client_skills_<%=skill.id%>"><%=skill.skill_name%></label>
+                    </div>
+                  <%}) %>
 
                   <hr />
 
                   <span class="col-12 text-info text-center"
                     ><h4>JOB TITLES</h4></span
                   >
-                  <!-- <?php foreach ($list_job_title as $key => $value): ?>
-    <div class="form-group col-md-2 col-sm-4 form-check mb-2">
-        <input type="checkbox" class="form-check-input" name="job_titles[]" id="job_titles_<?php echo $value->id; ?>" value="<?php echo $value->id; ?>" <?php echo set_checkbox('job_titles[]', $value->id); ?>>
-        <label class="form-check-label" for="job_titles_<?php echo $value->id; ?>"><?php echo $value->job_title_name; ?></label>
-    </div>
-<?php endforeach; ?> -->
+                  <% jobs.forEach(function(job,index){%>
+                    <div class="form-group col-md-2 col-sm-4 form-check mb-2">
+                      <input type="checkbox" class="form-check-input" name="client_jobs[]" id="client_jobs_<%= job.id %>" value="<%=job.id%>">
+                      <label class="form-check-label" for="client_jobs_<%=job.id%>"><%=job.job_title_name%></label>
+                    </div>
+                  <%}) %>
 
                   <div class="col-12 mt-4"></div>
                   <div class="form-group col-md-3 col-sm-4">
@@ -1001,9 +977,7 @@
                       placeholder="Notice Period"
                       id="notice_period"
                       name="notice_period"
-                      value=""
-                      autocomplete="off"
-                    />
+                      value=""/>
                   </div>
                   <div class="form-group col-md-3 col-sm-6">
                     <label
@@ -1013,8 +987,7 @@
                       class="default-select form-control wide mb-2"
                       name="current_pay_status"
                       id="current_pay_status"
-                      required=""
-                    >
+                      required>
                       <option value="">-Select-</option>
                       <option value="PAYE">PAYE</option>
                       <option value="UMBRELLAv">UMBRELLA</option>
@@ -1198,77 +1171,9 @@
         }
       }
     </script>
-    <!-- <script>
-    $(document).ready(function() {
-      $('#btnSubmit').click(function() {
-        $.ajax({
-          url: '<?php echo site_url('Candidate/send_mail'); ?>',
-          method: 'POST',
-          success: function(response) {
-            alert(response);
-          }
-        });
-      });
-    });
-  </script> -->
+  
   </body>
 </html>
 
 <script src="<?php echo base_url('assets/') ?>vendor/toastr/js/toastr.min.js"></script>
 <script src="<?php echo base_url('assets/') ?>js/plugins-init/toastr-init.js"></script>
-
-<!-- <?php if ($this->session->flashdata('success')) : ?>
-   <script type="text/javascript">
-     $(document).ready(function() {
-       var audio = new Audio('<?php echo base_url() ?>assets/success.mp3');
-       audio.play();
-
-                    toastr.success("Success", "<?php echo $this->session->flashdata('success'); ?>", {
-                    timeOut: 500000000,
-                    closeButton: !0,
-                    debug: !1,
-                    newestOnTop: !0,
-                    progressBar: !0,
-                    positionClass: "toast-top-right",
-                    preventDuplicates: !0,
-                    onclick: null,
-                    showDuration: "300",
-                    hideDuration: "1000",
-                    extendedTimeOut: "1000",
-                    showEasing: "swing",
-                    hideEasing: "linear",
-                    showMethod: "fadeIn",
-                    hideMethod: "fadeOut",
-                    tapToDismiss: !1
-                })
-
-     });
-   </script>
- <?php endif; ?>
- <?php if ($this->session->flashdata('error')) : ?>
-   <script type="text/javascript">
-     $(document).ready(function() {
-       var audio = new Audio('<?php echo base_url() ?>assets/error.mp3');
-       audio.play();
-                     toastr.error("Error","<?php echo $this->session->flashdata('error'); ?>", {
-                    positionClass: "toast-top-right",
-                    timeOut: 5e3,
-                    closeButton: !0,
-                    debug: !1,
-                    newestOnTop: !0,
-                    progressBar: !0,
-                    preventDuplicates: !0,
-                    onclick: null,
-                    showDuration: "300",
-                    hideDuration: "1000",
-                    extendedTimeOut: "1000",
-                    showEasing: "swing",
-                    hideEasing: "linear",
-                    showMethod: "fadeIn",
-                    hideMethod: "fadeOut",
-                    tapToDismiss: !1
-                })
-
-     });
-   </script>
- <?php endif; ?> -->
