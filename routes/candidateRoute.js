@@ -1,5 +1,9 @@
 const express=require('express')
 const router=express.Router()
+
+const candidateauth=require('../app/middleware/candidateauth')
+
+
 const multer=require("multer")
 const candidateController=require("../app/controller/candidateController/candidateController")
 const storage = multer.diskStorage({
@@ -18,11 +22,14 @@ const storage = multer.diskStorage({
 
 
 
-router.get('/candidate',candidateController.candidateDashboard)
+router.get('/candidate',candidateauth.login,candidateController.candidateDashboard)
 
-router.post('/updateCandidate1',upload.fields([{name:"profile_image"},{name:"upload_cv"}]),candidateController.updateCandidate1)
-router.post('/updateCandidate2',candidateController.updateCandidate2)
-router.post('/updateCandidate3',candidateController.updateCandidate3)
+router.get('/downloadFile',candidateController.downloadFile)
+
+
+router.post('/updateCandidate1',candidateauth.login,upload.fields([{name:"profile_image"},{name:"upload_cv"}]),candidateController.updateCandidate1)
+router.post('/updateCandidate2',candidateauth.login,candidateController.updateCandidate2)
+router.post('/updateCandidate3',candidateauth.login,candidateController.updateCandidate3)
 
 
 

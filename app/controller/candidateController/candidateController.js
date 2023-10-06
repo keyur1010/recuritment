@@ -2,7 +2,7 @@ const { Sequelize, DataTypes, DATE,Op, where } = require("sequelize");
 const db = require("../../../config/database");
 
 
-
+const loginModel=db.loginModel
 const clientPersonalModel = db.clientPersonalModel;
 const m_clientSkillModel=db.m_clientSkillModel
 const m_clientJobModel=db.m_clientJobModel
@@ -53,11 +53,37 @@ exports.candidateDashboard=async(req,res)=>{
           const AD=await advert_refModel.findAll({})
           
           const AllSkill=await skillModel.findAll({where:{status:1}})
-        return res.render('./candidate/candidateDashboard.ejs',{data:data,SD:sData,JD:jData,ID:IData,AD:AD,AllSkill:AllSkill})
+          const Allindusrty=await g_industryModel.findAll({where:{status:1}})
+          const AllJob=await g_jobModel.findAll({where:{status:1}})
+        return res.render('./candidate/candidateDashboard.ejs',{data:data,SD:sData,JD:jData,ID:IData,AD:AD,AllSkill:AllSkill,Allindusrty:Allindusrty,AllJob:AllJob})
     } catch (error) {
         console.log(error)
     }
 }
+
+exports.downloadFile=async(req,res)=>{
+  try {
+    const loginUser=await clientPersonalModel.findOne({where:{client_random:req.session.user.login_random}})
+    console.log("this is login User-------->",loginUser)
+    console.log("this is login User-------->",loginUser.upload_cv)
+    const filePath='./public/uploads/'
+    const fileName=loginUser.upload_cv
+    const findFile=filePath +fileName
+    res.download(findFile, fileName, (err) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send('Error downloading the file');
+      } else {
+        console.log('File downloaded successfully');
+      }
+    });
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+
+
 
 
 exports.updateCandidate1=async(req,res)=>{

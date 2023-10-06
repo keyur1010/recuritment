@@ -56,8 +56,11 @@ exports.newClientCreate = async (req, res) => {
     const {
       client_name,type,registered_address,contract_name,contract_position,contract_number,contract_mobile,contract_email,website,industry,vat_number,registration_no,client_logo,img_url,subscrption_level_agreed,payroll_subsribe,employement_contract,service,services,finance_name,finance_position,finance_number,finance_mobile,finance_email,finance_credit_limit,finance_debit_details,billing_name,billing_position,billing_number,billing_mobile,billing_email,
     } = req.body;
-    const hashedPassword=md5('123456')
+    const checkClientemail=await clientModel.findOne({where:{contract_email:contract_email}})
+    if(!checkClientemail){
 
+      const hashedPassword=md5('123456')
+      
     const { originalname, filename } = req.file;
     function generateRandomString(length) {
       const letters = 'abcdefghijklmnopqrstuvwxyz';
@@ -76,10 +79,7 @@ exports.newClientCreate = async (req, res) => {
     const randomStringLength = dateString.length;
     
     const randomString = generateRandomString(randomStringLength) + dateString;
-    
-    // Save the file details to your Sequelize model
- 
-    // console.log('fileupload-------------------?>',fileRecord)
+
 
       const allServices = {
         service_name: req.body.service_name,
@@ -91,9 +91,6 @@ exports.newClientCreate = async (req, res) => {
       };
       
       const serviceDataJSON = JSON.stringify(allServices);
-      // const clientLogo = req.file;
-
-      // console.log("this ---------->",serviceDataJSON);
 
       const insertOn=new Date()
     const data = await clientModel.create({
@@ -131,7 +128,7 @@ exports.newClientCreate = async (req, res) => {
       insertOn:insertOn,
       login_random:randomString,
       
-      // insertBy:req.session.user.id,
+      insertBy:req.session.user.id,
     
     });
     const clietLogin=await loginModel.create({
@@ -144,6 +141,10 @@ exports.newClientCreate = async (req, res) => {
     
     
     return res.redirect('/admin/clientList');
+  }else{
+    console.log('email already in the database')
+    return res.redirect('/admin/clientList')
+  }
   } catch (error) {
     console.log(error);
   }
@@ -223,6 +224,7 @@ exports.approveBtn=async(req,res)=>{
 exports.clientEdit1=async(req,res)=>{
   try {
     const {client_name,type,registered_address,contract_name,contract_position,contract_number,contract_mobile,contract_email,website,industry,vat_number,registration_no,client_logo,img_url,subscrption_level_agreed,payroll_subsribe,employement_contract,service,services,finance_name,finance_position,finance_number,finance_mobile,finance_email,finance_credit_limit,finance_debit_details,billing_name,billing_position,billing_number,billing_mobile,billing_email,} = req.body;
+    
     if(req.file){
       const {filename,originalname}=req.file
       const allServices = {
@@ -479,7 +481,7 @@ exports.editCompany=async(req,res)=>{
 exports.editCompany1=async(req,res)=>{
   try {
     const{company_name,shrtname,proprietor,phone,phone2,email,email2,pin_code,place,state,state_code,company_address,gst_applicable,address,gst_no,pan_no,website,password,wp_api_key,distance_api_key,smtp_host,smtp_port,smtp_sender_id,smtp_password,smtp_secure,smtp_name,default_cc_mailid}=req.body
-    const hashedPassword=md5(password)
+    
       if(req.file){
         const{filename,originalname}=req.file
         const newData={
@@ -499,7 +501,7 @@ exports.editCompany1=async(req,res)=>{
         gst_no:gst_no,
         pan_no:pan_no,
         website:website,
-        password:hashedPassword,
+        password:password,
         wp_api_key:wp_api_key,
         distance_api_key:distance_api_key,
         smtp_host:smtp_host,
@@ -992,6 +994,32 @@ exports.AdminAddEmployee1=async(req,res)=>{
   }  
 }  
 
+exports.Reset_Password=async(req,res)=>{
+  try {
+    const employeeBody=req.body
+    console.log('employeeBody reset password----------->0',employeeBody)
+    const data=await EmployeeModel.findOne({where:{id:req.params.id}})
+    console.log("data--------->",data.password)
+    if(md5(employeeBody.old)==data.password){
+      const hashpassword=md5(employeeBody.new1)
+      const updatedData={
+        password:hashpassword
+      }
+      console.log('updatedata',updatedData)
+      const updatepassword=await EmployeeModel.update(updatedData,{where:{id:req.params.id}})
+      const loginEmployee=await loginModel.update(updatedData,{where:{login_random:data.login_random}})
+      console.log('password updated')
+      return res.redirect('/admin/adminEmployee')
+
+    }else{
+      console.log('old password is wrong')
+      return res.redirect('/admin/adminEmployee')
+    }
+
+  } catch (error) {
+    console.log(error)
+  }
+}
 exports.employeeView=async(req,res)=>{
   try {
     console.log('data')
@@ -1108,7 +1136,7 @@ exports.Approve_accept_candidate=async(req,res)=>{
       };
       try {
         await transporter.sendMail(mailOptions);
-        const passwordAdd=await clientPersonalModel.update({password:'123456'},{where:{id:req.params.id}})
+        const passwordAdd=await clientPersonalModel.update({password:hashedPassword},{where:{id:req.params.id}})
         const checkLogin=await loginModel.findOne({where:{email:data.email_id}})
         console.log('checkLogin=----------->',checkLogin)
         if(!checkLogin){
@@ -1118,6 +1146,9 @@ exports.Approve_accept_candidate=async(req,res)=>{
           role:"Candidate",
           password:hashedPassword
         })
+        }else{
+          const updateLogincandidate=await loginModel.update({email:data.email_id,password:hashedPassword},{where:{email:checkLogin.email}})
+          
         }
         return res.redirect('/admin/candidateList'); // Redirect back to the form page
       } catch (error) {

@@ -69,7 +69,8 @@ exports.login = async (req, res, next) => {
                 // return res.redirect('/candidate/candidate')
             }else{
                 console.log('here nobody mention this ')
-                next()
+                // next()
+                return res.redirect('/')
 
             }
             // next()

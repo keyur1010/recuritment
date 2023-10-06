@@ -2,7 +2,7 @@ const express=require('express')
 const router=express.Router()
 const multer=require('multer')
 const  clientController=require('../app/controller/clientController/clientController')
-
+const clientAuth=require('../app/middleware/clientAuth')
 
   const storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -18,17 +18,17 @@ const upload = multer({ storage: storage });
 
 
 
-router.get('/client',clientController.clientPage)
-router.post('/saveCandidate',upload.fields([{name:"profile_image"},{name:"upload_cv"}]),clientController.clientLogin)
+router.get('/client',clientAuth.login,clientController.clientPage)
+router.post('/saveCandidate',clientAuth.login,upload.fields([{name:"profile_image"},{name:"upload_cv"}]),clientController.clientLogin)
 
-router.get('/clientView',clientController.clientView)
+router.get('/clientView',clientAuth.login,clientController.clientView)
 
-router.get('/recruitmentView',clientController.recruitmentView)
-router.get('/addRecruitment',clientController.addRecruitment)
-router.post('/saveRecruitment',clientController.saveRecruitment)
-router.get('/Recruitment_edit/:id',clientController.Recruitment_edit)
-router.post('/Recruitment_edit1/:id',clientController.Recruitment_edit1)
-router.get('/Recruitment_delete/:id',clientController.Recruitment_delete)
+router.get('/recruitmentView',clientAuth.login,clientController.recruitmentView)
+router.get('/addRecruitment',clientAuth.login,clientAuth.login,clientController.addRecruitment)
+router.post('/saveRecruitment',clientAuth.login,clientController.saveRecruitment)
+router.get('/Recruitment_edit/:id',clientAuth.login,clientController.Recruitment_edit)
+router.post('/Recruitment_edit1/:id',clientAuth.login,clientController.Recruitment_edit1)
+router.get('/Recruitment_delete/:id',clientAuth.login,clientController.Recruitment_delete)
 
 
 

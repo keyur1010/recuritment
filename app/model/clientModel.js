@@ -21,10 +21,12 @@ module.exports=(sequelize,DataTypes)=>{
             type:DataTypes.STRING
         },
         contract_number:{
-            type:DataTypes.STRING
+            type:DataTypes.INTEGER,
+            unique: true,
+           
         },
         contract_mobile:{
-            type:DataTypes.STRING
+            type:DataTypes.INTEGER
         },
         contract_email:{
             type:DataTypes.STRING
@@ -73,14 +75,12 @@ module.exports=(sequelize,DataTypes)=>{
             type:DataTypes.STRING
         },
         finance_credit_limit:{
-            type:DataTypes.STRING
+            type:DataTypes.INTEGER
         },
         finance_debit_details:{
-            type:DataTypes.STRING
+            type:DataTypes.INTEGER
         },
-        copytobilling:{
-            type:DataTypes.STRING
-        },
+       
         billing_name:{
             type:DataTypes.STRING
         },

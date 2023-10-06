@@ -32,7 +32,7 @@ module.exports=(sequelize,DataTypes)=>{
             type:DataTypes.STRING,
         },
         role:{
-            type:DataTypes.STRING,
+            type:Sequelize.ENUM('Admin'),
         },
         password:{
             type:DataTypes.STRING,

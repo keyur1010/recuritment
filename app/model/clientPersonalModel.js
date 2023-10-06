@@ -177,15 +177,13 @@ module.exports=(sequelize,DataTypes)=>{
         landline_no:{
             type:DataTypes.STRING,
         },
-        password:{
+        avail_for_emg_shift:{
             type:DataTypes.STRING,
         },
-        password:{
+        driver:{
             type:DataTypes.STRING,
         },
-        password:{
-            type:DataTypes.STRING,
-        },
+      
 
     });
     return clientPersonalModel
