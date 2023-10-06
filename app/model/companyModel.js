@@ -87,8 +87,8 @@ module.exports=(sequelize,DataTypes)=>{
         default_cc_mailid:{
             type:DataTypes.STRING,
         },
-        login_random:{
-            type:DataTypes.STRING
+        createdBy:{
+            type:DataTypes.INTEGER
         }
         
 

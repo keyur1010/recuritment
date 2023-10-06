@@ -28,10 +28,10 @@ exports.loginUser = async (req, res) => {
             }
             else if (checkUser.role=="Admin"){
                 console.log('this is a admin')
-                return res.redirect('/m_admin/admin')
+                return res.redirect('/m_admin/simpleAdmin')
             }else if(checkUser.role=='Client'){
                 console.log('This is a Client')
-                return res.redirect('/client/client')
+                return res.redirect('/client/clientView')
             }else if(checkUser.role=='Candidate'){
                 console.log('This is a Candidate')
                 return res.redirect('/candidate/candidate')

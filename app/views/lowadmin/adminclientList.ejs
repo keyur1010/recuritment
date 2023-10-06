@@ -1,0 +1,101 @@
+<%- include( '../main/header.ejs' ) %> <%- include( '../main/adminsidebar.ejs' ) %>
+<div class="content-body">
+  <div class="container-fluid">
+    <div class="row page-titles">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item active">
+          <a href="javascript:void(0)">Clients</a>
+        </li>
+        <li class="breadcrumb-item"><a href="javascript:void(0)">List</a></li>
+      </ol>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <div class="card card-outline-info">
+          <div class="card-header border-bottom">
+            <h4 class="m-b-0">
+              <i class="fa fa-user-o" aria-hidden="true"></i> Clients<span
+                class="pull-right"
+              ></span>
+            </h4>
+            <button type="button" class="btn btn-primary btn-sm">
+              <i class="fa fa-plus"></i
+              ><a href="/m_admin/m_clientAdd" class="text-white"
+                ><i class="" aria-hidden="true"></i> Add Client</a
+              >
+            </button>
+          </div>
+
+          <div class="card-body">
+            <div class="table-responsive">
+              <table id="example1" class="table table-bordered table-sm">
+                <thead>
+                  <tr>
+                    <th>Client Name</th>
+                    <th>Type</th>
+                    <th>Contrat Name</th>
+                    <th>Industry</th>
+                    <th>Vat Number</th>
+                    <th>Status</th>
+                    <th>Registration No.</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  
+                  <% clientData.forEach(function(d,index){ %>
+                  <tr>
+                      <td class="wspace-no">
+                      <span class="fs-16">
+                        <img
+                          src="./../../uploads/<%= d.client_logo %>"
+                          width="53"
+                          height="53"
+                          viewbox="0 0 53 53"
+                          class="me-2"
+                        />
+                        <%= d.client_name%>
+                      </span>
+                    </td>
+                    <td><%=d.type%></td>
+                    <td><%=d.contract_name%></td>
+                    <td><%=d.industry %></td>
+                    <td><%=d.vat_number %></td>
+                    <td><%=d.admin_status %></td>
+                    <td><%=d.registration_no %></td>
+                    <td>
+                      <a
+                        href="/m_admin/m_clientEdit/<%=d.id%>"
+                        class="btn btn-primary shadow btn-xs sharp me-1"
+                        ><i class="fas fa-pencil-alt"></i
+                      ></a>
+                      <a
+                        href="/m_admin/m_approveBtn/<%=d.id%>"
+                        class="btn btn-primary shadow btn-xs sharp me-1"
+                        ><i class="fas fa-chevron-down"></i
+                      ></a>
+                      <a
+                        href="/m_admin/m_clientDelete/<%= d.id%>"
+                        class="btn btn-danger shadow btn-xs sharp me-1"
+                        ><i class="fas fa-trash"></i
+                      ></a>
+                    </td>
+                  </tr>
+                  <%})%>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<%- include( '../main/footer.ejs' ) %>
+<script>
+  $(document).ready(function () {
+    $("#li-clients").addClass("active");
+    $("#masterMain").addClass("active");
+    $("#masterMain").addClass("show");
+  });
+</script>

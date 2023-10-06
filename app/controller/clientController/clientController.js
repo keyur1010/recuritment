@@ -11,6 +11,15 @@ const m_clientSkillModel=db.m_clientSkillModel
 const m_clientJobModel=db.m_clientJobModel
 const m_clientModelIndustry=db.m_clientModelIndustry
 const advert_refModel=db.advert_refModel
+const companyModel=db.companyModel
+const clientModel=db.clientModel
+const departmentModel=db.departmentModel
+const recruitmentModel=db.recruitmentModel
+const r_skillModel=db.r_skillModel
+const r_industryModel=db.r_industryModel
+
+
+
 
 exports.clientPage = async (req, res) => {
   try {
@@ -113,3 +122,130 @@ exports.clientLogin = async (req, res) => {
     console.log(error)
   }
 };
+
+
+
+
+
+exports.clientView=async(req,res)=>{
+  try {
+    console.log(req.session.user)
+    // const clientData=await loginModel.findOne({where:{login_random:req.session.user.login_random}})
+    // console.log(clientData.id)
+    const clientData=await clientModel.findOne({where:{login_random:req.session.user.login_random}})
+    // console.log('data-------------------------->',data)
+    const json_data=JSON.parse(clientData.dataValues.services)
+    console.log(json_data)
+    return res.render('./clientdashboard/clientView.ejs',{clientdata:clientData,json_data:json_data})
+  } catch (error) {
+    console.log(error)
+  }
+}
+exports.recruitmentView=async(req,res)=>{
+  try {
+    const data=await recruitmentModel.findAll({ include: [{ model: departmentModel, as: 'recruit_departments', attributes: ['department_name'] }]})
+    console.log(data)
+
+    return res.render('./clientdashboard/recruitmentView.ejs',{data:data})
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+exports.addRecruitment=async(req,res)=>{
+  try {
+    const depart=await departmentModel.findAll({where:{status:1}})
+    const industry=await g_industryModel.findAll({where:{status:1}})
+    // const advref=await advert_refModel.findAll({where:{status:1}})
+    const skills=await skillModel.findAll({where:{status:1}})
+    // const jobs=await g_jobModel.findAll({where:{status:1}})
+    return res.render('./clientdashboard/addRecruitment.ejs',{depart:depart,industry:industry,skills:skills})
+  } catch (error) {
+    console.log(error)
+  }
+}
+exports.saveRecruitment=async(req,res)=>{
+  try {
+    const recruitmentBody = req.body;
+  
+    function generateRandomString(length) {
+      const letters = 'abcdefghijklmnopqrstuvwxyz';
+      let randomString = '';
+    
+      for (let i = 0; i < length; i++) {
+        const randomIndex = Math.floor(Math.random() * letters.length);
+        randomString += letters.charAt(randomIndex);
+      }
+    
+      return randomString;
+    }
+    
+    const now = new Date();
+    const dateString = now.toISOString().replace(/[^0-9]/g, '');
+    const randomStringLength = dateString.length;
+    
+    const randomString = generateRandomString(randomStringLength) + dateString;
+
+    const addRecruitment=await recruitmentModel.create({
+      recruit_department:recruitmentBody.recruit_department,
+      no_position:recruitmentBody.no_position,
+      current_salary:recruitmentBody.current_salary,
+      desired_salary:recruitmentBody.desired_salary,
+      client_name:req.session.user.email,
+      r_random:randomString
+    })
+    
+   
+    for(var i=0;i<recruitmentBody.recruit_skills.length;i++){
+      const r_skill=await r_skillModel.create({
+        skill_id:recruitmentBody.recruit_skills[i],
+        r_random:randomString,
+
+      })
+    for(var i=0;i< recruitmentBody.recruit_industry.length;i++){
+      const r_industry=await r_industryModel.create({
+        industry_id:recruitmentBody.recruit_industry[i],
+        r_random:randomString
+      })
+    }
+   
+      
+    }
+return res.redirect('/client/recruitmentView')
+
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+
+
+exports.Recruitment_edit=async(req,res)=>{
+  try {
+     const data=await recruitmentModel.findOne({where:{id:req.params.id}})
+     console.log('edit recruitmetnt-------->',data)
+     const recDepart=await departmentModel.findAll({where:{status:1}})
+     return res.render('./clientdashboard/editRecruitment.ejs',{data:data,recDepart:recDepart})
+  } catch (error) {
+console.log(error)
+  }
+}
+
+exports.Recruitment_edit1=async(req,res)=>{
+  try {
+    const rBody=req.body
+    console.log("------------->",rBody)
+    const data=await recruitmentModel.update(rBody,{where:{id:req.params.id}})
+    return res.redirect('/client/recruitmentView')
+  } catch (error) {
+    console.log(error)
+  }
+}
+exports.Recruitment_delete=async(req,res)=>{
+  try {
+    const data=await recruitmentModel.destroy({where:{id:req.params.id}})
+    return res.redirect('/client/recruitmentView')
+  } catch (error) {
+    console.log(error)
+  }
+}

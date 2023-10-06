@@ -1,0 +1,69 @@
+<%- include( '../main/header.ejs' ) %>
+ <%- include( '../main/clientLoginsidebar.ejs' ) %>
+<div class="content-body">
+    <div class="container-fluid">
+        
+        <div class="row page-titles">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item active"><a href="javascript:void(0)">Recruitment</a></li>
+                <li class="breadcrumb-item"><a href="javascript:void(0)">List</a></li>
+            </ol>
+        </div>
+               <div class="row">
+                    <div class="col-12">
+                        <div class="card card-outline-info">
+                            <div class="card-header border-bottom">
+                                <h4 class="m-b-0"><i class="fa fa-user-o" aria-hidden="true"></i> Recruitment<span class="pull-right " ></span></h4>
+                                <button type="button" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i><a href="/client/addRecruitment" class="text-white"><i class="" aria-hidden="true"></i> Add Recruitment</a></button>
+                            </div>
+            
+            <div class="card-body">
+			<div class="table-responsive">
+             <table id="employees123" class="table table-bordered table-sm" >
+                <thead>
+                <tr>
+                  <th>Client Name</th>
+                  <th>Department</th>
+                  <th>No. of Positions</th>
+                  <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+<% data.forEach(function(d,index){%>
+
+    <tr>        
+        <td><%=d.client_name %></td>
+        <td><%=d.recruit_department%></td>
+        <td><%=d.no_position%></td>   
+        <td>
+            <a href="/client/Recruitment_edit/<%=d.id%>" class="btn btn-primary shadow btn-xs sharp me-1"><i class="fas fa-pencil-alt"></i></a>
+            <a href="/client/Recruitment_delete/<%=d.id%>" class="btn btn-danger shadow btn-xs sharp me-1"><i class="fas fa-trash"></i></a>
+        </td>
+    </tr>
+    <%}) %>
+                </tbody>
+              </table>
+            </div>
+			</div>
+        </div>
+                    </div>
+                </div>
+              </div>
+            </div>
+            
+            <%- include( '../main/footer.ejs' ) %>
+<script>
+
+$(document).ready(function() {
+   $("#li-clients").addClass('active');
+$("#masterMain").addClass('active');
+$('#masterMain').addClass('show');
+});
+
+
+    $('#employees123').DataTable({
+        "aaSorting": [[1,'asc']],
+        "pageLength": 100
+    });
+</script>
+

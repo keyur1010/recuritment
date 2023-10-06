@@ -1,0 +1,108 @@
+<%- include( '../main/header.ejs' ) %>
+<%- include( '../main/clientLoginsidebar.ejs' ) %>
+<div class="content-body">
+    <div class="container-fluid">
+        
+        <div class="row page-titles">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item active"><a href="javascript:void(0)">Recruitment</a></li>
+                <li class="breadcrumb-item"><a href="javascript:void(0)">Add New Recruitment</a></li>
+            </ol>
+        </div>
+               <div class="row">
+                    <div class="col-12">
+                        <div class="card card-outline-info">
+                            <div class="card-header">
+                                 <button type="button" class="btn btn-primary btn-sm"><i class="fa fa-arrow-left"></i><a href="/client/recruitmentView" class="text-white"><i class="" aria-hidden="true"></i>  Recruitment List</a></button>
+                            </div>
+                    <div class="card-body">
+                      <form role="form" action="/client/saveRecruitment" method="post"  class="form-valide-with-icon needs-validation" novalidate="">
+         
+                      <div class="row ">
+                        <div class="form-group col-md-4">
+                          <label class="text-label">Department*</label>
+                          <select class="form-control" name="recruit_department" id="recruit_department" required>
+                              <option value="">-Select Department-</option>
+                              <% depart.forEach(function(d,index){%>
+                                <option value="<%=d.department_name%>"><%=d.department_name%></option>
+
+                                <%}) %>
+                          </select>
+                        </div>
+                      <div class="form-group col-md-2 mt-2">
+                          <label>No. of Positions*</label>
+                          <input type="number" name="no_position" class="form-control" placeholder="No. of Positions" min="0" autocomplete="off" required> 
+                      </div> 
+                      <hr>
+                      <span class="col-12 text-info text-center"><h4>CLIENT GROUP EXPERIENCE</h4></span>
+                      <% industry.forEach(function(indust,index){%>
+                        <div class="form-group col-md-2 col-sm-4 form-check mb-2">
+                        <input type="checkbox" class="form-check-input" name="recruit_industry[]" id="candidate_industry_<%= indust.id %>" value="<%=indust.id%>">
+                        <label class="form-check-label" for="candidate_industry_<%=indust.id%>"><%=indust.industry_name%></label>
+                      </div>
+                    <%}) %>
+
+                      
+
+                    <hr>
+                    <span class="col-12 text-info text-center"><h4>SKILLS</h4></span>
+                    <% skills.forEach(function(skill,index){%>
+
+                      <div class="form-group col-md-2 col-sm-4 form-check mb-2">
+                        <input type="checkbox" class="form-check-input" name="recruit_skills[]" id="recruit_skills_<%=skill.id%>" value="<%=skill.id%>">
+                        <label class="form-check-label" for="recruit_skills_<%=skill.id%>"><%=skill.skill_name%></label>
+                      </div>
+                      <% }) %>
+                      <hr>
+                      <div class="col-12 mt-4"></div>
+                      <div class="form-group col-md-3 col-sm-4">
+                        <label>Current Hourly Rate</label>
+                        <input type="text" class="form-control" id="current_salary" name="current_salary" placeholder="Current Hourly Rate"  autocomplete="off">
+                      </div>
+                      <div class="form-group col-md-3 col-sm-4">
+                        <label>Desired Hourly Rate</label>  
+                        <input type="text" placeholder="Desired Hourly Rate" class="form-control" id="desired_salary" name="desired_salary" autocomplete="off">
+                      </div> 
+                    </div>
+                               
+        
+                    <hr>
+                    <div  class="form-group col-md-12">
+                    <button style="float: right;" id="btnSubmit"  onClick="return validateForm()"    type="submit" class="btn btn-primary btn-sm">Save </button>
+                    </div>
+                </form>
+            
+            </div>
+     </div>
+                    </div>
+                </div>
+              </div>
+            </div>
+
+            <%- include( '../main/footer.ejs' ) %>
+
+
+
+
+<script>
+
+$(document).ready(function() {
+   $("#li-clients").addClass('active');
+$("#masterMain").addClass('active');
+$('#masterMain').addClass('show');
+
+
+
+});
+
+
+
+ function validateForm() 
+    {   
+
+       return confirm("Are you sure to submit data");
+       
+    }
+
+
+</script>

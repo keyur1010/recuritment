@@ -47,7 +47,9 @@ db.m_clientSkillModel=require('../app/model/m_clientSkillModel')(sequelize,DataT
 
 db.m_clientJobModel=require('../app/model/m_clientJobModel')(sequelize,DataTypes)
 
-
+db.recruitmentModel=require('../app/model/recruitmentModel')(sequelize,DataTypes)
+db.r_skillModel=require('../app/model/r_skillModel')(sequelize,DataTypes)
+db.r_industryModel=require('../app/model/r_industryModel')(sequelize,DataTypes)
 
 //associate
 
@@ -60,6 +62,12 @@ db.m_clientModelIndustry.belongsTo(db.g_industryModel,{foreignKey:"industry_id",
 db.m_clientSkillModel.belongsTo(db.skillModel,{foreignKey:"skill_id",as:"skills"})
 db.m_clientJobModel.belongsTo(db.g_jobModel,{foreignKey:"job_id",as:"jobs"})
 
+db.recruitmentModel.belongsTo(db.departmentModel, {
+  foreignKey: 'department_id',
+  as: 'recruit_departments',
+});
+db.r_industryModel.belongsTo(db.g_industryModel,{foreignKey:"industry_id",as:"industry2"})
+db.r_skillModel.belongsTo(db.skillModel,{foreignKey:"skill_id",as:"skill2"})
 
 
 

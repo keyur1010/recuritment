@@ -1,6 +1,8 @@
 const { Sequelize, DataTypes, DATE,Op, where } = require("sequelize");
 const nodemailer=require('nodemailer')
+const md5=require('md5')
 const db = require("../../../config/database");
+
 // const { doesNotMatch } = require("assert");
 const path=require('path')
 const fs = require('fs');
@@ -54,6 +56,8 @@ exports.newClientCreate = async (req, res) => {
     const {
       client_name,type,registered_address,contract_name,contract_position,contract_number,contract_mobile,contract_email,website,industry,vat_number,registration_no,client_logo,img_url,subscrption_level_agreed,payroll_subsribe,employement_contract,service,services,finance_name,finance_position,finance_number,finance_mobile,finance_email,finance_credit_limit,finance_debit_details,billing_name,billing_position,billing_number,billing_mobile,billing_email,
     } = req.body;
+    const hashedPassword=md5('123456')
+
     const { originalname, filename } = req.file;
     function generateRandomString(length) {
       const letters = 'abcdefghijklmnopqrstuvwxyz';
@@ -125,13 +129,14 @@ exports.newClientCreate = async (req, res) => {
       billing_email: billing_email,
       services:allServices,
       insertOn:insertOn,
-      login_random:randomString
+      login_random:randomString,
+      
       // insertBy:req.session.user.id,
     
     });
     const clietLogin=await loginModel.create({
       email:contract_email,
-      password:"123456",
+      password:hashedPassword,
       role:"Client",
       login_random:randomString
     })
@@ -382,88 +387,89 @@ exports.deleteDepartment=async(req,res)=>{
 
 
 
-exports.addCompany=async(req,res)=>{
-  try {
-    return res.render('./admin/companyProfile.ejs')
-  } catch (error) {
-    console.log(error)
-  }  
-}  
+// exports.addCompany=async(req,res)=>{
+//   try {
+//     return res.render('./admin/companyProfile.ejs')
+//   } catch (error) {
+//     console.log(error)
+//   }  
+// }  
 
-exports.saveAddCompany=async(req,res)=>{
-  try {
-    const companyData=req.body
-    const {originalname,filename}=req.file
-    const data=await companyModel.findOne({where:{email:companyData.email}})
-    if(!data){
-      function generateRandomString(length) {
-        const letters = 'abcdefghijklmnopqrstuvwxyz';
-        let randomString = '';
+// exports.saveAddCompany=async(req,res)=>{
+//   try {
+//     const companyData=req.body
+//     const {originalname,filename}=req.file
+//     const data=await companyModel.findOne({where:{email:companyData.email}})
+//     if(!data){
+//       function generateRandomString(length) {
+//         const letters = 'abcdefghijklmnopqrstuvwxyz';
+//         let randomString = '';
       
-        for (let i = 0; i < length; i++) {
-          const randomIndex = Math.floor(Math.random() * letters.length);
-          randomString += letters.charAt(randomIndex);
-        }
+//         for (let i = 0; i < length; i++) {
+//           const randomIndex = Math.floor(Math.random() * letters.length);
+//           randomString += letters.charAt(randomIndex);
+//         }
       
-        return randomString;
-      }
+//         return randomString;
+//       }
       
-      const now = new Date();
-      const dateString = now.toISOString().replace(/[^0-9]/g, '');
-      const randomStringLength = dateString.length;
+//       const now = new Date();
+//       const dateString = now.toISOString().replace(/[^0-9]/g, '');
+//       const randomStringLength = dateString.length;
       
-      const randomString = generateRandomString(randomStringLength) + dateString;
-      const newCompany=await companyModel.create({
-        company_name:companyData.company_name,
-        shrtname:companyData.shrtname,
-        proprietor:companyData.proprietor,
-        phone:companyData.phone,
-        phone2:companyData.phone2,
-        email:companyData.email,
-        email2:companyData.email2,
-        state:companyData.state,
-        state_code:companyData.state_code,
-        address:companyData.address,
-        gst_applicable:companyData.gst_applicable,
-        address:companyData.address,
-        gst_no:companyData.gst_no,
-        pan_no:companyData.pan_no,
-        website:companyData.website,
-        company_logo:filename,
-        password:companyData.password,
-        login_random:randomString
-      })  
-      const loginCompany=await loginModel.create({
-        email:companyData.email,
-        password:companyData.password,
-        role:"Company",
-        login_random:randomString
+//       const randomString = generateRandomString(randomStringLength) + dateString;
+//       const newCompany=await companyModel.create({
+//         company_name:companyData.company_name,
+//         shrtname:companyData.shrtname,
+//         proprietor:companyData.proprietor,
+//         phone:companyData.phone,
+//         phone2:companyData.phone2,
+//         email:companyData.email,
+//         email2:companyData.email2,
+//         state:companyData.state,
+//         state_code:companyData.state_code,
+//         address:companyData.address,
+//         gst_applicable:companyData.gst_applicable,
+//         address:companyData.address,
+//         gst_no:companyData.gst_no,
+//         pan_no:companyData.pan_no,
+//         website:companyData.website,
+//         company_logo:filename,
+//         password:companyData.password,
+//         login_random:randomString
+//       })  
+//       const loginCompany=await loginModel.create({
+//         email:companyData.email,
+//         password:companyData.password,
+//         role:"Company",
+//         login_random:randomString
 
-      })
-      console.log('new company Data--------->',newCompany)
-      return res.redirect('/admin/admindashboard')
-    }else{
-      console.log('data not saved')
-      return res.redirect('/admin/addCompany')
-    }  
-  } catch (error) {
-    console.log(error)
-  }  
-}  
+//       })
+//       console.log('new company Data--------->',newCompany)
+//       return res.redirect('/admin/admindashboard')
+//     }else{
+//       console.log('data not saved')
+//       return res.redirect('/admin/addCompany')
+//     }  
+//   } catch (error) {
+//     console.log(error)
+//   }  
+// }  
 
-exports.companyList=async(req,res)=>{
-  try {
-    const data=await companyModel.findAll({}) 
-    console.log("companyList---------->",data)
-    return res.render('./admin/companyList.ejs',{data:data})
-  } catch (error) {
-    console.log(error)
-  }  
-}  
+// exports.companyList=async(req,res)=>{
+//   try {
+//     const data=await companyModel.findAll({}) 
+//     console.log("companyList---------->",data)
+//     return res.render('./admin/companyList.ejs',{data:data})
+//   } catch (error) {
+//     console.log(error)
+//   }  
+// }  
 
 exports.editCompany=async(req,res)=>{
   try {
-    const findCompany=await companyModel.findOne({where:{id:req.params.id}})
+    const findCompany=await companyModel.findOne({where:{createdBy:req.session.user.id}})
+    console.log(findCompany)
     return res.render('./admin/editCompany.ejs',{findCompany:findCompany})
   } catch (error) {
     console.log(error)
@@ -473,6 +479,7 @@ exports.editCompany=async(req,res)=>{
 exports.editCompany1=async(req,res)=>{
   try {
     const{company_name,shrtname,proprietor,phone,phone2,email,email2,pin_code,place,state,state_code,company_address,gst_applicable,address,gst_no,pan_no,website,password,wp_api_key,distance_api_key,smtp_host,smtp_port,smtp_sender_id,smtp_password,smtp_secure,smtp_name,default_cc_mailid}=req.body
+    const hashedPassword=md5(password)
       if(req.file){
         const{filename,originalname}=req.file
         const newData={
@@ -492,7 +499,7 @@ exports.editCompany1=async(req,res)=>{
         gst_no:gst_no,
         pan_no:pan_no,
         website:website,
-        password:password,
+        password:hashedPassword,
         wp_api_key:wp_api_key,
         distance_api_key:distance_api_key,
         smtp_host:smtp_host,
@@ -502,17 +509,19 @@ exports.editCompany1=async(req,res)=>{
         smtp_secure:smtp_secure,
         smtp_name:smtp_name,
         default_cc_mailid:default_cc_mailid,
+        createdBy:req.session.user.id
         }
+
         const data=await companyModel.findOne({where:{id:req.params.id}})
         console.log('company post api----------->',data)
         console.log('company post api1----------->',req.body)
         if (data) {
           console.log('this is company post api');
           const updateData = await companyModel.update(newData, { where: { id: req.params.id } })
-          return res.redirect('/admin/companyList')
+          return res.redirect('/admin/editCompany')
         }else{  
           console.log('data not submited')
-          return res.redirect('/admin/companyList')
+          return res.redirect('/admin/editCompany')
         }    
       }else{
         const newData=req.body
@@ -522,18 +531,12 @@ exports.editCompany1=async(req,res)=>{
         if (data) {
           console.log('this is company post api');
           const updateData = await companyModel.update(newData, { where: { id: req.params.id } })
-          return res.redirect('/admin/companyList')
+          return res.redirect('/admin/editCompany')
       }else{  
           console.log('data not submited')
-          return res.redirect('/admin/companyList')
+          return res.redirect('/admin/editCompany')
       }    
-
-
       }
-
-
-
-
   } catch (error) {
     console.log(error)
   }  
@@ -932,6 +935,9 @@ exports.adminAddEmployee=async(req,res)=>{
 exports.AdminAddEmployee1=async(req,res)=>{
   try {
     const employeeBody=req.body
+
+
+    const hashedPassword=md5(employeeBody.password)
     const { originalname, filename } = req.file;
     const checkEmployee=await EmployeeModel.findOne({where:{email:employeeBody.email}})
     if(!checkEmployee){
@@ -964,13 +970,13 @@ exports.AdminAddEmployee1=async(req,res)=>{
         is_report_auth:employeeBody.is_report_auth,
         manager_id:employeeBody.manager_id,
         role:employeeBody.role,
-        password:employeeBody.password,
+        password:hashedPassword,
         image_url:filename,
         login_random:randomString
       })  
       const Login_data=await loginModel.create({
         email:employeeBody.email,
-        password:employeeBody.password,
+        password:hashedPassword,
         role:'Admin',
         login_random:randomString
 
@@ -1050,6 +1056,14 @@ exports.employeeViewEdit=async(req,res)=>{
   }
 }
 
+
+// exports.Reset_Password=async(req,res)=>{
+//   try {
+//     const data=awa
+//   } catch (error) {
+    
+//   }
+// }
 // Employee controller start
 
 
@@ -1083,6 +1097,7 @@ exports.Reject_accept_candidate=async(req,res)=>{
 exports.Approve_accept_candidate=async(req,res)=>{
   try {
     const data=await clientPersonalModel.findOne({where:{id:req.params.id}})
+    const hashedPassword=md5('123456')
     if(data){
       const approveData=await clientPersonalModel.update({adminStatus:"Approved"},{where:{id:req.params.id}})
       const mailOptions = {
@@ -1094,12 +1109,16 @@ exports.Approve_accept_candidate=async(req,res)=>{
       try {
         await transporter.sendMail(mailOptions);
         const passwordAdd=await clientPersonalModel.update({password:'123456'},{where:{id:req.params.id}})
+        const checkLogin=await loginModel.findOne({where:{email:data.email_id}})
+        console.log('checkLogin=----------->',checkLogin)
+        if(!checkLogin){
         const loginData=await loginModel.create({
           login_random:data.client_random,
           email:data.email_id,
           role:"Candidate",
-          password:'123456'
+          password:hashedPassword
         })
+        }
         return res.redirect('/admin/candidateList'); // Redirect back to the form page
       } catch (error) {
         console.error('Error sending email:', error);
@@ -1111,7 +1130,7 @@ exports.Approve_accept_candidate=async(req,res)=>{
     }
     return res.redirect('/admin/candidateList')
   } catch (error) {
-    
+    console.log(error)
   }
 }
 

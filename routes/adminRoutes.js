@@ -34,11 +34,11 @@ router.post('/editDepartment1/:id',adminController.editDepartment1)
 router.get('/deleteDepartment/:id',adminController.deleteDepartment)
 
 
-router.get('/addCompany',adminController.addCompany)
-router.post('/saveAddCompany',upload.single('company_logo'),adminController.saveAddCompany)
-router.get('editCompany/:id',adminController.editCompany)
-router.get('/companyList',adminController.companyList)
-router.get('/editCompany/:id',adminController.editCompany)
+// router.get('/addCompany',adminController.addCompany)
+// router.post('/saveAddCompany',upload.single('company_logo'),adminController.saveAddCompany)
+// router.get('editCompany/:id',adminController.editCompany)
+// router.get('/companyList',adminController.companyList)
+router.get('/editCompany',adminController.editCompany)
 router.post('/editCompany1/:id',upload.single('company_logo'),adminController.editCompany1)
 
 
