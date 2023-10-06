@@ -35,7 +35,7 @@ exports.m_newClientCreate=async(req,res)=>{
         const {
           client_name,type,registered_address,contract_name,contract_position,contract_number,contract_mobile,contract_email,website,industry,vat_number,registration_no,client_logo,img_url,subscrption_level_agreed,payroll_subsribe,employement_contract,service,services,finance_name,finance_position,finance_number,finance_mobile,finance_email,finance_credit_limit,finance_debit_details,billing_name,billing_position,billing_number,billing_mobile,billing_email,
         } = req.body;
-         const hashedPassword=md5(req.body.password)
+         const hashedPassword=md5('123456')
         const { originalname, filename } = req.file;
         function generateRandomString(length) {
           const letters = 'abcdefghijklmnopqrstuvwxyz';
