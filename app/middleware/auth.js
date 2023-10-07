@@ -48,26 +48,16 @@ exports.login = async (req, res, next) => {
         if (req.session.user) {
             console.log('this is middleware req.session',req.session.user.role)
             if(req.session.user.role=="Super Admin"){
-                console.log('this is super admin')
-                next()
+                if(req.session.user.role!="Super Admin"){
+                    console.log('this is super admin')
+                    return res.redirect('/')
+                }else{
+
+                    next()
+                }
                 // return res.redirect('/admin/admindashboard')
             }
-            else if (req.session.user.role=="Admin"){
-                console.log('this is a admin')
-                next()
-
-                // return res.redirect('/m_admin/admin')
-            }else if(req.session.user.role=='Client'){
-                console.log('This is a Client')
-                next()
-
-                // return res.redirect('/client/client')
-            }else if(req.session.user.role=='Candidate'){
-                console.log('This is a Candidate')
-                next()
-
-                // return res.redirect('/candidate/candidate')
-            }else{
+           else{
                 console.log('here nobody mention this ')
                 // next()
                 return res.redirect('/')

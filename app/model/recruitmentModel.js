@@ -18,6 +18,9 @@ module.exports=(sequelize,DataTypes)=>{
         desired_salary:{
             type:DataTypes.INTEGER
         },
+        recruit_skills:{
+            type:DataTypes.STRING
+        },
         r_random:{
             type:DataTypes.STRING
         },

@@ -1,5 +1,14 @@
 <%- include( '../main/header.ejs' ) %>
 <%- include( '../main/sidebar.ejs' ) %>
+<script>
+    function formatDate(dateString) {
+      const date = new Date(dateString);
+      const day = date.getDate();
+      const month = date.getMonth() + 1; // Months are zero-based, so add 1
+      const year = date.getFullYear();
+      return `${day}/${month}/${year}`;
+    }
+  </script>
 <div class="content-body">
     <div class="container-fluid">
         
@@ -72,22 +81,29 @@
                                             </tr>
                                         </thead>
                                         
-                                        
                                         <tbody>
                                             <% year_Data.forEach(function(data) { %>
-
-                                            <tr>
-                                               
-                                                <td><%=data.year_name%></td>
-                                                <td><%=data.year_start_date%></td>
-                                                <td><%=data.year_end_date%></td>
-                                                <td class="jsgrid-align-center ">
-                                                    <a href="/admin/edit_fin_year/<%=data.id%>" title="Edit" class="btn btn-sm btn-primary "><i class="fa fa-edit"></i></a>
-                                                    <a onclick="return confirm('Are you sure to delete this data?')" href="/admin/Delete_fin_year/<%=data.id%>" title="Delete" class="btn btn-sm btn-danger "><i class="fa fa-trash"></i></a>
+                                              <tr>
+                                                <td><%= data.year_name %></td>
+                                                <td>
+                                                    <% const startDate = new Date(data.year_start_date); %>
+                                                    <% const formattedStartDate = String(startDate.getDate()).padStart(2, '0') + '/' + String(startDate.getMonth() + 1).padStart(2, '0') + '/' + startDate.getFullYear(); %>
+                                                    <%= formattedStartDate %>
+                                                  </td>
+                                                  <td>
+                                                    <% const endDate = new Date(data.year_end_date); %>
+                                                    <% const formattedEndDate = String(endDate.getDate()).padStart(2, '0') + '/' + String(endDate.getMonth() + 1).padStart(2, '0') + '/' + endDate.getFullYear(); %>
+                                                    <%= formattedEndDate %>
+                                                  </td>
+                                                  
+                                                <td class="jsgrid-align-center">
+                                                  <a href="/admin/edit_fin_year/<%= data.id %>" title="Edit" class="btn btn-sm btn-primary"><i class="fa fa-edit"></i></a>
+                                                  <a onclick="return confirm('Are you sure to delete this data?')" href="/admin/Delete_fin_year/<%= data.id %>" title="Delete" class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></a>
                                                 </td>
-                                            </tr>
-                                            <%})%>
-                                        </tbody>
+                                              </tr>
+                                            <% }) %>
+                                          </tbody>
+                                          
                                     </table>
                                 </div>
                             </div>
@@ -98,10 +114,13 @@
         </div>
 <%- include( '../main/footer.ejs' ) %>
 
-    <script>
-$(document).ready(function() {
-   $("#li-fin_years").addClass('active');
-$("#masterMain").addClass('active');
-$('#masterMain').addClass('show');
-});
+<!-- Define formatDate function outside the $(document).ready() function -->
+<script>
+ 
+
+  $(document).ready(function() {
+    $("#li-fin_years").addClass('active');
+    $("#masterMain").addClass('active');
+    $('#masterMain').addClass('show');
+  });
 </script>

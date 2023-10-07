@@ -186,22 +186,33 @@ exports.saveRecruitment=async(req,res)=>{
     
     const randomString = generateRandomString(randomStringLength) + dateString;
 
+    const skillsData = [];
+    for (var i = 0; i < recruitmentBody.recruit_skills.length; i++) {
+      skillsData.push({
+        skill_id: recruitmentBody.recruit_skills[i],
+        // Add any other skill-related properties here
+      });
+    }
+    console.log('skilldata------->',skillsData)
+    const skillsDataJSON = JSON.stringify(skillsData);
+
     const addRecruitment=await recruitmentModel.create({
       recruit_department:recruitmentBody.recruit_department,
       no_position:recruitmentBody.no_position,
       current_salary:recruitmentBody.current_salary,
       desired_salary:recruitmentBody.desired_salary,
+      recruit_skills:skillsDataJSON,
       client_name:req.session.user.email,
       r_random:randomString
     })
     
    
-    for(var i=0;i<recruitmentBody.recruit_skills.length;i++){
-      const r_skill=await r_skillModel.create({
-        skill_id:recruitmentBody.recruit_skills[i],
-        r_random:randomString,
+    // for(var i=0;i<recruitmentBody.recruit_skills.length;i++){
+    //   const r_skill=await r_skillModel.create({
+    //     skill_id:recruitmentBody.recruit_skills[i],
+    //     r_random:randomString,
 
-      })
+    //   })
     for(var i=0;i< recruitmentBody.recruit_industry.length;i++){
       const r_industry=await r_industryModel.create({
         industry_id:recruitmentBody.recruit_industry[i],
@@ -210,7 +221,7 @@ exports.saveRecruitment=async(req,res)=>{
     }
    
       
-    }
+    // }
 return res.redirect('/client/recruitmentView')
 
   } catch (error) {

@@ -6,6 +6,7 @@ const session = require('express-session')
 const bodyParser = require('body-parser')
 const path=require('path')
 const md5=require('md5')
+const flash=require('connect-flash')
 // const fileUpload = require('express-fileupload')
 
 app.use(bodyParser.json())
@@ -27,6 +28,7 @@ app.use(session({
         maxAge: 24 * 60 * 60 * 1000
     }
 }));
+app.use(flash())
 const upload=multer({dest:'../../uploads'})
 // app.use(fileUpload())
 require('../recruit_portal/config/database')

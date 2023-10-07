@@ -3,7 +3,7 @@ const db = require("../../../config/database");
 const md5=require('md5')
 
 
-
+const loginModel=db.loginModel
 const clientModel = db.clientModel;
 
 

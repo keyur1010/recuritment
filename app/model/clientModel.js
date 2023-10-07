@@ -21,7 +21,7 @@ module.exports=(sequelize,DataTypes)=>{
             type:DataTypes.STRING
         },
         contract_number:{
-            type:DataTypes.INTEGER,
+            type:DataTypes.BIGINT,
             unique: true,
            
         },

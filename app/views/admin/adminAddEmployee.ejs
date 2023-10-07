@@ -216,3 +216,28 @@
         }
     });
 </script>
+
+<script>
+    $(document).ready(function() {
+      // Reference the file input element for the "Image" field
+      const fileInput = document.querySelector('input[name="image_url"]');
+    
+      // Add an event listener to the file input's change event
+      fileInput.addEventListener('change', function() {
+        // Get the selected file from the input
+        const selectedFile = this.files[0];
+    
+        // Check if a file is selected
+        if (selectedFile) {
+          // Check if the file size exceeds 5MB (5 * 1024 * 1024 bytes)
+          if (selectedFile.size > 5 * 1024 * 1024) {
+            alert('File size exceeds the maximum allowed (5MB).');
+            // Clear the file input to prevent submission
+            this.value = '';
+          }
+        }
+      });
+    });
+    </script>
+    
+

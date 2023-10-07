@@ -18,7 +18,7 @@
             <button type="button" class="btn btn-primary btn-sm">
               <i class="fa fa-arrow-left"></i
               ><a href="/m_admin/m_clientList" class="text-white"
-                ><i class="" aria-hidden="true"></i> Customer List</a
+                ><i class="" aria-hidden="true"></i> Client List</a
               >
             </button>
             <!-- <button type="button" class="btn btn-primary btn-sm"><i class="fa fa-arrow-left"></i><a href="<?php echo base_url(); ?>clients" class="text-white"><i class="" aria-hidden="true"></i>  Customer List</a></button> -->
@@ -516,7 +516,62 @@
 </div>
 
 <%- include( '../main/footer.ejs' ) %>
+<script>
+  $(document).ready(function () {
+    $("#contract_mobile").on("input", function () {
+      // Get the input value
+      var inputValue = $(this).val();
 
+      // Use a regular expression to allow only numeric input
+      var numericInput = inputValue.replace(/\D/g, "");
+
+      // Update the input field with the numeric value
+      $(this).val(numericInput);
+    });
+  });
+</script>
+<script>
+  $(document).ready(function() {
+    // Reference the file input element for the "Client Logo" field
+    const fileInput = document.querySelector('input[name="client_logo"]');
+  
+    // Add an event listener to the file input's change event
+    fileInput.addEventListener('change', function() {
+      // Get the selected file from the input
+      const selectedFile = this.files[0];
+  
+      // Check if a file is selected
+      if (selectedFile) {
+        // Check if the file size exceeds 5MB (5 * 1024 * 1024 bytes)
+        if (selectedFile.size > 5 * 1024 * 1024) {
+          alert('File size exceeds the maximum allowed (5MB).');
+          // Clear the file input to prevent submission
+          this.value = '';
+        }
+      }
+    });
+  });
+  </script>
+  <script>
+    function img_pathUrl(input) {
+      const selectedFile = input.files[0];
+  
+      // Check if a file is selected
+      if (selectedFile) {
+        // Check if the file size exceeds 8MB (8 * 1024 * 1024 bytes)
+        const maxSize = 5 * 1024 * 1024; // 8MB in bytes
+        if (selectedFile.size <= maxSize) {
+          // Create and display an object URL for the image
+          $("#img_url")[0].src = (window.URL ? URL : webkitURL).createObjectURL(selectedFile);
+        } else {
+          console.log('File size exceeds the maximum allowed (5MB).');
+          // Clear the file input to prevent submission
+          input.value = '';
+        }
+      }
+    }
+  </script>
+  
 <script>
   function fillstatecode() {
     var gstnum = $("#gst_no").val();
@@ -535,11 +590,11 @@
     $("#masterMain").addClass("show");
   });
 
-  function img_pathUrl(input) {
-    $("#img_url")[0].src = (window.URL ? URL : webkitURL).createObjectURL(
-      input.files[0]
-    );
-  }
+  // function img_pathUrl(input) {
+  //   $("#img_url")[0].src = (window.URL ? URL : webkitURL).createObjectURL(
+  //     input.files[0]
+  //   );
+  // }
 
   function validateForm() {
     return confirm("Are you sure to submit data");
@@ -647,6 +702,29 @@
     });
   });
 </script>
+<script>
+  $(document).ready(function() {
+    // Reference the file input element for the "Client Logo" field
+    const fileInput = document.querySelector('input[name="client_logo"]');
+  
+    // Add an event listener to the file input's change event
+    fileInput.addEventListener('change', function() {
+      // Get the selected file from the input
+      const selectedFile = this.files[0];
+  
+      // Check if a file is selected
+      if (selectedFile) {
+        // Check if the file size exceeds 5MB (5 * 1024 * 1024 bytes)
+        if (selectedFile.size > 5 * 1024 * 1024) {
+          alert('File size exceeds the maximum allowed (5MB).');
+          // Clear the file input to prevent submission
+          this.value = '';
+        }
+      }
+    });
+  });
+  </script>
+  
 
 <!--   <script>
     $(document).ready(function() {

@@ -16,6 +16,9 @@ exports.login = async (req, res, next) => {
             console.log('this is middleware req.session',req.session.user.role)
            
              if (req.session.user.role=="Admin"){
+                if(req.session.user.role!="Admin"){
+                    return res.redirect('/')
+                }
                 console.log('this is a admin')
                 next()
 
