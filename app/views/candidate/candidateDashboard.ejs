@@ -136,7 +136,7 @@
                                         <div class="tab-pane fade show active" id="profile" role="tabpanel">
                                             <div class="pt-4">
                                                 
-	  <form role="form" action="/candidate/updateCandidate1" method="post" enctype="multipart/form-data"  class="form-valide-with-icon needs-validation"  >  
+	  <form role="form" action="/candidate/updateCandidate1" method="post" enctype="multipart/form-data"  class="form-valide-with-icon needs-validation"  novalidate="" >  
 	        
            <div class="row">
             <div class="form-group col-md-6 col-sm-6">
@@ -260,7 +260,7 @@
           <hr>
            <div  class="form-group col-md-12">
            	<!-- <input type="hidden" class="form-control"  id="candidate_id"  name="candidate_id" placeholder="" autocomplete="off" value="<?php echo $cand_data->candidate_id; ?>"> -->
-          <button  id="btnSubmit"   onClick="return confirm('Are you sure to submit data!!!')"  type="submit" class="btn btn-success btn-sm">Update Profile</button>
+          <button  id="btnSubmit"   onClick="return confirm('Are you sure to submit data!!!')"  type="submit" class="btn btn-success btn-sm" >Update Profile</button>
 
 		<!-- <?php if(!empty($cand_data->upload_cv)) { ?> -->
 			<a class="btn btn-primary btn-sm" href="/candidate/downloadFile"  download><i class="fa fa-file"> </i> Download CV</a>
@@ -424,13 +424,14 @@
           <% AllSkill.forEach(function(skill) { %>
             <div class="form-group col-md-2 col-sm-4 form-check mb-2">
               <input type="checkbox" class="form-check-input" name="candidate_skills[]" id="candidate_skills_<%= skill.id %>" value="<%= skill.id %>"
-              <% if (SD.some(mSkill => mSkill.id === skill.id)) { %>
-                checked
+                <% if (skillsData.skill_id.includes(String(skill.id))) { %>
+                  checked
                 <% } %>
               >
               <label class="form-check-label" for="candidate_skills_<%= skill.id %>"><%= skill.skill_name %></label>
             </div>
           <% }) %>
+          
           
 
 

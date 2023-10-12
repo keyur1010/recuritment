@@ -31,7 +31,7 @@ router.post('/updateCandidate1',candidateauth.login,upload.fields([{name:"profil
 router.post('/updateCandidate2',candidateauth.login,candidateController.updateCandidate2)
 router.post('/updateCandidate3',candidateauth.login,candidateController.updateCandidate3)
 
-
+router.post('/updateCandidate4',candidateauth.login,candidateController.updateCandidate4)
 
 
 module.exports=router

@@ -9,25 +9,29 @@ const clientModel = db.clientModel;
 
 exports.adminDashboard=async(req,res)=>{
     try {
-        return res.render('./lowadmin/lowadmindashboard.ejs')
+        return res.render('./lowadmin/lowadmindashboard.ejs',{messages:req.flash()})
     } catch (error) {
         console.log(error)
     }
 }
 exports.simpleClient=async(req,res)=>{
     try {
-        return res.render('./lowadmin/clientAdd.ejs')
+        return res.render('./lowadmin/clientAdd.ejs',{messages:req.flash()})
     } catch (error) {
         console.log(error)
+        req.flash('error','Something Went Wrong')
+        return res.redirect('/login')
     }
 }
 exports.m_clientList=async(req,res)=>{
     try {
-        const clientData=await  clientModel.findAll({where:{isDeleted:0}})
+        const clientData=await  clientModel.findAll({where:{isDeleted:0,insertBy:req.session.user.id}})
 
-        return res.render('./lowadmin/adminclientList.ejs',{clientData:clientData})
+        return res.render('./lowadmin/adminclientList.ejs',{clientData:clientData,messages:req.flash()})
     } catch (error) {
         console.log(error)
+        req.flash('error','Something Went Wrong')
+        return res.redirect('/login')
     }
 }
 exports.m_newClientCreate=async(req,res)=>{
@@ -115,11 +119,13 @@ exports.m_newClientCreate=async(req,res)=>{
           login_random:randomString
         })
         // console.log("data---------->", data);
-        
+        req.flash('success','Client Added Successfully')
         
         return res.redirect('/m_admin/m_clientList');
       } catch (error) {
         console.log(error);
+        req.flash('error','Something Went Wrong')
+        return res.redirect('/login')
       }
 }
 
@@ -130,6 +136,7 @@ exports.m_approveBtn=async(req,res)=>{
         const updatebtn=await clientModel.update({admin_status:"Approved"},{where:{
           id:req.params.id
         }})  
+        req.flash('success','Client Approved')
         return res.redirect('/m_admin/m_clientList')
   
       }  
@@ -137,16 +144,20 @@ exports.m_approveBtn=async(req,res)=>{
         const updatebtn=await clientModel.update({admin_status:"Pending"},{where:{
           id:req.params.id
         }})  
+        req.flash('error','Now Client Is Pending')
         return res.redirect('/m_admin/m_clientList')
   
      
       }  
       else{
         console.log('error on update')
+        req.flash('error','Can Not DO Any Operation')
         return res.redirect('/m_admin/m_clientList')
       }  
     } catch (error) {
       console.log(error)
+      req.flash('error','Something Went Wrong')
+      return res.redirect('/login')
     }  
   }  
 
@@ -154,9 +165,12 @@ exports.m_approveBtn=async(req,res)=>{
 exports.m_clientDelete=async(req,res)=>{
     try {
         const data=await clientModel.update({isDeleted:1},{where:{id:req.params.id}})
+        req.flash('success','Client Deleted')
         return res.redirect('/m_admin/m_clientList')
       } catch (error) {
         console.log(error)
+        req.flash('error','Something Went Wrong')
+        return res.redirect('/login')
       }
 }
 
@@ -170,9 +184,11 @@ exports.m_clientEdit=async(req,res)=>{
       console.log(json_data)
         
         console.log('data',json_data)
-        return res.render('./lowadmin/m_clientEdit.ejs',{data:data,json_data:json_data})
+        return res.render('./lowadmin/m_clientEdit.ejs',{data:data,json_data:json_data,messages:req.flash()})
     } catch (error) {
       console.log(error)
+      req.flash('error','Something Went Wrong')
+      return res.redirect('/login')
     }
   }
 
@@ -216,6 +232,7 @@ exports.m_clientEdit=async(req,res)=>{
       const data=await clientModel.findOne({where:{id:req.params.id}})
       console.log('client edit 1------------->',data)
       const updateForm1=await clientModel.update(newBody,{ where: { id: req.params.id } })
+      req.flash('success','Client Edited Successfully')
       return res.redirect(`/m_admin/m_clientEdit/${req.params.id}`)
       }
       else{
@@ -224,10 +241,13 @@ exports.m_clientEdit=async(req,res)=>{
         const data=await clientModel.findOne({where:{id:req.params.id}})
         console.log('client edit 1------------->',data)
         const updateForm1=await clientModel.update(newBody,{ where: { id: req.params.id } })
+        req.flash('success','Client Edited Successfully')
         return res.redirect(`/m_admin/m_clientEdit/${req.params.id}`)
       }
     } catch (error) {
       console.log(error)
+      req.flash('error','Something Went Wrong')
+      return res.redirect('/login')
     }
   }
   exports.m_clientEdit2=async(req,res)=>{
@@ -236,9 +256,12 @@ exports.m_clientEdit=async(req,res)=>{
       const data=await clientModel.findOne({where:{id:req.params.id}})
       console.log('data2------------------>',data)
       const updateForm2=await clientModel.update(newData,{where:{id:req.params.id}})
+      req.flash('success','Client Edited Successfully')
       return res.redirect(`/m_admin/m_clientEdit/${req.params.id}`)
     } catch (error) {
       console.log(error)
+      req.flash('error','Something Went Wrong')
+      return res.redirect('/login')
     }
   }
   
@@ -249,9 +272,13 @@ exports.m_clientEdit=async(req,res)=>{
       const data=await clientModel.findOne({where:{id:req.params.id}})
       console.log('data3------------------>',data)
       const updateForm2=await clientModel.update(newData,{where:{id:req.params.id}})
+      req.flash('success','Client Edited Successfully')
+
       return res.redirect(`/m_admin/m_clientEdit/${req.params.id}`)
     } catch (error) {
       console.log(error)
+      req.flash('error','Something Went Wrong')
+      return res.redirect('/login')
     }
   }
   

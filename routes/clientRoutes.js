@@ -19,7 +19,11 @@ const upload = multer({ storage: storage });
 
 
 router.get('/client',clientController.clientPage)
-router.post('/saveCandidate',clientAuth.login,upload.fields([{name:"profile_image"},{name:"upload_cv"}]),clientController.clientLogin)
+router.post('/saveCandidate',upload.fields([{name:"profile_image"},{name:"upload_cv"}]),clientController.clientLogin)
+router.get('/thanku',clientController.thanku)
+
+
+
 
 router.get('/clientView',clientAuth.login,clientController.clientView)
 

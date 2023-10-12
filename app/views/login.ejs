@@ -49,6 +49,12 @@ body {
     border: none;
     display: none;
   }
+  #flash-message {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    z-index: 9999;
+  }
     @media (min-width: 1601px) {
     .font {
       font-size: 12px;
@@ -83,13 +89,33 @@ body {
     overflow: hidden;
   }
 </style>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var flashMessage = document.getElementById('flash-message');
 
+    // Check if the flash message element exists
+    if (flashMessage) {
+      // Automatically hide the flash message after 5 seconds
+      setTimeout(function () {
+        flashMessage.style.display = 'none';
+      }, 5000);
+    }
+  });
+</script>
 </head>
-<body>
 
-  
+<body>
+<!-- Add this to your EJS template to display flash messages -->
+
+
+
   
   <div class="container1">
+    <% if (messages.error) { %>
+      <div class="alert alert-danger" id="flash-message"><%= messages.error %></div>
+      <% } else if (messages.success) { %>
+        <div class="alert alert-success" id="flash-message"><%= messages.success %></div>
+      <% } %>
     <img src="/assests/images/complogo.jpeg" alt="" class="mCS_img_loaded" style="max-width: 50%;"><br>
     <span style="color: #ff564B; font-size: 35px; font-weight: 550;">welcome back</span><br><br>
     <span class="font" style="color: #413230;">Thank you for getting back, please login to your<br>account by filling these form:</span><br><br>
@@ -117,6 +143,7 @@ body {
             </a>
         </div>
     </div>
+    
 </div>
   
   <div class="container2">

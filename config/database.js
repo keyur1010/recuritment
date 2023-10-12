@@ -6,11 +6,11 @@ const sequelize = new Sequelize('recruit_portal', 'root', '', {
   dialect: 'mysql',
   logging:false,
   pool:{
-    max:50000,
+    max:500000,
     min:0,
-    acquire:30000,
-    idle:10000,
-    evict:1000
+    acquire:300000,
+    idle:100000,
+    evict:10000
   }
 });
 

@@ -183,6 +183,17 @@ module.exports=(sequelize,DataTypes)=>{
         driver:{
             type:DataTypes.STRING,
         },
+        skills:{
+            type:DataTypes.JSON,
+        },
+        jobs:{
+            type:DataTypes.JSON,
+
+        },
+        allIndustry:{
+            type:DataTypes.JSON,
+
+        },
       
 
     });

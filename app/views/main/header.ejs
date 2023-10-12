@@ -34,7 +34,15 @@
   <link href="/assets/vendor/datatables/css/jquery.dataTables.min.css" rel="stylesheet">
   <link rel="stylesheet" href="/assets/vendor/toastr/css/toastr.min.css">
      <link rel="stylesheet" href="/assets/vendor/select2/css/select2.min.css">
-  
+     <style>
+      /* Add CSS styles for the flash message */
+      #flash-message {
+        position: fixed;
+        top: 10px;
+        right: 10px;
+        z-index: 9999;
+      }
+      </style>
   <!-- Style css -->
     <link href="/assets/css/style.css" rel="stylesheet">
 
@@ -69,6 +77,12 @@
     <div id="main-wrapper">
 
 
+      <% if (messages.error) { %>
+      <div class="alert alert-danger" id="flash-message"><%= messages.error %></div>
+      <% } else if (messages.success) { %>
+        <div class="alert alert-success" id="flash-message"><%= messages.success %></div>
+      <% } %>
+            <div class="header-content">
 
       <div class="nav-header">
         <!-- <a href="<?php echo base_url(); ?>" class="brand-logo"> -->
@@ -89,7 +103,6 @@
                   
   
             <div class="header">
-            <div class="header-content">
                 <nav class="navbar navbar-expand">
                     <div class="collapse navbar-collapse justify-content-between">
                         <div class="header-left">
@@ -303,3 +316,17 @@
         </nav>
       </div>
     </div>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        var flashMessage = document.getElementById('flash-message');
+  
+        // Check if the flash message element exists
+        if (flashMessage) {
+          // Automatically hide the flash message after 5 seconds
+          setTimeout(function () {
+            flashMessage.style.display = 'none';
+          }, 5000);
+        }
+      });
+    </script>

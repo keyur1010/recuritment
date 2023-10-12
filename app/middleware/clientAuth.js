@@ -31,7 +31,7 @@ exports.login = async (req, res, next) => {
             // next()
         }
         else {
-            console.log('only  admin can view this')
+            console.log('only client can view this')
             // next()
             return res.redirect('/login')
         }

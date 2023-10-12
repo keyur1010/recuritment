@@ -8,47 +8,50 @@ exports.loginPage = async (req, res) => {
     console.log("login page");
     const data = await loginModel.findOne({ where: { role: "Super Admin" } });
     // console.log(data)
-    return res.render("./login.ejs", { data });
+    return res.render("./login.ejs", { data,messages:req.flash() });
   } catch (error) {
     console.log(error);
+    req.flash('error','Something Went Wrong')
+    return res.redierect('/login')
   }
 };
 exports.loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
     const checkUser = await loginModel.findOne({ where: { email: email } });
-    req.session.user = checkUser;
-    console.log(req.session.user);
+    
     if (!checkUser) {
-        console.log("invaild user email and password");
-        return res.redirect("/login");
-      } else {
-        if (md5(password) === checkUser.password) {
+      req.flash("error", "Invalid email & password");
+      return res.redirect("/login");
+    } else {
+      if (md5(password) === checkUser.password) {
+        req.session.user = checkUser;
         if (checkUser.role == "Super Admin") {
-          console.log("this is super admin");
+          req.flash("success", "Welcome, Super Admin!");
           return res.redirect("/admin/admindashboard");
         } else if (checkUser.role == "Admin") {
-          console.log("this is a admin");
+          req.flash("success", "Welcome, Admin!");
           return res.redirect("/m_admin/simpleAdmin");
         } else if (checkUser.role == "Client") {
-          console.log("This is a Client");
+          req.flash("success", "Welcome, Client!");
           return res.redirect("/client/clientView");
         } else if (checkUser.role == "Candidate") {
-          console.log("This is a Candidate");
+          req.flash("success", "Welcome, Candidate!");
           return res.redirect("/candidate/candidate");
         } else {
-          console.log("here nobody mention this ");
+          console.log("here nobody mentioned this role");
         }
-      }else{
-        console.log("password is incorrect");
-        return res.redirect("/");
+      } else {
+        req.flash("error", "Incorrect password");
+        return res.redirect("/login");
       }
-      }
+    }
     
-    console.log("created data -------------->", checkUser);
-    // return res.send(checkUser);
+    // ...
   } catch (error) {
     console.log(error);
+    req.flash('error','Something Went Wrong')
+    return res.redirect('/login')
   }
 };
 
@@ -56,13 +59,19 @@ exports.logout = async (req, res) => {
   try {
     req.session.destroy((err) => {
       if (err) {
-        console.error("Error destroying session:", err);
-        res.sendStatus(500);
+        req.flash('error', 'Something Went Wrong');
+        return res.redirect('/login');
       } else {
-        res.redirect("/login"); // Redirect to the login page or any other desired page
+        // req.flash('error', 'Logout Successfully');
+        return res.redirect('/login');
       }
     });
+    
   } catch (error) {
     console.log(error);
+    req.flash('error','Something Went Wrong')
+    return res.redirect('/login')
+    
   }
 };
+

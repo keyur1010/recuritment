@@ -19,6 +19,7 @@ app.set('views', './app/views');
 app.use(express.json())
 // app.use(express.static(path.join(__dirname, "/public")))
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(flash())
 
 app.use(session({
     secret: 'thisiskey',
@@ -28,7 +29,6 @@ app.use(session({
         maxAge: 24 * 60 * 60 * 1000
     }
 }));
-app.use(flash())
 const upload=multer({dest:'../../uploads'})
 // app.use(fileUpload())
 require('../recruit_portal/config/database')
@@ -39,6 +39,8 @@ const adminRoutes=require('./routes/adminRoutes')
 const simpleAdmin=require('./routes/simpleAdmin')
 const candidateRoutes=require('./routes/candidateRoute')
 app.use('/', loginRoutes)
+
+  
 app.use('/client',clientRoutes)
 app.use('/admin',adminRoutes)
 app.use('/m_admin',simpleAdmin)

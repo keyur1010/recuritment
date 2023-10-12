@@ -21,12 +21,12 @@ module.exports=(sequelize,DataTypes)=>{
             type:DataTypes.STRING
         },
         contract_number:{
-            type:DataTypes.BIGINT,
-            unique: true,
+            type:DataTypes.STRING,
+            // unique: true,
            
         },
         contract_mobile:{
-            type:DataTypes.INTEGER
+            type:DataTypes.STRING
         },
         contract_email:{
             type:DataTypes.STRING

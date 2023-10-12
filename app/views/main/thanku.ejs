@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body {
+      background-color: #004affcf; /* Background color remains constant */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .large-text {
+      font-size: 72px; /* Large text size */
+      font-weight: bold;
+      background: linear-gradient(90deg, yellow, orange, red); /* Gradient text color */
+      -webkit-background-clip: text; /* Clip text to the background gradient */
+      color: transparent; /* Make text transparent */
+      animation: text-color-change 5s infinite linear;
+    }
+
+    @keyframes text-color-change {
+      0% {
+        background-position: 0%;
+      }
+      100% {
+        background-position: 100%;
+      }
+    }
+
+    .large-smiley {
+      font-size: 100px;
+      animation: bounce 2s infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-20px);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="large-smiley">
+    😊
+  </div>
+  <pre><h1 class="large-text">Thank You!</h1>
+  <h2 class="large-text">We'll Reach You Soon</h2>
+  </pre>
+  
+
+</body>
+</html>

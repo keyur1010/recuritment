@@ -1,6 +1,15 @@
 
 <%- include( '../main/header.ejs' ) %>
 <%- include( '../main/sidebar.ejs' ) %>
+<script>
+    function formatDate(dateString) {
+      const date = new Date(dateString);
+      const day = date.getDate();
+      const month = date.getMonth() + 1; // Months are zero-based, so add 1
+      const year = date.getFullYear();
+      return `${day}/${month}/${year}`;
+    }
+  </script>
 <div class="content-body">
     <div class="container-fluid">
 
@@ -56,22 +65,33 @@
                                             <td>
                                                 <span class="btn bgl-secondary light btn-rounded btn-sm"><%=all.adminStatus%></span>
                                             </td>
-                                            <td><%=all.createdAt%></td>
                                             <td>
+                                                <% const endDate = new Date(all.createdAt); %>
+                                                <% const formattedEndDate = String(endDate.getDate()).padStart(2, '0') + '/' + String(endDate.getMonth() + 1).padStart(2, '0') + '/' + endDate.getFullYear(); %>
+                                                <%= formattedEndDate %>
+                                              </td>
+                                              <td>
                                                 <div class="dropdown text-center">
                                                     <div class="btn-link" data-bs-toggle="dropdown">
                                                         <i class="fa fa-ellipsis-h"></i>
                                                     </div>
                                                     <div class="dropdown-menu dropdown-menu-right">
-                                                        <!-- <a class="dropdown-item text-success" href="<?php echo base_url('candidate/profile/' . base64_encode($value->candidate_id)); ?>">
-                                                            <i class="far fa-eye me-1 text-success"></i>View Profile
-                                                        </a> -->
-                                                            <a class="dropdown-item text-black" href="/admin/Approve_accept_candidate/<%=all.id%>">
+                                                        <!-- Render "Accept" and "Reject" buttons only if the status is not "approved" -->
+                                                        <% if (all.adminStatus !== 'Approved') { %>
+                                                            <a class="dropdown-item text-black accept-button" href="/admin/Approve_accept_candidate/<%=all.id%>">
                                                                 <i class="far fa-check-circle me-1 text-success"></i>Accept Application
                                                             </a>
-                                                            <a class="dropdown-item text-black" href="/admin/Reject_accept_candidate/<%=all.id%>">
+                                                            <a class="dropdown-item text-black reject-button" href="/admin/Reject_accept_candidate/<%=all.id%>">
                                                                 <i class="far fa-times-circle me-1 text-danger"></i>Reject Application
                                                             </a>
+                                                        <% }else{%>
+                                                            <!-- <a class="dropdown-item text-black accept-button" href="/admin/Approve_accept_candidate/<%=all.id%>">
+                                                                <i class="far fa-check-circle me-1 text-success"></i>Accept Application
+                                                            </a> -->
+                                                            <a class="dropdown-item text-black reject-button" href="/admin/Reject_accept_candidate/<%=all.id%>">
+                                                                <i class="far fa-times-circle me-1 text-danger"></i>Reject Application
+                                                            </a>
+                                                      <%  } %>
                                                     </div>
                                                 </div>
                                             </td>
@@ -115,14 +135,22 @@
                                             </td>
                                             <td><%=PD.email_id%></td>
                                             <td><%=PD.advert_ref%></td>
-                                            <td><%=PD.candidate_dob%></td>
+                                            <td>
+                                                <% const endDate11 = new Date(PD.candidate_dob); %>
+                                                <% const formattedEndDate11 = String(endDate11.getDate()).padStart(2, '0') + '/' + String(endDate11.getMonth() + 1).padStart(2, '0') + '/' + endDate11.getFullYear(); %>
+                                                <%= formattedEndDate11 %>
+                                              </td>
                                             <td><%=PD.current_position%></td>
                                             <td><%=PD.current_pay_status%></td>
                                             <td><%=PD.notice_period%></td>
                                             <td>
                                                 <span class="btn bgl-secondary light btn-rounded btn-sm"><%=PD.adminStatus%></span>
                                             </td>
-                                            <td><%=PD.createdAt %></td>
+                                            <td>
+                                                <% const endDate = new Date(PD.createdAt); %>
+                                                <% const formattedEndDate = String(endDate.getDate()).padStart(2, '0') + '/' + String(endDate.getMonth() + 1).padStart(2, '0') + '/' + endDate.getFullYear(); %>
+                                                <%= formattedEndDate %>
+                                              </td>
                                             <td>
                                                 <div class="dropdown text-center">
                                                     <div class="btn-link" data-bs-toggle="dropdown">
@@ -179,14 +207,22 @@
                                             </td>
                                             <td><%=AD.email_id%></td>
                                             <td><%=AD.advert_ref%></td>
-                                            <td><%=AD.candidate_dob%></td>
+                                            <td>
+                                                <% const endDate1 = new Date(AD.candidate_dob); %>
+                                                <% const formattedEndDate1 = String(endDate1.getDate()).padStart(2, '0') + '/' + String(endDate1.getMonth() + 1).padStart(2, '0') + '/' + endDate1.getFullYear(); %>
+                                                <%= formattedEndDate1 %>
+                                              </td>
                                             <td><%=AD.current_position%></td>
                                             <td><%=AD.current_pay_status%></td>
                                             <td><%=AD.notice_period%></td>
                                             <td>
                                                 <span class="btn bgl-secondary light btn-rounded btn-sm"><%=AD.adminStatus%></span>
                                             </td>
-                                            <td><%=AD.createdAt %></td>
+                                            <td>
+                                                <% const endDate = new Date(AD.createdAt); %>
+                                                <% const formattedEndDate = String(endDate.getDate()).padStart(2, '0') + '/' + String(endDate.getMonth() + 1).padStart(2, '0') + '/' + endDate.getFullYear(); %>
+                                                <%= formattedEndDate %>
+                                              </td>
                                             <td>
                                                 <div class="dropdown text-center">
                                                     <div class="btn-link" data-bs-toggle="dropdown">
@@ -194,9 +230,7 @@
                                                     </div>
                                                     <div class="dropdown-menu dropdown-menu-right  viewButton">
                                                     
-                                                            <a class="dropdown-item text-black accept-button" href=/admin/Approve_accept_candidate/<%=AD.id%>">
-                                                                <i class="far fa-check-circle me-1 text-success"></i>Accept Application
-                                                            </a>
+                                                           
                                                             <a class="dropdown-item text-black reject-button" href="/admin/Reject_accept_candidate/<%=AD.id%>">
                                                                 <i class="far fa-times-circle me-1 text-danger"></i>Reject Application
                                                             </a>
