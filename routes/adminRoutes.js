@@ -16,7 +16,8 @@ const storage = multer.diskStorage({
 
 
 const auth=require('../app/middleware/auth')
-const adminController=require('../app/controller/adminController/adminController')
+const adminController=require('../app/controller/adminController/adminController');
+const { candidateDashboard } = require('../app/controller/candidateController/candidateController');
 
 
 
@@ -114,8 +115,11 @@ router.post('/employeeViewEdit/:id',auth.login,upload.single('image_url'),adminC
 router.get('/candidateList',auth.login,adminController.candidateList)
 router.get('/Approve_accept_candidate/:id',auth.login,adminController.Approve_accept_candidate)
 router.get('/Reject_accept_candidate/:id',auth.login,adminController.Reject_accept_candidate)
-
-
+router.get('/candidateView/:id',adminController.candidateView)
+router.post('/updateCandidate1/:id',auth.login,adminController.updateCandidate1)
+router.post('/updateCandidate2/:id',auth.login,adminController.updateCandidate2)
+router.post('/updateCandidate3/:id',auth.login,adminController.updateCandidate3)
+router.post('/updateCandidate4/:id',auth.login,adminController.updateCandidate4)
 
 
 router.get('/clientList',auth.login,adminController.clientList)

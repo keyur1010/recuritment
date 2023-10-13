@@ -34,4 +34,9 @@ router.post('/updateCandidate3',candidateauth.login,candidateController.updateCa
 router.post('/updateCandidate4',candidateauth.login,candidateController.updateCandidate4)
 
 
+
+
+
+
+
 module.exports=router

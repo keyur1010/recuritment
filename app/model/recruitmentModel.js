@@ -19,7 +19,10 @@ module.exports=(sequelize,DataTypes)=>{
             type:DataTypes.INTEGER
         },
         recruit_skills:{
-            type:DataTypes.STRING
+            type:DataTypes.JSON
+        },
+        recruit_industry:{
+            type:DataTypes.JSON
         },
         r_random:{
             type:DataTypes.STRING

@@ -33,7 +33,7 @@
             >
               <div class="row">
                 <div class="form-group col-md-4">
-                  <label>Client Name</label>
+                  <label>Client Name</label><i class="text-danger">*</i>
                   <input
                     type="text"
                     class="form-control"
@@ -45,7 +45,7 @@
                   />
                 </div>
                 <div class="form-group col-md-4">
-                  <label>Type</label>
+                  <label>Type</label><i class="text-danger">*</i>
                   <select
                     name="type"
                     id="type"
@@ -58,7 +58,7 @@
                   </select>
                 </div>
                 <div class="form-group col-md-4">
-                  <label>Registered Address</label>
+                  <label>Registered Address</label><i class="text-danger">*</i>
                   <textarea
                     class="form-control"
                     id="registered_address"
@@ -71,7 +71,7 @@
 
                 <h6 class="text-info"><u>Contract Contact Details</u></h6>
                 <div class="form-group col-md-4">
-                  <label>Name</label>
+                  <label>Name</label><i class="text-danger">*</i>
                   <input
                     type="text"
                     class="form-control"
@@ -82,7 +82,7 @@
                   />
                 </div>
                 <div class="form-group col-md-4">
-                  <label>Position</label>
+                  <label>Position</label><i class="text-danger">*</i>
                   <input
                     type="text"
                     class="form-control"
@@ -93,7 +93,7 @@
                   />
                 </div>
                 <div class="form-group col-md-4">
-                  <label>Number</label>
+                  <label>Number</label><i class="text-danger">*</i>
                   <input
                     type="number"
                     class="form-control"
@@ -104,7 +104,7 @@
                   />
                 </div>
                 <div class="form-group col-md-4">
-                  <label>Mobile</label>
+                  <label>Mobile</label><i class="text-danger">*</i>
                   <input
                     type="tel"
                     class="form-control"
@@ -115,7 +115,7 @@
                   />
                 </div>
                 <div class="form-group col-md-4">
-                  <label>Email</label>
+                  <label>Email</label><i class="text-danger">*</i>
                   <input
                     type="email"
                     class="form-control"
@@ -128,7 +128,7 @@
 
                 <h6 class="text-info"><u>Other Details</u></h6>
                 <div class="form-group col-md-4">
-                  <label>Website</label>
+                  <label>Website</label><i class="text-danger">*</i>
                   <input
                     type="text"
                     class="form-control"
@@ -139,7 +139,7 @@
                   />
                 </div>
                 <div class="form-group col-md-4">
-                  <label>Industry</label>
+                  <label>Industry</label><i class="text-danger">*</i>
                   <input
                     type="text"
                     class="form-control"
@@ -150,7 +150,7 @@
                   />
                 </div>
                 <div class="form-group col-md-4">
-                  <label>VAT Number</label>
+                  <label>VAT Number</label><i class="text-danger">*</i>
                   <input
                     type="text"
                     class="form-control"
@@ -161,7 +161,7 @@
                   />
                 </div>
                 <div class="form-group col-md-4">
-                  <label>Company Registration Number</label>
+                  <label>Company Registration Number</label><i class="text-danger">*</i>
                   <input
                     type="text"
                     class="form-control"
@@ -173,7 +173,7 @@
                 </div>
 
                 <div class="form-group col-md-2">
-                  <label>Client Logo</label>
+                  <label>Client Logo</label><i class="text-danger">*</i>
                   <input
                     type="file"
                     class="form-file-input form-control"
@@ -195,7 +195,7 @@
                 </div>
 
                 <div class="form-group col-md-4">
-                  <label>Subscription level agreed</label>
+                  <label>Subscription level agreed</label> <i class="text-danger">*</i>
                   <input
                     type="text"
                     class="form-control"
@@ -207,51 +207,55 @@
                 </div>
 
                 <div class="form-group col-md-4">
-                  <label>Payroll Facility Subscribed</label>
+                  <label>Payroll Facility Subscribed</label><i class="text-danger">*</i>
                   <div class="form-check">
                     <input
                       class="form-check-input"
                       type="radio"
+                      id="payroll_subsribe"
                       name="payroll_subsribe"
                       value="Y"
                       required
                     />
-                    <label class="form-check-label"> YES </label>
+                    <label class="form-check-label" for="payroll_subsribe"> YES </label>
                   </div>
                   <div class="form-check">
                     <input
                       class="form-check-input"
                       type="radio"
+                      id="payroll_subsribe1"
                       name="payroll_subsribe"
                       value="N"
                       required
                     />
-                    <label class="form-check-label"> NO </label>
+                    <label class="form-check-label" for="payroll_subsribe1"> NO </label>
                   </div>
                 </div>
 
                 <div class="form-group col-md-4">
-                  <label>Employment contract supplied if no payroll</label>
+                  <label>Employment contract supplied if no payroll</label><i class="text-danger">*</i>
                   <div class="form-check">
                     <input
                       class="form-check-input"
                       type="radio"
+                      id="employement_contract"
                       name="employement_contract"
                       value="Y"
                       required
                     />
-                    <label class="form-check-label"> YES </label>
+                    <label class="form-check-label" for="employement_contract"> YES </label>
                   </div>
                   <div class="form-check">
                     <input
                       class="form-check-input"
                       type="radio"
+                      id="employement_contract1"
                       name="employement_contract"
                       value="N"
                       required
                       
                     />
-                    <label class="form-check-label"> NO </label>
+                    <label class="form-check-label" for="employement_contract1" > NO </label>
                   </div>
                 </div>
 
@@ -380,10 +384,10 @@
                   />
                   <label class="form-check-label" for="copytofinance"
                     >Same As Contract</label
-                  >
+                  ><i class="text-danger">*</i>
                 </div>
                 <div class="form-group col-md-4">
-                  <label>Name</label>
+                  <label>Name</label><i class="text-danger">*</i>
                   <input
                     type="text"
                     class="form-control"
@@ -394,7 +398,7 @@
                   />
                 </div>
                 <div class="form-group col-md-4">
-                  <label>Position</label>
+                  <label>Position</label><i class="text-danger">*</i>
                   <input
                     type="text"
                     class="form-control"
@@ -405,7 +409,7 @@
                   />
                 </div>
                 <div class="form-group col-md-4">
-                  <label>Number</label>
+                  <label>Number</label><i class="text-danger">*</i>
                   <input
                     type="number"
                     class="form-control"
@@ -416,7 +420,7 @@
                   />
                 </div>
                 <div class="form-group col-md-4">
-                  <label>Mobile</label>
+                  <label>Mobile</label><i class="text-danger">*</i>
                   <input
                     type="tel"
                     class="form-control"
@@ -427,7 +431,7 @@
                   />
                 </div>
                 <div class="form-group col-md-4">
-                  <label>Email</label>
+                  <label>Email</label><i class="text-danger">*</i>
                   <input
                     type="email"
                     class="form-control"
@@ -438,7 +442,7 @@
                   />
                 </div>
                 <div class="form-group col-md-4">
-                  <label>Credit Limit</label>
+                  <label>Credit Limit</label><i class="text-danger">*</i>
                   <input
                     type="number"
                     class="form-control"
@@ -449,7 +453,7 @@
                   />
                 </div>
                 <div class="form-group col-md-4">
-                  <label>Direct Debit Details (TBC) </label>
+                  <label>Direct Debit Details (TBC) </label><i class="text-danger">*</i>
                   <input
                     type="number"
                     class="form-control"
@@ -474,7 +478,7 @@
                   >
                 </div>
                 <div class="form-group col-md-4">
-                  <label>Name</label>
+                  <label>Name</label><i class="text-danger">*</i>
                   <input
                     type="text"
                     class="form-control"
@@ -485,7 +489,7 @@
                   />
                 </div>
                 <div class="form-group col-md-4">
-                  <label>Position</label>
+                  <label>Position</label><i class="text-danger">*</i>
                   <input
                     type="text"
                     class="form-control"
@@ -496,7 +500,7 @@
                   />
                 </div>
                 <div class="form-group col-md-4">
-                  <label>Number</label>
+                  <label>Number</label><i class="text-danger">*</i>
                   <input
                     type="text"
                     class="form-control"
@@ -507,7 +511,7 @@
                   />
                 </div>
                 <div class="form-group col-md-4">
-                  <label>Mobile</label>
+                  <label>Mobile</label><i class="text-danger">*</i>
                   <input
                     type="tel"
                     class="form-control"
@@ -519,7 +523,7 @@
                   />
                 </div>
                 <div class="form-group col-md-4">
-                  <label>Email</label>
+                  <label>Email</label><i class="text-danger">*</i>
                   <input
                     type="email"
                     class="form-control"

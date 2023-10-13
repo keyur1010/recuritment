@@ -194,6 +194,9 @@ module.exports=(sequelize,DataTypes)=>{
             type:DataTypes.JSON,
 
         },
+        advert_re:{
+            type:DataTypes.INTEGER
+        }
       
 
     });

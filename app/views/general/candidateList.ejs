@@ -76,6 +76,9 @@
                                                         <i class="fa fa-ellipsis-h"></i>
                                                     </div>
                                                     <div class="dropdown-menu dropdown-menu-right">
+                                                        <a class="dropdown-item text-success" href="/admin/candidateView/<%=all.id%>">
+                                                            <i class="far fa-eye me-1 text-success"></i>View Profile
+                                                        </a>
                                                         <!-- Render "Accept" and "Reject" buttons only if the status is not "approved" -->
                                                         <% if (all.adminStatus !== 'Approved') { %>
                                                             <a class="dropdown-item text-black accept-button" href="/admin/Approve_accept_candidate/<%=all.id%>">
@@ -157,6 +160,9 @@
                                                         <i class="fa fa-ellipsis-h"></i>
                                                     </div>
                                                     <div class="dropdown-menu dropdown-menu-right">
+                                                        <a class="dropdown-item text-success" href="/admin/candidateView/<%=PD.id%>">
+                                                            <i class="far fa-eye me-1 text-success"></i>View Profile
+                                                        </a>
                                                        
                                                             <a class="dropdown-item text-black accept-button" href="/admin/Approve_accept_candidate/<%= PD.id %>">
                                                                 <i class="far fa-check-circle me-1 text-success"></i>Accept Application
@@ -230,7 +236,9 @@
                                                     </div>
                                                     <div class="dropdown-menu dropdown-menu-right  viewButton">
                                                     
-                                                           
+                                                        <a class="dropdown-item text-success" href="/admin/candidateView/<%=AD.id%>">
+                                                            <i class="far fa-eye me-1 text-success"></i>View Profile
+                                                        </a>
                                                             <a class="dropdown-item text-black reject-button" href="/admin/Reject_accept_candidate/<%=AD.id%>">
                                                                 <i class="far fa-times-circle me-1 text-danger"></i>Reject Application
                                                             </a>

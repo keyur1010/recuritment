@@ -22,37 +22,38 @@
                     <form class="row" method="post" action="/admin/AdminAddEmployee1" enctype="multipart/form-data">
 
                         <div class="form-group col-md-3 ">
-                            <label>First Name</label>
+                            <label>First Name</label><i class="text-danger">*</i>
                             <input type="text" name="fname" class="form-control form-control-line" placeholder="Your first name" minlength="2" required>
+
                         </div>
                         <div class="form-group col-md-3 ">
-                            <label>Last Name </label>
+                            <label>Last Name </label><i class="text-danger">*</i>
                             <input type="text" id="" name="lname" class="form-control form-control-line" value="" placeholder="Your last name" minlength="2" required>
                         </div>
                         <div class="form-group col-md-3 ">
-                            <label>Username (Login Id)</label>
+                            <label>Username (Login Id)</label><i class="text-danger">*</i>
                             <input type="text" name="em_username" id="em_username" onblur="checkusername()" class="form-control form-control-line" autocomplete="off" minlength="3" required="">
                             <span id="em_usernamespan"></span>
                             <input type="hidden" id="em_usernameflag" name="">
                         </div>
 
                         <div class="form-group col-md-3 ">
-                            <label>Contact Number </label>
+                            <label>Contact Number </label><i class="text-danger">*</i>
                             <input type="tel" name="contact" class="form-control" value="" placeholder="Enter Contact Number">
                         </div>
 
                         <div class="form-group col-md-3 ">
-                            <label>Address</label>
+                            <label>Address</label><i class="text-danger">*</i>
                             <textarea class="form-control" name="em_address" placeholder="Enter Address"></textarea>
                         </div>
 
                         <div class="form-group col-md-3 ">
-                            <label>Email</label>
+                            <label>Email</label><i class="text-danger">*</i>
                             <input type="email" id="email" name="email" class="form-control" placeholder="Ex- name@gmail.com">
                         </div>
 
                         <div class="form-group col-md-3 ">
-                            <label>Department</label>
+                            <label>Department</label><i class="text-danger">*</i>
                             <select class="form-control" name="dep_id" id="dep_id" >
                                 <option value="">-Select Department-</option>
                                 <% department.forEach(function(department,index){%>
@@ -62,12 +63,12 @@
                             </select>
                         </div>
                         <div class="form-group form-check-lg ">
-                            <label>Have Reporting Authoroty</label><br>
+                            <label>Have Reporting Authoroty</label><i class="text-danger">*</i><br>
                             <input type="checkbox" class="" name="is_report_auth" value="Y">
                         </div>
 
                         <div class="form-group col-md-3 ">
-                        <label>Assign Reporting Manager <span class="text-primary">(Leave Empty If Not Eligible)</span></label>
+                        <label>Assign Reporting Manager <span class="text-primary">(Leave Empty If Not Eligible)<i class="text-danger">*</i></span></label>
                         <select class="form-control" name="manager_id" id="manager_id">
                             <option value="">-Select Reporting Manager-</option>
                             <% employees.forEach(function(emp,index){%>
@@ -87,16 +88,16 @@
 
 
                 <div class="form-group col-md-3 ">
-                    <label>Password </label>
+                    <label>Password </label><i class="text-danger">*</i>
                     <input id="txtPassword" type="text" name="password" class="form-control passwordInput" value="" placeholder="**********" autocomplete="off">
                     <span id="StrengthDisp" class="badge displayBadge text-light">Weak</span>
                 </div>
                 <div class="form-group col-md-3 ">
-                    <label>Confirm Password </label>
+                    <label>Confirm Password </label><i class="text-danger">*</i>
                     <input id="txtConfirmPassword" type="password" name="confirm" class="form-control" value="" placeholder="**********" autocomplete="off">
                 </div>
                 <div class="form-group col-md-3 ">
-                    <label>Image </label>
+                    <label>Image </label><i class="text-danger">*</i>
                     <input type="file" name="image_url" class="form-control" >
                 </div>
 

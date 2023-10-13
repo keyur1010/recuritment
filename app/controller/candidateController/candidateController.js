@@ -24,14 +24,23 @@ console.log('-----------data',data)
     console.log(skillsData)
 
     // Extract the skill IDs from the JSON
-    if(!skillsData){
 
       const skillIds = skillsData.skill_id.map(Number);
       
       // Fetch the skills based on the extracted skill IDs
       const sData = await skillModel.findAll({ where: { id: skillIds } });
-    }
-    const sData=null
+
+
+
+      const industryData=JSON.parse(data.allIndustry)
+      const industryIds=industryData.industry_id.map(Number)
+      const iData=await g_industryModel.findAll({where:{id:industryIds}})
+
+
+      const jobData=JSON.parse(data.jobs)
+      const jobIds=jobData.job_id.map(Number)
+      const jbData=await g_jobModel.findAll({where:{id:jobIds}})
+    // const sData=null
 
     // Fetch the candidate's job titles and industries as before
     const JD = await m_clientJobModel.findAll({ where: { client_random: clientRandom } });
@@ -54,9 +63,10 @@ console.log('-----------data',data)
     return res.render('./candidate/candidateDashboard.ejs', {
       data: data,
       SD: sData,
-      JD: jData,
-      ID: IData,
+      JD: jbData,
+      ID: iData,
       AD: AD,
+      jobData:jobData,
       skillsData:skillsData,
       AllSkill: AllSkill,
       Allindusrty: Allindusrty,
@@ -142,7 +152,7 @@ exports.updateCandidate1=async(req,res)=>{
         req.flash('success','Data Updated Successfully')
         return res.redirect('/candidate/candidate')
       }
-      
+
       
       else if(req.files.upload_cv){
       const uploadCV = req.files['upload_cv'][0];
@@ -246,6 +256,7 @@ exports.updateCandidate2=async(req,res)=>{
     return res.redirect('/login')
   }
 }
+
 exports.updateCandidate3=async(req,res)=>{
 
   try {
@@ -298,6 +309,8 @@ exports.updateCandidate4=async(req,res)=>{
     return res.redirect('/login')
   }
 }
+
+
 
 
 

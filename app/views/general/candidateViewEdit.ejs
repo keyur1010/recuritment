@@ -1,6 +1,6 @@
-<%- include( '../main/header.ejs' ) %>
- <%- include( '../main/candidatesidebar.ejs' ) %>
 
+<%- include( '../main/header.ejs' ) %>
+<%- include( '../main/sidebar.ejs' ) %>
 	<div class="content-body">
             <!-- row -->
 			<div class="container-fluid">
@@ -14,15 +14,19 @@
 							</div>
 						</div>
 						<div class="profile-pic d-flex">
-                            <% if (data && data.profile_image) { %>
+
+							 
+                            <% if (data.profile_image) { %>
                                 <img src="/uploads/<%= data.profile_image %>" class="img-circle" />
-                            <% } else { %>
-                                <img src="/assets/images/candidate/user.jpg" class="img-circle" />
-                            <% } %>
+                              <% } else { %>
+                                <img src="<%= '/assets/images/candidate/user.jpg' %>" class="img-circle" />
+                              <% } %>
+                              
 
 							<div class="profile-info2">
-								<h2 class="mb-0"><%=data.candidate_name %></h2>								<h4><%=data.current_position %></h4>
-								<span class="d-block"><i class="fas fa-map-marker-alt me-2"></i><%=data.address_line_1%>   <%=data.address_line_2%>  <%=data.country%>   <%=data.post_code%></span>
+								<h2 class="mb-0"><%data.candidate_name%></h2>								<h4><%=  data.current_position %></h4>
+								<span class="d-block"><i class="fas fa-map-marker-alt me-2"></i><%= data.address_line_1 + ' ' + data.address_line_2  + ' ' + data.post_code %></span>
+
 							</div>
 						</div>
 					</div>
@@ -40,7 +44,7 @@
 												</span>
 												<div>
 													<span>Phone</span>
-													<h5 class="mb-0 fs-18"><%=data.countryCode%><%=data.mobile_number %></h5>
+													<h5 class="mb-0 fs-18"><%=data.countryCode%> <%=data.mobile_number%></h5>
 												</div>
 											</div>
 											<div class="d-flex contacts-social align-items-center mb-3">
@@ -49,7 +53,7 @@
 												</span>
 												<div>
 													<span>Email</span>
-													<h5 class="mb-0 fs-13"><%=data.email_id %></h5>
+													<h5 class="mb-0 fs-13"><%=data.email_id%></h5>
 												</div>
 											</div>
 											<div class="d-flex contacts-social align-items-center mb-3">
@@ -58,7 +62,7 @@
 												</span>
 												<div>
 													<span>Address</span>
-													<h5 class="mb-0 fs-13"><%=data.address_line_1%> , <%=data.address_line_2%> <br><%=data.post_code%> , <%=data.country %></h5>
+													<h5 class="mb-0 fs-13"><%= data.address_line_1 + ', ' + data.address_line_2 + ',' + data.post_code  %></h5>
 												</div>
 											</div>
 										</div>
@@ -69,10 +73,10 @@
 									</div>
 									<div class="card-body">
                                         <% SD.forEach(RSkill => { %>
-                                                <div class="d-flex align-items-end  pb-1 justify-content-between">
-                                                    <span class="fs-14 font-w500"><%= RSkill.skill_name %></span>
-                                                </div>
-                                                <% }); %>
+                                            <div class="d-flex align-items-end  pb-1 justify-content-between">
+                                                <span class="fs-14 font-w500"><%= RSkill.skill_name %></span>
+                                            </div>
+                                            <% }); %>
 									</div>
 									<hr>
 									<div class="card-header border-1">
@@ -136,12 +140,12 @@
                                         <div class="tab-pane fade show active" id="profile" role="tabpanel">
                                             <div class="pt-4">
                                                 
-	  <form role="form" action="/candidate/updateCandidate1" method="post" enctype="multipart/form-data"  class="form-valide-with-icon needs-validation"  novalidate="" >  
+	  <form role="form" action="/admin/updateCandidate1/<%=data.id%>" method="post"   class="form-valide-with-icon needs-validation" novalidate="" >  
 	        
            <div class="row">
             <div class="form-group col-md-6 col-sm-6">
             <label class="form-label">Name <i class="text-danger">*</i> </label>
-            <input type="hidden" value="<%= data.id %>" name="candidate_id">
+            <!-- <input type="hidden" value="<?php echo $cand_data->candidate_id?>" name="candidate_id"> -->
             <input type="text" class="form-control" id="candidate_name"  name="candidate_name" placeholder="Enter Full name" autocomplete="off" required="" value="<%=data.candidate_name%>">
           </div>
           
@@ -150,11 +154,11 @@
           <select class="default-select form-control"  name="advert_ref" id="advert_ref" required="">
             <option value="">-Select-</option>
             <% AD.forEach(function(value) { %>
-              <option value="<%= value.ad_ref_name %>" <%= data.advert_ref == value.ad_ref_name ? 'selected' : '' %>>
-                  <%= value.ad_ref_name %>
-                </option>
-                <% }); %>
-              </select>
+                <option value="<%= value.ad_ref_name %>" <%= data.advert_ref == value.ad_ref_name ? 'selected' : '' %>>
+                    <%= value.ad_ref_name %>
+                  </option>
+                  <% }); %> 
+          </select>
           </div>
 
           <div class="form-group col-md-6 col-sm-6">
@@ -175,9 +179,13 @@
           <div class="form-group col-md-6 col-sm-6">
             <label>DOB <i class="text-danger">*</i></label>
             <input type="date" class="form-control" id="candidate_dob" name="candidate_dob" autocomplete="off" required  value="<%= data.candidate_dob ? data.candidate_dob.toISOString().split('T')[0] : '' %>">
-          </div>
-          
 
+          </div>
+<!-- 
+          <div class="form-group col-md-4">
+            <label>Preferred Location for Work</label>
+            <input type="text" class="form-control" id="loc_of_work"  name="loc_of_work" placeholder="Preferred Location for Work" autocomplete="off" value="<?php echo $cand_data->loc_of_work; ?>">
+          </div> -->
           
           <div class="form-group col-md-6 col-sm-6">
             <label>DBS <i class="text-danger">*</i></label>
@@ -192,6 +200,7 @@
 
 
 
+
           <div class="form-group col-md-6">
             <label>Passport (if non EU, what visa)</label>
             <input type="text" class="form-control" id="passport"  name="passport" placeholder="Passport (if non EU, what visa)" autocomplete="off" value="<%=data.passport%>">
@@ -200,7 +209,22 @@
          
 
          
-         
+          <!--  <div class="form-group col-md-4 col-sm-6">
+            <label>Current Pay Status</label>
+            <br>
+               <label class="radio">
+                <input type="radio" value="PAYE" name="current_pay_status"  id="current_pay_status" <?php if ($cand_data->current_pay_status=='PAYE'){ echo 'checked'; } ?> >
+                <span>PAYE</span>
+               </label>
+               <label class="radio">
+                <input type="radio" value="LTD" name="current_pay_status"  id="current_pay_status" <?php if ($cand_data->current_pay_status=='LTD'){ echo 'checked'; } ?>>
+                <span>LTD</span>
+               </label> 
+               <label class="radio">
+                <input type="radio" value="UMBRELLA" name="current_pay_status"  id="current_pay_status" <?php if ($cand_data->current_pay_status=='UMBRELLA'){ echo 'checked'; } ?>>
+                <span>UMBRELLA</span>
+               </label>
+          </div> -->
 
             <div class="form-group col-md-3 col-sm-4">
             <label>Desired Hourly Rate</label>
@@ -209,14 +233,14 @@
 
           <div class="form-group col-md-3 col-sm-4">
             <label>Notice Period</label>
-            <input type="text" class="form-control"  id="notice_period"  name="notice_period"  autocomplete="off" value="<%=data.notice_period%>" >
+            <input type="text" class="form-control"  id="notice_period"  name="notice_period"  autocomplete="off" value="<%=data.notice_period %>" >
           </div>
 
 
               <div class="form-group col-md-3 col-sm-6">
                   <label>Current Pay Status</label>
                   <select class="default-select form-control wide mb-2" name="current_pay_status" id="current_pay_status" required="">
-                    <option value="<%=data.current_pay_status%>"><%=data.current_pay_status%></option>
+                    <option value="<%=data.current_pay_status%>"><%= data.current_pay_status%></option>
                     <option value="PAYE">PAYE</option>
                     <option value="UMBRELLA">UMBRELLA</option>
                     
@@ -234,37 +258,42 @@
            <div class="col-12 mt-4"></div>
           <div class="form-group col-md-12	 col-sm-6">
             <label>Most Recent / Current Position <small>also Company Name/Line Manager</small> </label>
-            <input type="text" class="form-control"  id="current_position"  name="current_position"  autocomplete="off" required value="<%=data.current_position%>">
+            <input type="text" class="form-control"  id="current_position"  name="current_position"  autocomplete="off" required value="<%= data.current_position%>">
           </div>
 
 
-        
+          <!-- <div class="form-group col-md-3 col-sm-4">
+            <label>Benifits</label>
+            <input type="text" class="form-control"  id="banifits"  name="banifits"  autocomplete="off" value="<?php echo $cand_data->banifits; ?>">
+          </div> -->
           
           <div class="form-group col-md-12 col-sm-6">
             <label>Reason for leaving ( perm job or agency )</label>
-            <input type="text" class="form-control"  id="reason_for_leave"  name="reason_for_leave" placeholder="detailed,probe,explore,motivators..." autocomplete="off" value="<%=data.reason_for_leave%>">
+            <input type="text" class="form-control"  id="reason_for_leave"  name="reason_for_leave" placeholder="detailed,probe,explore,motivators..." autocomplete="off" value="<%= data.reason_for_leave%>">
           </div>
-      
+         <!--  <div class="form-group col-md-6 col-sm-6">
+            <label>MITs in next job/agency</label>
+            <input type="text" class="form-control"  id="mit_next_job"  name="mit_next_job" placeholder="" autocomplete="off" value="<?php echo $cand_data->mit_next_job; ?>">
+          </div> -->
            <div class="form-group col-md-6 col-sm-6">
 	           
 	            <label>Profile Image </label>
-	            <input type="file"  name="profile_image" class="form-control" value="<%=data.profile_image%>" accept="image/*">
-              
-	            <input type="hidden"  name="oldprofile_image" class="form-control" value="<%=data.profile_image%>" >
-            </div>
-            
-            <div class="form-group col-md-6 col-sm-6">
-              <label>Upload CV</label>
-                  <input type="file" name="upload_cv" class="form-control" value="<%=data.upload_cv%>" >
+	            <input type="file"  name="profile_image" class="form-control" value="" accept="image/*">
+	            <input type="hidden"  name="oldprofile_image" class="form-control" value="<%= data.profile_image%>" >
+	        </div>
+
+	        <div class="form-group col-md-6 col-sm-6">
+                  <label>Upload CV</label>
+                  <input type="file" name="upload_cv" class="form-control" value="<% data.upload_cv%>" >
                 </div>
           <hr>
            <div  class="form-group col-md-12">
-           	<!-- <input type="hidden" class="form-control"  id="candidate_id"  name="candidate_id" placeholder="" autocomplete="off" value="<?php echo $cand_data->candidate_id; ?>"> -->
-          <button  id="btnSubmit"   onClick="return confirm('Are you sure to submit data!!!')"  type="submit" class="btn btn-success btn-sm" >Update Profile</button>
+           	<input type="hidden" class="form-control"  id="candidate_id"  name="candidate_id" placeholder="" autocomplete="off" value="<% data.id%>">
+          <button  id="btnSubmit"   onClick="return confirm('Are you sure to submit data!!!')"  type="submit" class="btn btn-success btn-sm">Update Profile</button>
 
-		<!-- <?php if(!empty($cand_data->upload_cv)) { ?> -->
-			<a class="btn btn-primary btn-sm" href="/candidate/downloadFile"  download><i class="fa fa-file"> </i> Download CV</a>
-		<!-- <?php } ?> -->
+		<!-- <?php if(!empty($cand_data->upload_cv)) { ?>
+			<a class="btn btn-primary btn-sm" href="<?php echo base_url(); ?>assets/images/candidate/<?php echo $cand_data->upload_cv;  ?>" download><i class="fa fa-file"> </i> Download CV</a>
+		<?php } ?> -->
 
 
           </div>
@@ -278,52 +307,53 @@
                                         </div>
                                         <div class="tab-pane fade" id="contact">
                                             <div class="pt-4">
-			                    <form role="form" action="/candidate/updateCandidate2" method="post"  class="form-valide-with-icon needs-validation" novalidate="" >  
+			                    <form role="form" action="/admin/updateCandidate2/<%=data.id%>" method="post"    class="form-valide-with-icon needs-validation" novalidate="" >  
 	        
            <div class="row">
             <div class="form-group col-md-6 col-sm-6">
             <label class="form-label">Address Line 1 <i class="text-danger">*</i> </label>
-             <input type="text" class="form-control" id="address_line_1"  name="address_line_1" placeholder="Enter Address Line 1" autocomplete="off" required="" value="<%=data.address_line_1%>">
+             <input type="text" class="form-control" id="address_line_1"  name="address_line_1" placeholder="Enter Address Line 1" autocomplete="off" required="" value="<%= data.address_line_1%>">
           </div>
           <div class="form-group col-md-6 col-sm-6">
             <label class="form-label">Address Line 2 </label>
-             <input type="text" class="form-control" id="address_line_2"  name="address_line_2" placeholder="Enter Address Line 2" autocomplete="off"  value="<%=data.address_line_2%>">
+             <input type="text" class="form-control" id="address_line_2"  name="address_line_2" placeholder="Enter Address Line 2" autocomplete="off"  value="<%= data.address_line_2%>">
           </div>
           <div class="form-group col-md-6 col-sm-6">
             <label class="form-label">Landline No.  </label>
-             <input type="number" class="form-control" id="landline_no"  name="landline_no" placeholder="Enter Landline No." autocomplete="off"  value="<%=data.landline_no%>">
+             <input type="number" class="form-control" id="landline_no"  name="landline_no" placeholder="Enter Landline No." autocomplete="off"  value="<%= data.landline_no%>">
           </div>
           <div class="form-group col-md-6 col-sm-6">
             <label class="form-label">Post Code  </label>
-             <input type="text" class="form-control" id="post_code"  name="post_code" placeholder="Enter Post Code" autocomplete="off"  value="<%=data.post_code%>">
+             <input type="text" class="form-control" id="post_code"  name="post_code" placeholder="Enter Post Code" autocomplete="off"  value="<%= data.post_code%>">
           </div>
           <div class="form-group col-md-6 col-sm-6">
             <label class="form-label">Visa  </label>
-             <input type="text" class="form-control" id="visa"  name="visa" placeholder="Enter Visa" autocomplete="off"  value="<%=data.visa%>">
+             <input type="text" class="form-control" id="visa"  name="visa" placeholder="Enter Visa" autocomplete="off"  value="<%= data.visa%>">
           </div>
           <div class="form-group col-md-6 col-sm-6">
             <label class="form-label">Email Address  </label>
-             <input type="email" class="form-control" id="email"  name="email" placeholder="Enter Email Address" autocomplete="off"  value="<%=data.email_id%>">
+             <input type="email" class="form-control" id="email"  name="email" placeholder="Enter Email Address" autocomplete="off"  value="<%= data.email_id%>">
           </div>
           <h4 class="text-primary">Social Media</h4>
           <div class="form-group col-md-6 col-sm-6">
             <label class="form-label">Instagram  </label>
-             <input type="text" class="form-control" id="ig"  name="ig" placeholder="Enter Instagram Id" autocomplete="off"  value="<%=data.ig%>">
+             <input type="text" class="form-control" id="ig"  name="ig" placeholder="Enter Instagram Id" autocomplete="off"  value="<%= data.ig%>">
           </div>
           <div class="form-group col-md-6 col-sm-6">
             <label class="form-label">Facebook  </label>
-             <input type="text" class="form-control" id="fb"  name="fb" placeholder="Enter Facebook Id" autocomplete="off"  value="<%=data.fb%>">
+             <input type="text" class="form-control" id="fb"  name="fb" placeholder="Enter Facebook Id" autocomplete="off"  value="<%= data.fb%>">
           </div>
           <div class="form-group col-md-6 col-sm-6">
             <label class="form-label">Twitter/X  </label>
-             <input type="text" class="form-control" id="twitter"  name="twitter" placeholder="Enter Twitter/X Id" autocomplete="off"  value="<%=data.twitter%>">
+             <input type="text" class="form-control" id="twitter"  name="twitter" placeholder="Enter Twitter/X Id" autocomplete="off"  value="<%= data.twitter%>">
           </div>
           <div class="form-group col-md-6 col-sm-6">
             <label class="form-label">TikTok  </label>
-             <input type="text" class="form-control" id="tiktok"  name="tiktok" placeholder="Enter Tiktok Id" autocomplete="off"  value="<%=data.tiktok%>">
+             <input type="text" class="form-control" id="tiktok"  name="tiktok" placeholder="Enter Tiktok Id" autocomplete="off"  value="<%= data.tiktok%>">
           </div>
+      <?php endforeach; ?>
       <div  class="form-group col-md-12">
-          	<input type="hidden" class="form-control"  id="candidate_id"  name="candidate_id" placeholder="" autocomplete="off" value="<%=data.candidate_id%>">
+          	<!-- <input type="hidden" class="form-control"  id="candidate_id"  name="candidate_id" placeholder="" autocomplete="off" value="<?php echo $cand_data->candidate_id; ?>"> -->
           <button  id="btnSubmit"   onClick="return confirm('Are you sure to submit data!!!')"  type="submit" class="btn btn-success btn-sm">Update Details</button>
           </div>
       </div>
@@ -332,14 +362,32 @@
                                         </div>
                                         <div class="tab-pane fade" id="paydetails">
                                             <div class="pt-4">
-                                               <form role="form" action="/candidate/updateCandidate3" method="post" class="form-valide-with-icon needs-validation" novalidate="" >  
+                                               <form role="form" action="/admin/updateCandidate3/<%=data.id%>" method="post"   class="form-valide-with-icon needs-validation" novalidate="" >  
         
 									           <div class="row ">
-									           
+									            <!-- <div class="form-group col-md-4 col-sm-6">
+									            <label class="form-label">Paid By </label><br>
+									           		 <div class="form-check form-check-inline">
+                                                        <input class="form-check-input " type="radio" name="paid_by" value="Client" required <?php if ($cand_data->paid_by=='Client'){ echo 'checked'; } ?> >
+                                                        <label class="form-check-label">
+                                                            Client
+                                                        </label>
+                                                    </div>
+                                                   <div class="form-check form-check-inline">
+                                                        <input class="form-check-input " type="radio" name="paid_by" value="Company" required  <?php if ($cand_data->paid_by=='Company'){ echo 'checked'; } ?>>
+                                                        <label class="form-check-label">
+                                                            Company
+                                                        </label>
+                                                    </div>
+									          </div> -->
+									            <!-- <div class="form-group col-md-8 col-sm-6">
+									            <label>Pay Method</label>
+									            <input type="text" class="form-control"  id="pay_method"  name="pay_method" placeholder="" autocomplete="off" value="<?php echo $cand_data->pay_method; ?>">
+									          </div> -->
 									          <span class="text-primary col-12">Umbrella Company</span>
 									           <div class="form-group col-md-4 col-sm-6">
 									            <label>Umbrella Company Name</label>
-									            <input type="text" class="form-control"  id="umbrella_comp_name"  name="umbrella_comp_name" placeholder="" autocomplete="off" value="<%=data.umbrella_comp_name%>">
+									            <input type="text" class="form-control"  id="umbrella_comp_name"  name="umbrella_comp_name" placeholder="" autocomplete="off" value="<%= data.umbrella_comp_name%>">
 									          </div>
 									          <div class="form-group col-md-4 col-sm-6">
 									            <label>Umbrella Company Email Address</label>
@@ -347,51 +395,54 @@
 									          </div>
 									          <div class="form-group col-md-4 col-sm-6">
 									            <label>Umbrella Company Number</label>
-									            <input type="text" class="form-control"  id="umbrella_comp_contact"  name="umbrella_comp_contact" placeholder="" autocomplete="off" value="<%=data.umbrella_comp_contact%>">
+									            <input type="text" class="form-control"  id="umbrella_comp_contact"  name="umbrella_comp_contact" placeholder="" autocomplete="off" value="<%= data.umbrella_comp_contact%>">
 									          </div>
 
 									          <span class="text-primary col-12">Bank Details</span>
 									           <div class="form-group col-md-6 col-sm-6">
 									            <label>Bank</label>
-									            <input type="text" class="form-control"  id="bank_name"  name="bank_name" placeholder="" autocomplete="off" value="<%=data.bank_name%>">
+									            <input type="text" class="form-control"  id="bank_name"  name="bank_name" placeholder="" autocomplete="off" value="<%= data.bank_name%>">
 									          </div>
 									          <div class="form-group col-md-6 col-sm-6">
 									            <label>Bank Address</label>
-									            <input type="text" class="form-control"  id="bank_address"  name="bank_address" placeholder="" autocomplete="off" value="<%=data.bank_address%>">
+									            <input type="text" class="form-control"  id="bank_address"  name="bank_address" placeholder="" autocomplete="off" value="<%= data.bank_address%>">
 									          </div>
 									          <div class="form-group col-md-6 col-sm-6">
 									            <label>Sort Code</label>
-									            <input type="text" class="form-control"  id="bank_sort_code"  name="bank_sort_code" placeholder="" autocomplete="off" value="<%=data.bank_sort_code%>">
+									            <input type="text" class="form-control"  id="bank_sort_code"  name="bank_sort_code" placeholder="" autocomplete="off" value="<%= data.bank_sort_code%>">
 									          </div>
 									          <div class="form-group col-md-6 col-sm-6">
 									            <label>Account Number</label>
-									            <input type="text" class="form-control"  id="bank_acc_no"  name="bank_acc_no" placeholder="" autocomplete="off" value="<%=data.bank_acc_no%>">
+									            <input type="text" class="form-control"  id="bank_acc_no"  name="bank_acc_no" placeholder="" autocomplete="off" value="<%= data.bank_acc_no%>">
 									          </div>
 
 									          <span class="text-primary col-4">Hourly Pay Rate Requirements</span><span class="text-danger col-8" style="font-size:13px">(Note: The actual rates may differ depending on client and negotiated rate)</span>
 									           <div class="form-group col-md-4 col-sm-6">
 									            <label>Standard Hourly Rate</label>
-									            <input type="text" class="form-control"  id="standard_hourly_rate"  name="standard_hourly_rate" placeholder="" autocomplete="off" value="<%=data.standard_hourly_rate%>">
+									            <input type="text" class="form-control"  id="standard_hourly_rate"  name="standard_hourly_rate" placeholder="" autocomplete="off" value="<%= data.standard_hourly_rate%>">
 									          </div>
 									          <div class="form-group col-md-4 col-sm-6">
 									            <label>Sleep In Hourly Rate </label>
-									            <input type="text" class="form-control"  id="sleep_hourly_rate"  name="sleep_hourly_rate" placeholder="" autocomplete="off" value="<%=data.sleep_hourly_rate%>">
+									            <input type="text" class="form-control"  id="sleep_hourly_rate"  name="sleep_hourly_rate" placeholder="" autocomplete="off" value="<%= data.sleep_hourly_rate%>">
 									          </div>
 									          <div class="form-group col-md-4 col-sm-6">
 									            <label> Weekend Pay Rate </label>
-									            <input type="text" class="form-control"  id="weekend_pay_rate"  name="weekend_pay_rate" placeholder="" autocomplete="off" value="<%=data.weekend_pay_rate%>">
+									            <input type="text" class="form-control"  id="weekend_pay_rate"  name="weekend_pay_rate" placeholder="" autocomplete="off" value="<%= data.weekend_pay_rate%>">
 									          </div>
 									          <div class="form-group col-md-4 col-sm-6">
 									            <label>Bank Holiday Pay Rate </label>
-									            <input type="text" class="form-control"  id="bank_holiday_pay_rate"  name="bank_holiday_pay_rate" placeholder="" autocomplete="off" value="<%=data.bank_holiday_pay_rate%>">
+									            <input type="text" class="form-control"  id="bank_holiday_pay_rate"  name="bank_holiday_pay_rate" placeholder="" autocomplete="off" value="<%= data.bank_holiday_pay_rate%>">
 									          </div>
-
+									          <!-- <div class="form-group col-md-8 col-sm-6">
+									            <label> Negotiable (Min Pay requirements) </label>
+									          </div> -->
 									         <div class="form-group col-md-8 col-sm-6">
 									            <label> National Insurance </label>
-									            <input type="text" class="form-control"  id="national_insurance"  name="national_insurance" placeholder="" autocomplete="off" value="<%=data.national_insurance%>">
+									            <input type="text" class="form-control"  id="national_insurance"  name="national_insurance" placeholder="" autocomplete="off" value="<%= data.national_insurance%>">
 									          </div>
 
 									          <div  class="form-group col-md-12">
+									          	<input type="hidden" class="form-control"  id="candidate_id"  name="candidate_id" placeholder="" autocomplete="off" value="<?php echo $cand_data->candidate_id; ?>">
 									          <button  id="btnSubmit"   onClick="return confirm('Are you sure to submit data!!!')"  type="submit" class="btn btn-success btn-sm">Update Details</button>
 									          </div>
 											      </div>
@@ -400,27 +451,26 @@
                                         </div>
                                         <div class="tab-pane fade" id="jobreq">
                                           
-  <form role="form" action="/candidate/updateCandidate4" method="post"  class="form-valide-with-icon needs-validation" novalidate="" >  
+  <form role="form" action="/admin/updateCandidate4/<%=data.id%>" method="post"    class="form-valide-with-icon needs-validation" novalidate="" >  
         
            <div class="row mt-2">
             	
             	<span class="col-12 text-info text-center"><h4>CLIENT GROUP EXPERIENCE</h4></span>
-              <% Allindusrty.forEach(function(industry) { %>
-                <div class="form-group col-md-2 col-sm-4 form-check mb-2">
-                  <input type="checkbox" class="form-check-input" name="candidate_industry[]" id="candidate_industry_<%= industry.id %>" value="<%= industry.id %>"
-                  <% if (ID.some(mindusrty => mindusrty.id === industry.id)) { %>
-                    checked
-                  <% } %>
-                
-                  >
-                  <label class="form-check-label" for="candidate_industry_<%= industry.id %>"><%= industry.industry_name %></label>
-                </div>
-              <% }) %>
-              
+                <% Allindusrty.forEach(function(industry) { %>
+                    <div class="form-group col-md-2 col-sm-4 form-check mb-2">
+                      <input type="checkbox" class="form-check-input" name="candidate_industry[]" id="candidate_industry_<%= industry.id %>" value="<%= industry.id %>"
+                      <% if (ID.some(mindusrty => mindusrty.id === industry.id)) { %>
+                        checked
+                      <% } %>
+                    
+                      >
+                      <label class="form-check-label" for="candidate_industry_<%= industry.id %>"><%= industry.industry_name %></label>
+                    </div>
+                  <% }) %>
 
           <hr>
           <span class="col-12 text-info text-center"><h4>SKILLS</h4></span>
-         
+        
           <% AllSkill.forEach(function(skill) { %>
             <div class="form-group col-md-2 col-sm-4 form-check mb-2">
               <input type="checkbox" class="form-check-input" name="candidate_skills[]" id="candidate_skills_<%= skill.id %>" value="<%= skill.id %>"
@@ -431,9 +481,6 @@
               <label class="form-check-label" for="candidate_skills_<%= skill.id %>"><%= skill.skill_name %></label>
             </div>
           <% }) %>
-          
-          
-
 
           <hr>
           <span class="col-12 text-info text-center"><h4>JOB TITLES</h4></span>
@@ -449,14 +496,11 @@
               <label class="form-check-label" for="job_titles_<%= job.id %>"><%= job.job_title_name %></label>
              </div>
              <%})%>
-
-      
-
           	<div class="col-12"></div>
           	<div class="form-group col-md-6 col-sm-6">
 	            <label> Driver  </label>
 	            <select class="form-control" name="driver" id="driver" required>
-	            	<option value="<%=data.driver%>"><%=data.driver%></option>
+	            	<option value="<%=data.driver %>"><%=data.driver%></option>
 	            	<option value="YES">YES</option>
 	            	<option value="NO">NO</option>
 	            </select>
@@ -471,6 +515,7 @@
 	        </div>
 
 	        <div  class="form-group col-md-12">
+	        	<input type="hidden" class="form-control"  id="candidate_id"  name="candidate_id" placeholder="" autocomplete="off" value="<?php echo $cand_data->candidate_id; ?>">
 	          <button  id="btnSubmit"   onClick="return confirm('Are you sure to submit data!!!')"  type="submit" class="btn btn-success btn-sm">Update Details</button>
 	          </div>
 
@@ -501,16 +546,43 @@
 									
 								</div>
 							</div>
-
+							<!-- <div class="col-xl-4 col-xxl-5">
+								<div class="card">
+									<div class="card-header border-0 pb-0">
+										<h4 class="fs-20 font-w600">Socials</h4>
+									</div>
+									<div class="card-body">
+										<div>
+											<a href="javascript:;" class="btn text-start d-block mb-3 bg-facebook light"><i class="fab fa-facebook-f scale5 me-4 text-facebook"></i></a>
+											<a href="javascript:;" class="btn text-start d-block mb-3 bg-linkedin light"><i class="fab fa-linkedin-in scale5 me-4 text-linkedin"></i>/franklin.jr123</a>
+											<a href="javascript:;" class="btn text-start d-block mb-3 bg-dribble light"><i class="fab fa-dribbble scale5 me-4 text-dribble"></i>/franklin.jr123</a>
+											<a href="javascript:;" class="btn text-start d-block mb-3 bg-youtube light"><i class="fab fa-youtube scale5 me-4 text-youtube"></i>
+											/franklin.jr123</a>
+										</div>
+									</div>
+								</div>
+							</div> -->
+							<!-- <div class="col-xl-12">
+								<div class="card bg-dark">
+									<div class="card-body d-flex align-items-center">
+										<div>
+											<h4 class="fs-20 font-w600 mb-2 text-white">Upload your curriculum vitae</h4>
+											<p class="text-white mb-0 op6">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut</p>
+										</div>	
+										<div class="upload">
+											<a href="javascript:void(0);"><i class="fas fa-arrow-up"></i></a>
+										</div>
+									</div>
+								</div>
+							</div> -->
 						</div>
 					</div>
 				</div>
             </div>
         </div>	
 
-        <%- include( '../main/footer.ejs' ) %> 
 
-
+        <%- include( '../main/footer.ejs' ) %>
 <script>
 function editaddressFunc(id)
 { 
@@ -539,7 +611,7 @@ function editaddressFunc(id)
 
         <div class="modal-content">
 
-            <form method="post" action="<?php echo base_url('Loan/app_loan'); ?>" enctype="multipart/form-data">
+            <form method="post" action="<?php echo base_url('Loan/app_loan'); ?>" >
                 <input type="hidden" name="id" value="<?php echo $value->id; ?>">
 
                 <div class="modal-header">
@@ -582,53 +654,4 @@ function editaddressFunc(id)
 
     </div>
 
-</div> 
-
-
-
-
-
-
-
-<script>
-  $(document).ready(function() {
-    // Reference the file input element for the "Profile Image" field
-    const profileImageInput = document.querySelector('input[name="profile_image"]');
-  
-    // Add an event listener to the "Profile Image" file input's change event
-    profileImageInput.addEventListener('change', function() {
-      // Get the selected file from the input
-      const selectedFile = this.files[0];
-  
-      // Check if a file is selected
-      if (selectedFile) {
-        // Check if the file size exceeds 5MB (5 * 1024 * 1024 bytes)
-        if (selectedFile.size > 5 * 1024 * 1024) {
-          alert('Profile Image size exceeds the maximum allowed (5MB).');
-          // Clear the file input to prevent submission
-          this.value = '';
-        }
-      }
-    });
-  
-    // Reference the file input element for the "Upload CV" field
-    const uploadCVInput = document.querySelector('input[name="upload_cv"]');
-  
-    // Add an event listener to the "Upload CV" file input's change event
-    uploadCVInput.addEventListener('change', function() {
-      // Get the selected file from the input
-      const selectedFile = this.files[0];
-  
-      // Check if a file is selected
-      if (selectedFile) {
-        // Check if the file size exceeds 5MB (5 * 1024 * 1024 bytes)
-        if (selectedFile.size > 5 * 1024 * 1024) {
-          alert('Upload CV size exceeds the maximum allowed (5MB).');
-          // Clear the file input to prevent submission
-          this.value = '';
-        }
-      }
-    });
-  });
-  </script>
-  
+</div>  

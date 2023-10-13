@@ -77,6 +77,7 @@ db.r_skillModel.belongsTo(db.skillModel,{foreignKey:"skill_id",as:"skill2"})
 
 
 
+
 db.sequelize.sync({force:false,alter:true}).then(()=>{
   console.log('THIS IS SYNC')
 })

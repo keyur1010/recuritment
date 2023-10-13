@@ -35,5 +35,7 @@ router.post('/Recruitment_edit1/:id',clientAuth.login,clientController.Recruitme
 router.get('/Recruitment_delete/:id',clientAuth.login,clientController.Recruitment_delete)
 
 
+router.get('/editClient',clientController.editClient)
+
 
 module.exports=router
