@@ -23,5 +23,8 @@
     "nodemailer": "^6.9.5",
     "path": "^0.12.7",
     "sequelize": "^6.33.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
   }
 }

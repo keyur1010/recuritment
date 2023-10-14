@@ -1,6 +1,6 @@
 
 <%- include( '../main/header.ejs' ) %>
-<%- include( '../main/sidebar.ejs' ) %>
+<%- include( '../main/sidebar.ejs',{session:session} ) %>
 <script>
     function formatDate(dateString) {
       const date = new Date(dateString);
@@ -76,26 +76,25 @@
                                                         <i class="fa fa-ellipsis-h"></i>
                                                     </div>
                                                     <div class="dropdown-menu dropdown-menu-right">
-                                                        <a class="dropdown-item text-success" href="/admin/candidateView/<%=all.id%>">
+                                                        <a class="dropdown-item text-success" href="/admin/candidateView/<%= Buffer.from(all.id.toString()).toString('base64') %>">
                                                             <i class="far fa-eye me-1 text-success"></i>View Profile
                                                         </a>
                                                         <!-- Render "Accept" and "Reject" buttons only if the status is not "approved" -->
                                                         <% if (all.adminStatus !== 'Approved') { %>
-                                                            <a class="dropdown-item text-black accept-button" href="/admin/Approve_accept_candidate/<%=all.id%>">
+                                                            <a class="dropdown-item text-black accept-button" href="/admin/Approve_accept_candidate/<%= Buffer.from(all.id.toString()).toString('base64') %>">
                                                                 <i class="far fa-check-circle me-1 text-success"></i>Accept Application
                                                             </a>
-                                                            <a class="dropdown-item text-black reject-button" href="/admin/Reject_accept_candidate/<%=all.id%>">
+                                                            <a class="dropdown-item text-black reject-button" href="/admin/Reject_accept_candidate/<%= Buffer.from(all.id.toString()).toString('base64') %>">
                                                                 <i class="far fa-times-circle me-1 text-danger"></i>Reject Application
                                                             </a>
-                                                        <% }else{%>
-                                                            <!-- <a class="dropdown-item text-black accept-button" href="/admin/Approve_accept_candidate/<%=all.id%>">
-                                                                <i class="far fa-check-circle me-1 text-success"></i>Accept Application
-                                                            </a> -->
-                                                            <a class="dropdown-item text-black reject-button" href="/admin/Reject_accept_candidate/<%=all.id%>">
+                                                        <% } else { %>
+                                                            <!-- Only "Reject" button for "Approved" status -->
+                                                            <a class="dropdown-item text-black reject-button" href="/admin/Reject_accept_candidate/<%= Buffer.from(all.id.toString()).toString('base64') %>">
                                                                 <i class="far fa-times-circle me-1 text-danger"></i>Reject Application
                                                             </a>
-                                                      <%  } %>
+                                                        <% } %>
                                                     </div>
+                                                    
                                                 </div>
                                             </td>
                                         </tr>

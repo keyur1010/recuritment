@@ -1,5 +1,5 @@
 <%- include( '../main/header.ejs' ) %>
-<%- include( '../main/clientLoginsidebar.ejs' ) %>
+<%- include( '../main/sidebar.ejs',{session:session} ) %>
 <div class="content-body">
     <div class="container-fluid">
         
@@ -65,6 +65,29 @@
                         <label class="form-check-label" for="candidate_skills_<?php echo $value->id; ?>"><?php echo $value->skill_name; ?></label>
                       </div>
                       <?php } ?> -->
+                      <span class="col-12 text-info text-center"><h4>CLIENT GROUP EXPERIENCE</h4></span>
+                      <% industry.forEach(function(indust,index){%>
+                        <div class="form-group col-md-2 col-sm-4 form-check mb-2">
+                        <input type="checkbox" class="form-check-input" name="recruit_industry[]" id="candidate_industry_<%= indust.id %>" value="<%=indust.id%>">
+                        <label class="form-check-label" for="candidate_industry_<%=indust.id%>"><%=indust.industry_name%></label>
+                      </div>
+                    <%}) %>
+
+                      
+
+                    <hr>
+                    <span class="col-12 text-info text-center"><h4>SKILLS</h4></span>
+                    <% skills.forEach(function(skill, index) { %>
+                        <div class="form-group col-md-2 col-sm-4 form-check mb-2">
+                          <input type="checkbox" class="form-check-input" name="recruit_skills[]" id="recruit_skills_<%= skill.id %>" value="<%= skill.id %>"
+                          <% if (data.some(item => item.skill_id === skill.id)) { %>
+                            checked
+                          <% } %>
+                          >
+                          <label class="form-check-label" for="recruit_skills_<%= skill.id %>"><%= skill.skill_name %></label>
+                        </div>
+                      <% }) %>
+                      
 
         <hr>
         <div class="col-12 mt-4"></div>

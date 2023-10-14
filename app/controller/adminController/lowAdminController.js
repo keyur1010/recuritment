@@ -9,14 +9,18 @@ const clientModel = db.clientModel;
 
 exports.adminDashboard=async(req,res)=>{
     try {
-        return res.render('./lowadmin/lowadmindashboard.ejs',{messages:req.flash()})
+    const session=await loginModel.findOne({where:{role:req.session.user.role}})
+
+        return res.render('./lowadmin/lowadmindashboard.ejs',{session:session,messages:req.flash()})
     } catch (error) {
         console.log(error)
     }
 }
 exports.simpleClient=async(req,res)=>{
     try {
-        return res.render('./lowadmin/clientAdd.ejs',{messages:req.flash()})
+    const session=await loginModel.findOne({where:{role:req.session.user.role}})
+
+        return res.render('./lowadmin/clientAdd.ejs',{session:session,messages:req.flash()})
     } catch (error) {
         console.log(error)
         req.flash('error','Something Went Wrong')
@@ -25,9 +29,11 @@ exports.simpleClient=async(req,res)=>{
 }
 exports.m_clientList=async(req,res)=>{
     try {
+    const session=await loginModel.findOne({where:{role:req.session.user.role}})
+      
         const clientData=await  clientModel.findAll({where:{isDeleted:0,insertBy:req.session.user.id}})
 
-        return res.render('./lowadmin/adminclientList.ejs',{clientData:clientData,messages:req.flash()})
+        return res.render('./lowadmin/adminclientList.ejs',{session:session,clientData:clientData,messages:req.flash()})
     } catch (error) {
         console.log(error)
         req.flash('error','Something Went Wrong')
@@ -196,6 +202,8 @@ exports.m_clientDelete=async(req,res)=>{
 
 exports.m_clientEdit=async(req,res)=>{
     try {
+    const session=await loginModel.findOne({where:{role:req.session.user.role}})
+
       const data=await clientModel.findOne({where:{id:req.params.id}})
       console.log('data-------------------------->',data)
       const json_data=JSON.parse(data.dataValues.services)
@@ -204,7 +212,7 @@ exports.m_clientEdit=async(req,res)=>{
       console.log(json_data)
         
         console.log('data',json_data)
-        return res.render('./lowadmin/m_clientEdit.ejs',{data:data,json_data:json_data,messages:req.flash()})
+        return res.render('./lowadmin/m_clientEdit.ejs',{session:session,data:data,json_data:json_data,messages:req.flash()})
     } catch (error) {
       console.log(error)
       req.flash('error','Something Went Wrong')

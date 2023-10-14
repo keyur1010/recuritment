@@ -24,11 +24,13 @@ const r_industryModel=db.r_industryModel
 exports.clientPage = async (req, res) => {
   try {
     console.log("client page");
+    const session=await loginModel.findOne({where:{role:req.session.user.role}})
+
     const industry=await g_industryModel.findAll({where:{status:1}})
     const advref=await advert_refModel.findAll({where:{status:1}})
     const skills=await skillModel.findAll({where:{status:1}})
     const jobs=await g_jobModel.findAll({where:{status:1}})
-    return res.render("./clientSign.ejs",{industry:industry,skills:skills,jobs:jobs,advref:advref,messages:req.flash()});
+    return res.render("./clientSign.ejs",{session:session,industry:industry,skills:skills,jobs:jobs,advref:advref,messages:req.flash()});
   } catch (error) {
     console.log(error);
     req.flash('error','Something Went Wrong')
@@ -134,7 +136,8 @@ return res.redirect('/login')
 
 exports.thanku=async(req,res)=>{
   try {
-    return res.render('./main/thanku.ejs',)
+    
+    return res.render('./main/thanku.ejs')
   } catch (error) {
     console.log(error)
     req.flash('error','Something Went Wrong')
@@ -152,8 +155,10 @@ exports.thanku=async(req,res)=>{
 
 exports.clientView=async(req,res)=>{
   try {
+    const session=await loginModel.findOne({where:{role:req.session.user.role}})
     try {
       console.log(req.session.user)
+
       // const clientData=await loginModel.findOne({where:{login_random:req.session.user.login_random}})
       // console.log(clientData.id)
       const clientData=await clientModel.findOne({where:{login_random:req.session.user.login_random}})
@@ -161,11 +166,11 @@ exports.clientView=async(req,res)=>{
       const json_data=JSON.parse(clientData.dataValues.services)
       console.log(json_data)
       // req.flash("success",{messages:"working properly"})
-      return res.render('./clientdashboard/clientView.ejs',{clientdata:clientData,json_data:json_data,messages:req.flash()})
+      return res.render('./clientdashboard/clientView.ejs',{session:session,clientdata:clientData,json_data:json_data,messages:req.flash()})
       
     } catch (e) {
       req.flash('error','problem in fetching data')
-      return res.render('./clientdashboard/clientView.ejs',{messages:req.flash()})
+      return res.render('./clientdashboard/clientView.ejs',{session:session,messages:req.flash()})
     }
   } catch (error) {
     console.log(error)
@@ -175,10 +180,12 @@ exports.clientView=async(req,res)=>{
 }
 exports.recruitmentView=async(req,res)=>{
   try {
+    const session=await loginModel.findOne({where:{role:req.session.user.role}})
+
     const data=await recruitmentModel.findAll({where:{client_name:req.session.user.id}})
     console.log(data)
 
-    return res.render('./clientdashboard/recruitmentView.ejs',{data:data,messages:req.flash()})
+    return res.render('./clientdashboard/recruitmentView.ejs',{session:session,data:data,messages:req.flash()})
   } catch (error) {
     console.log(error)
     req.flash('error','Something Went Wrong')
@@ -188,12 +195,14 @@ exports.recruitmentView=async(req,res)=>{
 
 exports.addRecruitment=async(req,res)=>{
   try {
+    const session=await loginModel.findOne({where:{role:req.session.user.role}})
+
     const depart=await departmentModel.findAll({where:{status:1}})
     const industry=await g_industryModel.findAll({where:{status:1}})
     // const advref=await advert_refModel.findAll({where:{status:1}})
     const skills=await skillModel.findAll({where:{status:1}})
     // const jobs=await g_jobModel.findAll({where:{status:1}})
-    return res.render('./clientdashboard/addRecruitment.ejs',{depart:depart,industry:industry,skills:skills,messages:req.flash()})
+    return res.render('./clientdashboard/addRecruitment.ejs',{session:session,depart:depart,industry:industry,skills:skills,messages:req.flash()})
   } catch (error) {
     console.log(error)
     req.flash('error','Something Went Wrong')
@@ -231,13 +240,14 @@ exports.saveRecruitment=async(req,res)=>{
       });
     }
     const industryData = [];
-    for (var i = 0; i < recruitmentBody.recruit_skills.length; i++) {
-      skillsData.push({
-        skill_id: recruitmentBody.recruit_skills[i],
+    for (var i = 0; i < recruitmentBody.recruit_industry.length; i++) {
+      industryData.push({
+        industry_id: recruitmentBody.recruit_industry[i],
         // Add any other skill-related properties here
       });
     }
     console.log('skilldata------->',skillsData)
+    console.log('1--------->',industryData)
     const skillsDataJSON = JSON.stringify(skillsData);
 
     const addRecruitment=await recruitmentModel.create({
@@ -245,11 +255,13 @@ exports.saveRecruitment=async(req,res)=>{
       no_position:recruitmentBody.no_position,
       current_salary:recruitmentBody.current_salary,
       desired_salary:recruitmentBody.desired_salary,
-      recruit_skills:skillsDataJSON,
+      recruit_skills:skillsData,
+      recruit_industry:industryData,
       client_name:req.session.user.id,
       r_random:randomString
     })
     
+
    
     // for(var i=0;i<recruitmentBody.recruit_skills.length;i++){
     //   const r_skill=await r_skillModel.create({
@@ -257,14 +269,15 @@ exports.saveRecruitment=async(req,res)=>{
     //     r_random:randomString,
 
     //   })
-    for(var i=0;i< recruitmentBody.recruit_industry.length;i++){
-      const r_industry=await r_industryModel.create({
-        industry_id:recruitmentBody.recruit_industry[i],
-        r_random:randomString
-      })
-    }
-   
-      
+    // for(var i=0;i< recruitmentBody.recruit_industry.length;i++){
+    //   const r_industry=await r_industryModel.create({
+    //     industry_id:recruitmentBody.recruit_industry[i],
+    //     r_random:randomString
+    //   })
+    // }
+    console.log('1--------->',skillsData)
+    console.log('1--------->',industryData)
+    console.log('data------------->',addRecruitment)
     // }
     req.flash('success','Recruitment Added Successfully')
     return res.redirect('/client/recruitmentView')
@@ -277,18 +290,33 @@ exports.saveRecruitment=async(req,res)=>{
 
 
 
-exports.Recruitment_edit=async(req,res)=>{
+exports.Recruitment_edit = async (req, res) => {
   try {
-     const data=await recruitmentModel.findOne({where:{id:req.params.id}})
-     console.log('edit recruitmetnt-------->',data)
-     const recDepart=await departmentModel.findAll({where:{status:1}})
-     return res.render('./clientdashboard/editRecruitment.ejs',{data:data,recDepart:recDepart,messages:req.flash()})
+    const session=await loginModel.findOne({where:{role:req.session.user.role}})
+
+    const data = await recruitmentModel.findOne({ where: { id: req.params.id } });
+    const industry = await g_industryModel.findAll({ where: { status: 1 } });
+    const skills = await skillModel.findAll({ where: { status: 1 } });
+    console.log('edit recruitment-------->', data);
+
+    // Parse the "data" field containing skills from JSON to an array
+    const d = JSON.parse(data.skills);
+    const d1=JSON.parse(d)
+    const recDepart = await departmentModel.findAll({ where: { status: 1 } });
+    return res.render('./clientdashboard/editRecruitment.ejs', {
+      session:session,
+      data: data,
+      recDepart: recDepart,
+      industry: industry,
+      skills: d1,
+      messages: req.flash(),
+    });
   } catch (error) {
-    console.log(error)
-    req.flash('error','Something Went Wrong')
-    return res.redirect('/login')
+    console.log(error);
+    req.flash('error', 'Something Went Wrong');
+    return res.redirect('/login');
   }
-}
+};
 
 exports.Recruitment_edit1=async(req,res)=>{
   try {
@@ -319,10 +347,12 @@ exports.Recruitment_delete=async(req,res)=>{
 
 exports.editClient=async(req,res)=>{
   try {
+    const session=await loginModel.findOne({where:{role:req.session.user.role}})
+
     const basic=await clientModel.findOne({where:{login_random:req.session.user.login_random}})
     const departmentData=await departmentModel.findAll({where:{status:1}})
     console.log(basic)
-    return res.render('./clientdashboard/editClient.ejs',{basic:basic,departmentData:departmentData,messages:req.flash()})
+    return res.render('./clientdashboard/editClient.ejs',{session:session,basic:basic,departmentData:departmentData,messages:req.flash()})
   } catch (error) {
     console.log(error)
     req.flash('error','Something Went Wrong')

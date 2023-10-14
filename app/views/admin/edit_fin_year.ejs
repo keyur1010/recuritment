@@ -1,5 +1,5 @@
 <%- include( '../main/header.ejs' ) %>
-<%- include( '../main/sidebar.ejs' ) %>
+<%- include( '../main/sidebar.ejs',{session:session} ) %>
 <script>
     function formatDate(dateString) {
       const date = new Date(dateString);

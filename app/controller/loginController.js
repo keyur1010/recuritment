@@ -12,8 +12,8 @@ exports.loginPage = async (req, res) => {
   } catch (error) {
     console.log(error);
     req.flash('error','Something Went Wrong')
-    return res.redierect('/login')
-  }
+    return res.redirect('/login')
+  } 
 };
 exports.loginUser = async (req, res) => {
   try {

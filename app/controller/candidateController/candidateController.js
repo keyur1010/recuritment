@@ -14,6 +14,8 @@ const advert_refModel=db.advert_refModel
 
 exports.candidateDashboard = async (req, res) => {
   try {
+    const session=await loginModel.findOne({where:{role:req.session.user.role}})
+
     const clientRandom = req.session.user.login_random;
 
     // Fetch the candidate's personal data
@@ -61,6 +63,7 @@ console.log('-----------data',data)
     const AllJob = await g_jobModel.findAll({ where: { status: 1 } });
 
     return res.render('./candidate/candidateDashboard.ejs', {
+      session:session,
       data: data,
       SD: sData,
       JD: jbData,

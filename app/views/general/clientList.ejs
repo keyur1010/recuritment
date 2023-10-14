@@ -1,5 +1,5 @@
 <%- include( '../main/header.ejs' ) %> 
-<%- include( '../main/sidebar.ejs' ) %>
+<%- include( '../main/sidebar.ejs',{session:session} ) %>
 <div class="content-body">
   <div class="container-fluid">
     <div class="row page-titles">
@@ -66,7 +66,7 @@
                     <td><%=d.registration_no %></td>
                     <td>
                       <a
-                        href="/admin/clientEdit/<%=d.id%>"
+                        href="/admin/clientEdit/<%=btoad.id)%>"
                         class="btn btn-primary shadow btn-xs sharp me-1"
                         ><i class="fas fa-pencil-alt"></i
                       ></a>

@@ -42,16 +42,18 @@
                     </a>
                 </div>
             </div>
-            <ul class="metismenu" id="menu">
-                <!-- <li><a  href="<?php echo base_url('dashboard/Dashboard'); ?>" aria-expanded="false"> -->
-                    <li><a  href="/admin/admindashboard" aria-expanded="false">
-                        <i class="flaticon-025-dashboard"></i>
-                        <span class="nav-text">Dashboard</span>
-                    </a>
+            <% if(session.role=="Super Admin"){%>
 
+                <ul class="metismenu" id="menu">
+                    <!-- <li><a  href="<?php echo base_url('dashboard/Dashboard'); ?>" aria-expanded="false"> -->
+                        <li><a  href="/admin/admindashboard" aria-expanded="false">
+                            <i class="flaticon-025-dashboard"></i>
+                            <span class="nav-text">Dashboard</span>
+                        </a>
+                        
                 </li>
                 <li><a class="has-arrow " href="javascript:void()" aria-expanded="false">
-                        <i class="flaticon-093-waving"></i>
+                    <i class="flaticon-093-waving"></i>
                         <span class="nav-text">Users</span>
                     </a>
                     <ul aria-expanded="false">
@@ -64,8 +66,8 @@
                         <span class="nav-text">Master</span>
                     </a>
                     <ul aria-expanded="false">
-                      <li><a href="/admin/adminDepartment" >Department</a></li>
-                      <li ><a href="/admin/editCompany" >Company Profile</a></li>
+                        <li><a href="/admin/adminDepartment" >Department</a></li>
+                        <li ><a href="/admin/editCompany" >Company Profile</a></li>
                       <li ><a href="/admin/fin_years" >Financial Year</a></li>
                       <!-- <li ><a href="<?php echo base_url('clients/client_groups'); ?>" >Customer Group</a></li>
                       <li ><a href="<?php echo base_url(); ?>clients" >Customer</a></li> -->
@@ -83,8 +85,8 @@
                 </li>
 
                 <li><a class="has-arrow " href="javascript:void()" aria-expanded="false">
-                        <i class="fa fa-user"></i>
-                        <span class="nav-text">Candidate</span>
+                    <i class="fa fa-user"></i>
+                    <span class="nav-text">Candidate</span>
                     </a>
                     <ul aria-expanded="false">
                         <li><a href="/admin/candidateList" >Applications </a></li>
@@ -99,18 +101,54 @@
                         <li><a href="/admin/clientList" > Clients</a></li>
                     </ul>
                 </li>
-
+                
             </ul>
+            <%}else if(session.role=='Admin'){%>
+                <ul class="metismenu" id="menu">
+           
+           
 
-            <!-- <ul class="metismenu" id="menu">
-                <li><a  href="/recruitment/index" aria-expanded="false">
-                        <i class="fa fa-user-plus"></i>
-                        <span class="nav-text">Recruitment</span>
-                    </a>
+            
 
-                </li>
+                    <li><a class="has-arrow " href="javascript:void()" aria-expanded="false">
+                            <i class="fa fa-user"></i>
+                            <span class="nav-text">Clients</span>
+                        </a>
+                        <ul aria-expanded="false">
+                            <li><a href="/m_admin/clientAdd" > Clients</a></li>
+                        </ul>
+                    </li>
+        
+                </ul>
+            <%}else if(session.role=='Client'){%>
+                <ul class="metismenu" id="menu">
+           
+           
 
-            </ul> -->
+            
+
+                    <ul class="metismenu" id="menu">
+                        <li><a  href="/client/recruitmentView" aria-expanded="false">
+                                <i class="fa fa-user-plus"></i>
+                                <span class="nav-text">Recruitment</span>
+                            </a>
+        
+                        </li>
+        
+                    </ul>
+                </ul>
+            <%}else if(session.role=='Candidate'){%>
+                <ul class="metismenu" id="menu"></ul>
+            <%}%>    
+                <!-- <ul class="metismenu" id="menu">
+                    <li><a  href="/recruitment/index" aria-expanded="false">
+                    <i class="fa fa-user-plus"></i>
+                    <span class="nav-text">Recruitment</span>
+                </a>
+
+            </li>
+            
+        </ul> -->
 
             <!-- <ul class="metismenu" id="menu">
                 <li><a  href="/fullcalendar/index" aria-expanded="false">

@@ -34,7 +34,8 @@ const transporter = nodemailer.createTransport({
 exports.adminDashboard = async (req, res) => {
   try {
     console.log("login page");
-    return res.render("./admin/dashboard.ejs", { messages: req.flash() });
+    const session=await loginModel.findOne({where:{role:req.session.user.role}})
+    return res.render("./admin/dashboard.ejs", {session:session , messages: req.flash() });
   } catch (error) {
     console.log(error);
   }
@@ -44,7 +45,9 @@ exports.newClient = async (req, res) => {
   try {
     console.log("new client");
     req.flash("success", "");
-    return res.render("./admin/clientCreate.ejs", { messages: req.flash() });
+    const session=await loginModel.findOne({where:{role:req.session.user.role}})
+
+    return res.render("./admin/clientCreate.ejs", {session:session, messages: req.flash() });
   } catch (error) {
     console.log(error);
     req.flash("error", "Something Went Wrong");
@@ -189,7 +192,10 @@ exports.newClientCreate = async (req, res) => {
 exports.clientList = async (req, res) => {
   try {
     const clientData = await clientModel.findAll({ where: { isDeleted: 0 } });
+    const session=await loginModel.findOne({where:{role:req.session.user.role}})
+
     return res.render("./general/clientList.ejs", {
+      session:session,
       clientData: clientData,
       messages: req.flash(),
     });
@@ -203,6 +209,8 @@ exports.clientList = async (req, res) => {
 exports.clientEdit = async (req, res) => {
   try {
     const data = await clientModel.findOne({ where: { id: req.params.id } });
+    const session=await loginModel.findOne({where:{role:req.session.user.role}})
+
     if (!data) {
       req.flash("error", "data not found");
       return res.redirect("/admin/clientList");
@@ -216,6 +224,7 @@ exports.clientEdit = async (req, res) => {
       console.log("data", json_data);
       // req.flash('success','all data fetched')
       return res.render("./general/clientEdit.ejs", {
+        session:session,
         data: data,
         json_data: json_data,
         messages: req.flash(),
@@ -564,8 +573,11 @@ exports.clientEdit3 = async (req, res) => {
 exports.adminDepartment = async (req, res) => {
   try {
     const data = await departmentModel.findAll({ where: { status: 1 } });
+    const session=await loginModel.findOne({where:{role:req.session.user.role}})
+
     // console.log("department_data------------>",data)
     return res.render("./admin/adminDepartment.ejs", {
+      session:session,
       data: data,
       messages: req.flash(),
     });
@@ -615,9 +627,12 @@ exports.editDepartment = async (req, res) => {
       where: { id: req.params.id },
     });
     const data = await departmentModel.findAll({ where: { status: 1 } });
+    const session=await loginModel.findOne({where:{role:req.session.user.role}})
+
     console.log("edit data-------------->", editData);
     return res.render("./admin/editDepartment.ejs", {
       editData: editData,
+      session:session,
       data: data,
       messages: req.flash(),
     });
@@ -774,11 +789,15 @@ exports.deleteDepartment = async (req, res) => {
 
 exports.editCompany = async (req, res) => {
   try {
+    const session=await loginModel.findOne({where:{role:req.session.user.role}})
+
     const findCompany = await companyModel.findOne({
       where: { createdBy: req.session.user.id },
     });
+
     console.log(findCompany);
     return res.render("./admin/editCompany.ejs", {
+      session:session,
       findCompany: findCompany,
       messages: req.flash(),
     });
@@ -897,9 +916,12 @@ exports.editCompany1 = async (req, res) => {
 
 exports.fin_years = async (req, res) => {
   try {
+    const session=await loginModel.findOne({where:{role:req.session.user.role}})
+
     const year_Data = await fin_yearsModel.findAll({ where: { status: 1 } });
 
     return res.render("./admin/fin_years.ejs", {
+      session:session,
       year_Data: year_Data,
       messages: req.flash(),
     });
@@ -940,6 +962,8 @@ exports.Save_fin_year = async (req, res) => {
 
 exports.edit_fin_year = async (req, res) => {
   try {
+    const session=await loginModel.findOne({where:{role:req.session.user.role}})
+
     const data = await fin_yearsModel.findAll({ where: { status: 1 } });
     const fin_year_data = await fin_yearsModel.findOne({
       where: { id: req.params.id },
@@ -947,6 +971,7 @@ exports.edit_fin_year = async (req, res) => {
     console.log("fin_year------------------>0", fin_year_data);
 
     return res.render("./admin/edit_fin_year.ejs", {
+      session:session,
       data: data,
       fin_year_data: fin_year_data,
       messages: req.flash(),
@@ -998,7 +1023,10 @@ exports.Delete_fin_year = async (req, res) => {
 exports.g_jobpage = async (req, res) => {
   try {
     const data = await g_jobModel.findAll({ where: { status: 1 } });
+    const session=await loginModel.findOne({where:{role:req.session.user.role}})
+
     return res.render("./general/jobTitle.ejs", {
+      sesson:session,
       data: data,
       messages: req.flash(),
     });
@@ -1035,9 +1063,12 @@ exports.g_jobAdd = async (req, res) => {
 
 exports.jobTItleEdit = async (req, res) => {
   try {
+    const session=await loginModel.findOne({where:{role:req.session.user.role}})
+
     const data = await g_jobModel.findAll({ where: { status: 1 } });
     const editJob = await g_jobModel.findOne({ where: { id: req.params.id } });
     return res.render("./general/jobTItleEdit.ejs", {
+      session:session,
       data: data,
       editJob: editJob,
       messages: req.flash(),
@@ -1116,8 +1147,11 @@ exports.Delete_jobtitles = async (req, res) => {
 
 exports.m_industry = async (req, res) => {
   try {
+    const session=await loginModel.findOne({where:{role:req.session.user.role}})
+
     const data = await g_industryModel.findAll({ where: { status: 1 } });
     return res.render("./general/industry.ejs", {
+      session:session,
       data: data,
       messages: req.flash(),
     });
@@ -1153,11 +1187,14 @@ exports.Save_m_industry = async (req, res) => {
 
 exports.edit_m_industry = async (req, res) => {
   try {
+    const session=await loginModel.findOne({where:{role:req.session.user.role}})
+
     const data = await g_industryModel.findAll({ where: { status: 1 } });
     const editInd = await g_industryModel.findOne({
       where: { id: req.params.id },
     });
     return res.render("./general/industryEdit.ejs", {
+      session:session,
       data: data,
       editInd: editInd,
       messages: req.flash(),
@@ -1216,8 +1253,11 @@ exports.Delete_m_industry = async (req, res) => {
 
 exports.m_skillPage = async (req, res) => {
   try {
+    const session=await loginModel.findOne({where:{role:req.session.user.role}})
+
     const data = await skillModel.findAll({ where: { status: 1 } });
     return res.render("./general/skillsPage.ejs", {
+      session:session,
       data: data,
       messages: req.flash(),
     });
@@ -1254,9 +1294,12 @@ exports.Save_m_skills = async (req, res) => {
 
 exports.edit_m_skills = async (req, res) => {
   try {
+    const session=await loginModel.findOne({where:{role:req.session.user.role}})
+
     const data = await skillModel.findAll({ where: { status: 1 } });
     const skill = await skillModel.findOne({ where: { id: req.params.id } });
     return res.render("./general/skillPageEdit.ejs", {
+      session:session,
       data: data,
       skill: skill,
       messages: req.flash(),
@@ -1309,8 +1352,11 @@ exports.Delete_m_skills = async (req, res) => {
 
 exports.ad_ref_page = async (req, res) => {
   try {
+    const session=await loginModel.findOne({where:{role:req.session.user.role}})
+
     const data = await advert_refModel.findAll({ where: { status: 1 } });
     return res.render("./general/advert_ref.ejs", {
+      session:session,
       data: data,
       messages: req.flash(),
     });
@@ -1347,9 +1393,12 @@ exports.Save_m_advert_ref = async (req, res) => {
 
 exports.edit_m_advertPage = async (req, res) => {
   try {
+    const session=await loginModel.findOne({where:{role:req.session.user.role}})
+
     const data = await advert_refModel.findAll({ where: { status: 1 } });
     const adv = await advert_refModel.findOne({ where: { id: req.params.id } });
     return res.render("./general/advPageEdit.ejs", {
+      session:session,
       data: data,
       adv: adv,
       messages: req.flash(),
@@ -1417,8 +1466,11 @@ exports.Delete_m_advert_ref = async (req, res) => {
 
 exports.adminEmployee = async (req, res) => {
   try {
+    const session=await loginModel.findOne({where:{role:req.session.user.role}})
+
     const EmpData = await EmployeeModel.findAll({});
     return res.render("./admin/adminEmployee.ejs", {
+      session:session,
       EmpData: EmpData,
       messages: req.flash(),
     });
@@ -1429,12 +1481,15 @@ exports.adminEmployee = async (req, res) => {
 
 exports.adminAddEmployee = async (req, res) => {
   try {
+    const session=await loginModel.findOne({where:{role:req.session.user.role}})
+    
     const EmpData = await EmployeeModel.findAll({ where: { status: 1 } });
     const department = await departmentModel.findAll({ where: { status: 1 } });
     const employees = await EmployeeModel.findAll({
       where: { status: 1, is_report_auth: "Y" },
     });
     return res.render("./admin/adminAddEmployee.ejs", {
+      session,session,
       EmpData: EmpData,
       department: department,
       employees: employees,
@@ -1553,11 +1608,14 @@ exports.Reset_Password = async (req, res) => {
 };
 exports.employeeView = async (req, res) => {
   try {
+    const session=await loginModel.findOne({where:{role:req.session.user.role}})
+
     console.log("data");
     const data = await EmployeeModel.findOne({ where: { id: req.params.id } });
     console.log("--------------employeeviewdata----------->", data);
 
     return res.render("./general/employeeView.ejs", {
+      session:session,
       d: data,
       messages: req.flash(),
     });
@@ -1732,6 +1790,8 @@ exports.employeeViewEdit = async (req, res) => {
 
 exports.candidateList = async (req, res) => {
   try {
+    const session=await loginModel.findOne({where:{role:req.session.user.role}})
+
     const PData = await clientPersonalModel.findAll({
       where: { adminStatus: "Pending" },
     });
@@ -1740,6 +1800,7 @@ exports.candidateList = async (req, res) => {
     });
     const AllData = await clientPersonalModel.findAll({});
     return res.render("./general/candidateList.ejs", {
+      session:session,
       PData: PData,
       AData: AData,
       AllData: AllData,
@@ -1835,14 +1896,18 @@ exports.Approve_accept_candidate = async (req, res) => {
 
 exports.candidateView = async (req, res) => {
   try {
+    const session=await loginModel.findOne({where:{role:req.session.user.role}})
+    const decodedId = atob(req.params.id);
+    console.log(decodedId)
+
     const data = await clientPersonalModel.findOne({
-      where: { id: req.params.id },
+      where: { id: decodedId },
     });
     // const clientRandom = req.session.user.login_random;
 
     // Fetch the candidate's personal data
     const data1 = await clientPersonalModel.findOne({
-      where: { id: req.params.id },
+      where: { id: decodedId },
     });
     console.log("-----------data", data);
     // Fetch the JSON data containing skill IDs and parse it
@@ -1866,7 +1931,7 @@ exports.candidateView = async (req, res) => {
     // const sData=null
 
     // Fetch the candidate's job titles and industries as before
-    const JD = await m_clientJobModel.findAll({ where: { id: req.params.id } });
+    const JD = await m_clientJobModel.findAll({ where: { id: decodedId } });
     const jData = await Promise.all(
       JD.map(async (item) => {
         const RJob = await g_jobModel.findOne({ where: { id: item.job_id } });
@@ -1875,7 +1940,7 @@ exports.candidateView = async (req, res) => {
     );
 
     const ID = await m_clientModelIndustry.findAll({
-      where: { id: req.params.id },
+      where: { id: decodedId},
     });
     const IData = await Promise.all(
       ID.map(async (item) => {
@@ -1892,6 +1957,7 @@ exports.candidateView = async (req, res) => {
     const AllJob = await g_jobModel.findAll({ where: { status: 1 } });
     console.log("cleint personal data------------>", data);
     return res.render("./general/candidateViewEdit.ejs", {
+      session:session,
       data: data,
       data1: data1,
       SD: sData,
