@@ -58,8 +58,8 @@
                                                 <td><%= value.job_title_name %></td>
                                                 <td>
                                                   <div class="d-flex">
-                                                    <a href="/admin/jobTItleEdit/<%= value.id %>" class="btn btn-primary shadow btn-xs sharp me-1"><i class="fas fa-pencil-alt"></i></a>
-                                                    <a onclick="return confirm('Are you sure to delete ')" href="/admin/Delete_jobtitles/<%= value.id %>" class="btn btn-danger shadow btn-xs sharp"><i class="fa fa-trash"></i></a>
+                                                    <a href="/admin/jobTItleEdit/<%= Buffer.from(value.id.toString()).toString('base64') %>" class="btn btn-primary shadow btn-xs sharp me-1"><i class="fas fa-pencil-alt"></i></a>
+                                                    <a onclick="return confirm('Are you sure to delete ')" href="/admin/Delete_jobtitles/<%= Buffer.from(value.id.toString()).toString('base64') %>" class="btn btn-danger shadow btn-xs sharp"><i class="fa fa-trash"></i></a>
                                                   </div>
                                                 </td>
                                               </tr>

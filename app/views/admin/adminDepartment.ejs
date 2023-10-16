@@ -71,8 +71,8 @@
                                                   <td><%= data.dep_code %></td>
                                                   <td><%= data.department_name %></td>
                                                   <td class="jsgrid-align-center">
-                                                    <a href="/admin/editDepartment/<%= data.id %>" title="Edit" class="btn btn-sm btn-primary"><i class="fa fa-edit"></i></a>
-                                                    <a href="/admin/deleteDepartment/<%= data.id %>" title="Delete" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure to delete this data?')"><i class="fa fa-trash"></i></a>
+                                                    <a href="/admin/editDepartment/<%= Buffer.from(data.id.toString()).toString('base64') %>" title="Edit" class="btn btn-sm btn-primary"><i class="fa fa-edit"></i></a>
+                                                    <a href="/admin/deleteDepartment/<%= Buffer.from(data.id.toString()).toString('base64') %>" title="Delete" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure to delete this data?')"><i class="fa fa-trash"></i></a>
                                                   </td>
                                                 </tr>
                                               <% }); %> 

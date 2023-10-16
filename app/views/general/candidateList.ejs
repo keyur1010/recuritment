@@ -159,14 +159,14 @@
                                                         <i class="fa fa-ellipsis-h"></i>
                                                     </div>
                                                     <div class="dropdown-menu dropdown-menu-right">
-                                                        <a class="dropdown-item text-success" href="/admin/candidateView/<%=PD.id%>">
+                                                        <a class="dropdown-item text-success" href="/admin/candidateView/<%= Buffer.from(PD.id.toString()).toString('base64') %>">
                                                             <i class="far fa-eye me-1 text-success"></i>View Profile
                                                         </a>
                                                        
-                                                            <a class="dropdown-item text-black accept-button" href="/admin/Approve_accept_candidate/<%= PD.id %>">
+                                                            <a class="dropdown-item text-black accept-button" href="/admin/Approve_accept_candidate/<%= Buffer.from(PD.id.toString()).toString('base64') %>">
                                                                 <i class="far fa-check-circle me-1 text-success"></i>Accept Application
-                                                            </a>
-                                                            <a class="dropdown-item text-black reject-button" href="/admin/Reject_accept_candidate/<%=PD.id%>">
+                                                            </a>PD
+                                                            <a class="dropdown-item text-black reject-button" href="/admin/Reject_accept_candidate/<%= Buffer.from(PD.id.toString()).toString('base64') %>">
                                                                 <i class="far fa-times-circle me-1 text-danger"></i>Reject Application
                                                             </a>
                                                         </div>
@@ -235,10 +235,10 @@
                                                     </div>
                                                     <div class="dropdown-menu dropdown-menu-right  viewButton">
                                                     
-                                                        <a class="dropdown-item text-success" href="/admin/candidateView/<%=AD.id%>">
+                                                        <a class="dropdown-item text-success" href="/admin/candidateView/<%= Buffer.from(AD.id.toString()).toString('base64') %>">
                                                             <i class="far fa-eye me-1 text-success"></i>View Profile
                                                         </a>
-                                                            <a class="dropdown-item text-black reject-button" href="/admin/Reject_accept_candidate/<%=AD.id%>">
+                                                            <a class="dropdown-item text-black reject-button" href="/admin/Reject_accept_candidate/<%= Buffer.from(AD.id.toString()).toString('base64') %>">
                                                                 <i class="far fa-times-circle me-1 text-danger"></i>Reject Application
                                                             </a>
                                                     </div>

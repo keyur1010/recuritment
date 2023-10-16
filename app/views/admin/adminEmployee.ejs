@@ -59,7 +59,7 @@
                                                     <td><%=d.role%></td>
                                                     <td>
                                                         <div class="d-flex">
-                                                            <a href="/admin/employeeView/<%= d.id %>" title="View"  class="btn btn-primary shadow btn-xs sharp me-1"><i class="fa fa-eye"></i></a>
+                                                            <a href="/admin/employeeView/<%= Buffer.from(d.id.toString()).toString('base64') %>" title="View"  class="btn btn-primary shadow btn-xs sharp me-1"><i class="fa fa-eye"></i></a>
                                                         </div>
                                                     </td>
                                                 </tr>

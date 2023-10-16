@@ -661,8 +661,9 @@ exports.Save_m_departments = async (req, res) => {
 
 exports.editDepartment = async (req, res) => {
   try {
+    const encoded=atob(req.params.id)
     const editData = await departmentModel.findOne({
-      where: { id: req.params.id },
+      where: { id: encoded },
     });
     const data = await departmentModel.findAll({ where: { status: 1 } });
     const session = await loginModel.findOne({
@@ -731,11 +732,12 @@ exports.editDepartment1 = async (req, res) => {
 
 exports.deleteDepartment = async (req, res) => {
   try {
+    const encoded=atob(req.params.id)
     const data = await departmentModel.findOne({
-      where: { id: req.params.id },
+      where: { id: encoded},
     });
     const datadestroy = await departmentModel.destroy({
-      where: { id: req.params.id },
+      where: { id: encoded },
     });
     req.flash("seccess", `${data.department_name} Is Deleted`);
     return res.redirect("/admin/adminDepartment");
@@ -746,86 +748,7 @@ exports.deleteDepartment = async (req, res) => {
   }
 };
 
-// department controller start
 
-// exports.addCompany=async(req,res)=>{
-//   try {
-//     return res.render('./admin/companyProfile.ejs')
-//   } catch (error) {
-//     console.log(error)
-//   }
-// }
-
-// exports.saveAddCompany=async(req,res)=>{
-//   try {
-//     const companyData=req.body
-//     const {originalname,filename}=req.file
-//     const data=await companyModel.findOne({where:{email:companyData.email}})
-//     if(!data){
-//       function generateRandomString(length) {
-//         const letters = 'abcdefghijklmnopqrstuvwxyz';
-//         let randomString = '';
-
-//         for (let i = 0; i < length; i++) {
-//           const randomIndex = Math.floor(Math.random() * letters.length);
-//           randomString += letters.charAt(randomIndex);
-//         }
-
-//         return randomString;
-//       }
-
-//       const now = new Date();
-//       const dateString = now.toISOString().replace(/[^0-9]/g, '');
-//       const randomStringLength = dateString.length;
-
-//       const randomString = generateRandomString(randomStringLength) + dateString;
-//       const newCompany=await companyModel.create({
-//         company_name:companyData.company_name,
-//         shrtname:companyData.shrtname,
-//         proprietor:companyData.proprietor,
-//         phone:companyData.phone,
-//         phone2:companyData.phone2,
-//         email:companyData.email,
-//         email2:companyData.email2,
-//         state:companyData.state,
-//         state_code:companyData.state_code,
-//         address:companyData.address,
-//         gst_applicable:companyData.gst_applicable,
-//         address:companyData.address,
-//         gst_no:companyData.gst_no,
-//         pan_no:companyData.pan_no,
-//         website:companyData.website,
-//         company_logo:filename,
-//         password:companyData.password,
-//         login_random:randomString
-//       })
-//       const loginCompany=await loginModel.create({
-//         email:companyData.email,
-//         password:companyData.password,
-//         role:"Company",
-//         login_random:randomString
-
-//       })
-//       console.log('new company Data--------->',newCompany)
-//       return res.redirect('/admin/admindashboard')
-//     }else{
-//       console.log('data not saved')
-//       return res.redirect('/admin/addCompany')
-//     }
-//   } catch (error) {
-//     console.log(error)
-//   }
-// }
-
-// exports.companyList=async(req,res)=>{
-//   try {
-//     const data=await companyModel.findAll({})
-//     console.log("companyList---------->",data)
-//     return res.render('./admin/companyList.ejs',{data:data})
-//   } catch (error) {
-//     console.log(error)
-//   }
-// }
 
 exports.editCompany = async (req, res) => {
   try {
@@ -1006,13 +929,14 @@ exports.Save_fin_year = async (req, res) => {
 
 exports.edit_fin_year = async (req, res) => {
   try {
+    const encoded=atob(req.params.id)
     const session = await loginModel.findOne({
       where: { role: req.session.user.role },
     });
 
     const data = await fin_yearsModel.findAll({ where: { status: 1 } });
     const fin_year_data = await fin_yearsModel.findOne({
-      where: { id: req.params.id },
+      where: { id: encoded },
     });
     console.log("fin_year------------------>0", fin_year_data);
 
@@ -1052,7 +976,8 @@ exports.edit_fin_year1 = async (req, res) => {
 };
 exports.Delete_fin_year = async (req, res) => {
   try {
-    const data = await fin_yearsModel.destroy({ where: { id: req.params.id } });
+    const encoded=atob(req.params.id)
+    const data = await fin_yearsModel.destroy({ where: { id: encoded } });
 
     req.flash("success", "Data Deleted Successfully");
     return res.redirect("/admin/fin_years");
@@ -1074,7 +999,7 @@ exports.g_jobpage = async (req, res) => {
     });
 
     return res.render("./general/jobTitle.ejs", {
-      sesson: session,
+      session: session,
       data: data,
       messages: req.flash(),
     });
@@ -1114,6 +1039,7 @@ exports.jobTItleEdit = async (req, res) => {
     const session = await loginModel.findOne({
       where: { role: req.session.user.role },
     });
+    const encoded=atob(req.params.id)
 
     const data = await g_jobModel.findAll({ where: { status: 1 } });
     const editJob = await g_jobModel.findOne({ where: { id: req.params.id } });
@@ -1545,6 +1471,7 @@ exports.adminEmployee = async (req, res) => {
 
 exports.adminAddEmployee = async (req, res) => {
   try {
+
     const session = await loginModel.findOne({
       where: { role: req.session.user.role },
     });
@@ -1675,12 +1602,14 @@ exports.Reset_Password = async (req, res) => {
 };
 exports.employeeView = async (req, res) => {
   try {
+    const encoded=atob(req.params.id)
+    console.log(encoded)
     const session = await loginModel.findOne({
       where: { role: req.session.user.role },
     });
 
     console.log("data");
-    const data = await EmployeeModel.findOne({ where: { id: req.params.id } });
+    const data = await EmployeeModel.findOne({ where: { id: encoded} });
     console.log("--------------employeeviewdata----------->", data);
 
     return res.render("./general/employeeView.ejs", {
