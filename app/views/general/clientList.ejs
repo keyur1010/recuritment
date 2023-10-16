@@ -49,7 +49,7 @@
                       <td class="wspace-no">
                       <span class="fs-16">
                         <img
-                          src="./../../uploads/<%= d.client_logo %>"
+                          src="/uploads/<%= d.client_logo %>"
                           width="53"
                           height="53"
                           viewbox="0 0 53 53"
@@ -66,17 +66,17 @@
                     <td><%=d.registration_no %></td>
                     <td>
                       <a
-                        href="/admin/clientEdit/<%=d.id%>"
+                        href="/admin/clientEdit/<%= Buffer.from(d.id.toString()).toString('base64') %>"
                         class="btn btn-primary shadow btn-xs sharp me-1"
                         ><i class="fas fa-pencil-alt"></i
                       ></a>
                       <a
-                        href="/admin/approveBtn/<%=d.id%>"
+                        href="/admin/approveBtn/<%= Buffer.from(d.id.toString()).toString('base64') %>"
                         class="btn btn-primary shadow btn-xs sharp me-1"
                         ><i class="fas fa-chevron-down"></i
                       ></a>
                       <a
-                        href="/admin/clientDelete/<%= d.id%>"
+                        href="/admin/clientDelete/<%= Buffer.from(d.id.toString()).toString('base64') %>"
                         class="btn btn-danger shadow btn-xs sharp me-1"
                         ><i class="fas fa-trash"></i
                       ></a>

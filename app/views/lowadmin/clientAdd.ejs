@@ -552,23 +552,34 @@
   });
   </script>
   <script>
-    function img_pathUrl(input) {
-      const selectedFile = input.files[0];
-  
-      // Check if a file is selected
-      if (selectedFile) {
-        // Check if the file size exceeds 8MB (8 * 1024 * 1024 bytes)
-        const maxSize = 5 * 1024 * 1024; // 8MB in bytes
-        if (selectedFile.size <= maxSize) {
-          // Create and display an object URL for the image
-          $("#img_url")[0].src = (window.URL ? URL : webkitURL).createObjectURL(selectedFile);
-        } else {
-          console.log('File size exceeds the maximum allowed (5MB).');
-          // Clear the file input to prevent submission
-          input.value = '';
-        }
+ 
+ function img_pathUrl(input) {
+    const selectedFile = input.files[0];
+
+    // Check if a file is selected
+    if (selectedFile) {
+      // Check if the file size exceeds 5MB (5 * 1024 * 1024 bytes)
+      const maxSize = 5 * 1024 * 1024; // 5MB in bytes
+      if (selectedFile.size <= maxSize) {
+        // Create and display an object URL for the image
+        const imageUrl = (window.URL ? URL : webkitURL).createObjectURL(selectedFile);
+
+        // Set the src attribute of the img_url element
+        $("#img_url")[0].src = imageUrl;
+      } else {
+        alert('File size exceeds the maximum allowed (5MB).');
+        
+        // Clear the file input to prevent submission
+        input.value = '';
+        
+        // Reset the src attribute of the img_url element
+        $("#img_url")[0].src = '';
       }
+    } else {
+      // Reset the src attribute of the img_url element if no file is selected
+      $("#img_url")[0].src = '';
     }
+  }
   </script>
   
 <script>

@@ -6,6 +6,7 @@ const db = require("../../../config/database");
 // const { doesNotMatch } = require("assert");
 const path = require("path");
 const fs = require("fs");
+const { encode } = require("punycode");
 require("../../../routes/adminRoutes");
 const loginModel = db.loginModel;
 const clientModel = db.clientModel;
@@ -34,8 +35,13 @@ const transporter = nodemailer.createTransport({
 exports.adminDashboard = async (req, res) => {
   try {
     console.log("login page");
-    const session=await loginModel.findOne({where:{role:req.session.user.role}})
-    return res.render("./admin/dashboard.ejs", {session:session , messages: req.flash() });
+    const session = await loginModel.findOne({
+      where: { role: req.session.user.role },
+    });
+    return res.render("./admin/dashboard.ejs", {
+      session: session,
+      messages: req.flash(),
+    });
   } catch (error) {
     console.log(error);
   }
@@ -44,10 +50,15 @@ exports.adminDashboard = async (req, res) => {
 exports.newClient = async (req, res) => {
   try {
     console.log("new client");
-    req.flash("success", "");
-    const session=await loginModel.findOne({where:{role:req.session.user.role}})
+    // req.flash("success", "");
+    const session = await loginModel.findOne({
+      where: { role: req.session.user.role },
+    });
 
-    return res.render("./admin/clientCreate.ejs", {session:session, messages: req.flash() });
+    return res.render("./admin/clientCreate.ejs", {
+      session: session,
+      messages: req.flash(),
+    });
   } catch (error) {
     console.log(error);
     req.flash("error", "Something Went Wrong");
@@ -192,10 +203,12 @@ exports.newClientCreate = async (req, res) => {
 exports.clientList = async (req, res) => {
   try {
     const clientData = await clientModel.findAll({ where: { isDeleted: 0 } });
-    const session=await loginModel.findOne({where:{role:req.session.user.role}})
+    const session = await loginModel.findOne({
+      where: { role: req.session.user.role },
+    });
 
     return res.render("./general/clientList.ejs", {
-      session:session,
+      session: session,
       clientData: clientData,
       messages: req.flash(),
     });
@@ -208,8 +221,12 @@ exports.clientList = async (req, res) => {
 
 exports.clientEdit = async (req, res) => {
   try {
-    const data = await clientModel.findOne({ where: { id: req.params.id } });
-    const session=await loginModel.findOne({where:{role:req.session.user.role}})
+    const encoded=atob(req.params.id)
+    console.log('encoded',encoded)
+    const data = await clientModel.findOne({ where: { id: encoded } });
+    const session = await loginModel.findOne({
+      where: { role: req.session.user.role },
+    });
 
     if (!data) {
       req.flash("error", "data not found");
@@ -224,7 +241,7 @@ exports.clientEdit = async (req, res) => {
       console.log("data", json_data);
       // req.flash('success','all data fetched')
       return res.render("./general/clientEdit.ejs", {
-        session:session,
+        session: session,
         data: data,
         json_data: json_data,
         messages: req.flash(),
@@ -239,10 +256,11 @@ exports.clientEdit = async (req, res) => {
 
 exports.clientDelete = async (req, res) => {
   try {
-    const data = await clientModel.findOne({ where: { id: req.params.id } });
+    const encoded=atob(req.params.id)
+    const data = await clientModel.findOne({ where: { id: encoded } });
     const dataDelete = await clientModel.update(
       { isDeleted: 1 },
-      { where: { id: req.params.id } }
+      { where: { id: encoded } }
     );
 
     // Set a success flash message using req.flash
@@ -261,14 +279,15 @@ exports.clientDelete = async (req, res) => {
 
 exports.approveBtn = async (req, res) => {
   try {
-    const data = await clientModel.findOne({ where: { id: req.params.id } });
+    const encoded=atob(req.params.id)
+    const data = await clientModel.findOne({ where: { id: encoded } });
     console.log(data);
     if (data.admin_status == "Pending") {
       const updatebtn = await clientModel.update(
         { admin_status: "Approved" },
         {
           where: {
-            id: req.params.id,
+            id: encoded,
           },
         }
       );
@@ -280,7 +299,7 @@ exports.approveBtn = async (req, res) => {
         { admin_status: "Pending" },
         {
           where: {
-            id: req.params.id,
+            id: encoded,
           },
         }
       );
@@ -300,6 +319,9 @@ exports.approveBtn = async (req, res) => {
 
 exports.clientEdit1 = async (req, res) => {
   try {
+    const enco=btoa(req.params.id)
+    console.log('enco------->',enco)
+ 
     const {
       client_name,
       type,
@@ -336,6 +358,19 @@ exports.clientEdit1 = async (req, res) => {
     const checkData = await loginModel.findOne({
       where: { email: contract_email },
     });
+    const datacheckemail=await clientModel.findOne({where:{id:req.params.id}})
+    if(datacheckemail.contract_email==req.body.contract_email){
+console.log('email not changed')
+    }else{
+      const checkD=await loginModel.findOne({where:{email:contract_email}})
+      if(!checkD){
+        console.log('everything Okkk')
+      }else{
+        req.flash('error','Change Email Email Already Exist')
+        return res.redirect(`/admin/clientEdit/${enco}`)
+      }
+    }
+
     if (!checkData) {
       if (req.file) {
         const { filename, originalname } = req.file;
@@ -380,8 +415,9 @@ exports.clientEdit1 = async (req, res) => {
           { email: contract_email },
           { where: { login_random: data.login_random } }
         );
+      
         req.flash("success", "Data Update Successfully");
-        return res.redirect(`/admin/clientEdit/${req.params.id}`);
+        return res.redirect(`/admin/clientEdit/${enco}`);
       } else {
         const newBody = req.body;
         const data = await clientModel.findOne({
@@ -398,7 +434,7 @@ exports.clientEdit1 = async (req, res) => {
         console.log("this is updateform 1--------->", updateForm1);
         req.flash("success", "Data Update Successfully");
 
-        return res.redirect(`/admin/clientEdit/${req.params.id}`);
+        return res.redirect(`/admin/clientEdit/${enco}`);
       }
     }
     if (checkData.email == contract_email) {
@@ -443,7 +479,7 @@ exports.clientEdit1 = async (req, res) => {
         });
         // const updateLogin=await loginModel.update({email:contract_email},{where:{login_random:data.login_random}})
         req.flash("success", "Data Update Successfully");
-        return res.redirect(`/admin/clientEdit/${req.params.id}`);
+        return res.redirect(`/admin/clientEdit/${enco}`);
       } else {
         const newBody = req.body;
         const data = await clientModel.findOne({
@@ -460,7 +496,7 @@ exports.clientEdit1 = async (req, res) => {
         console.log("this is updateform 1--------->", updateForm1);
         req.flash("success", "Data Update Successfully");
 
-        return res.redirect(`/admin/clientEdit/${req.params.id}`);
+        return res.redirect(`/admin/clientEdit/${enco}`);
       }
     } else {
       if (req.file) {
@@ -507,7 +543,7 @@ exports.clientEdit1 = async (req, res) => {
           { where: { login_random: data.login_random } }
         );
         req.flash("success", "Data Update Successfully");
-        return res.redirect(`/admin/clientEdit/${req.params.id}`);
+        return res.redirect(`/admin/clientEdit/${enco}`);
       } else {
         const newBody = req.body;
         const data = await clientModel.findOne({
@@ -524,7 +560,7 @@ exports.clientEdit1 = async (req, res) => {
         console.log("this is updateform 1--------->", updateForm1);
         req.flash("success", "Data Update Successfully");
 
-        return res.redirect(`/admin/clientEdit/${req.params.id}`);
+        return res.redirect(`/admin/clientEdit/${enco}`);
       }
     }
   } catch (error) {
@@ -573,11 +609,13 @@ exports.clientEdit3 = async (req, res) => {
 exports.adminDepartment = async (req, res) => {
   try {
     const data = await departmentModel.findAll({ where: { status: 1 } });
-    const session=await loginModel.findOne({where:{role:req.session.user.role}})
+    const session = await loginModel.findOne({
+      where: { role: req.session.user.role },
+    });
 
     // console.log("department_data------------>",data)
     return res.render("./admin/adminDepartment.ejs", {
-      session:session,
+      session: session,
       data: data,
       messages: req.flash(),
     });
@@ -627,12 +665,14 @@ exports.editDepartment = async (req, res) => {
       where: { id: req.params.id },
     });
     const data = await departmentModel.findAll({ where: { status: 1 } });
-    const session=await loginModel.findOne({where:{role:req.session.user.role}})
+    const session = await loginModel.findOne({
+      where: { role: req.session.user.role },
+    });
 
     console.log("edit data-------------->", editData);
     return res.render("./admin/editDepartment.ejs", {
       editData: editData,
-      session:session,
+      session: session,
       data: data,
       messages: req.flash(),
     });
@@ -789,7 +829,9 @@ exports.deleteDepartment = async (req, res) => {
 
 exports.editCompany = async (req, res) => {
   try {
-    const session=await loginModel.findOne({where:{role:req.session.user.role}})
+    const session = await loginModel.findOne({
+      where: { role: req.session.user.role },
+    });
 
     const findCompany = await companyModel.findOne({
       where: { createdBy: req.session.user.id },
@@ -797,7 +839,7 @@ exports.editCompany = async (req, res) => {
 
     console.log(findCompany);
     return res.render("./admin/editCompany.ejs", {
-      session:session,
+      session: session,
       findCompany: findCompany,
       messages: req.flash(),
     });
@@ -916,12 +958,14 @@ exports.editCompany1 = async (req, res) => {
 
 exports.fin_years = async (req, res) => {
   try {
-    const session=await loginModel.findOne({where:{role:req.session.user.role}})
+    const session = await loginModel.findOne({
+      where: { role: req.session.user.role },
+    });
 
     const year_Data = await fin_yearsModel.findAll({ where: { status: 1 } });
 
     return res.render("./admin/fin_years.ejs", {
-      session:session,
+      session: session,
       year_Data: year_Data,
       messages: req.flash(),
     });
@@ -962,7 +1006,9 @@ exports.Save_fin_year = async (req, res) => {
 
 exports.edit_fin_year = async (req, res) => {
   try {
-    const session=await loginModel.findOne({where:{role:req.session.user.role}})
+    const session = await loginModel.findOne({
+      where: { role: req.session.user.role },
+    });
 
     const data = await fin_yearsModel.findAll({ where: { status: 1 } });
     const fin_year_data = await fin_yearsModel.findOne({
@@ -971,7 +1017,7 @@ exports.edit_fin_year = async (req, res) => {
     console.log("fin_year------------------>0", fin_year_data);
 
     return res.render("./admin/edit_fin_year.ejs", {
-      session:session,
+      session: session,
       data: data,
       fin_year_data: fin_year_data,
       messages: req.flash(),
@@ -1023,10 +1069,12 @@ exports.Delete_fin_year = async (req, res) => {
 exports.g_jobpage = async (req, res) => {
   try {
     const data = await g_jobModel.findAll({ where: { status: 1 } });
-    const session=await loginModel.findOne({where:{role:req.session.user.role}})
+    const session = await loginModel.findOne({
+      where: { role: req.session.user.role },
+    });
 
     return res.render("./general/jobTitle.ejs", {
-      sesson:session,
+      sesson: session,
       data: data,
       messages: req.flash(),
     });
@@ -1063,12 +1111,14 @@ exports.g_jobAdd = async (req, res) => {
 
 exports.jobTItleEdit = async (req, res) => {
   try {
-    const session=await loginModel.findOne({where:{role:req.session.user.role}})
+    const session = await loginModel.findOne({
+      where: { role: req.session.user.role },
+    });
 
     const data = await g_jobModel.findAll({ where: { status: 1 } });
     const editJob = await g_jobModel.findOne({ where: { id: req.params.id } });
     return res.render("./general/jobTItleEdit.ejs", {
-      session:session,
+      session: session,
       data: data,
       editJob: editJob,
       messages: req.flash(),
@@ -1147,11 +1197,13 @@ exports.Delete_jobtitles = async (req, res) => {
 
 exports.m_industry = async (req, res) => {
   try {
-    const session=await loginModel.findOne({where:{role:req.session.user.role}})
+    const session = await loginModel.findOne({
+      where: { role: req.session.user.role },
+    });
 
     const data = await g_industryModel.findAll({ where: { status: 1 } });
     return res.render("./general/industry.ejs", {
-      session:session,
+      session: session,
       data: data,
       messages: req.flash(),
     });
@@ -1187,14 +1239,16 @@ exports.Save_m_industry = async (req, res) => {
 
 exports.edit_m_industry = async (req, res) => {
   try {
-    const session=await loginModel.findOne({where:{role:req.session.user.role}})
+    const session = await loginModel.findOne({
+      where: { role: req.session.user.role },
+    });
 
     const data = await g_industryModel.findAll({ where: { status: 1 } });
     const editInd = await g_industryModel.findOne({
       where: { id: req.params.id },
     });
     return res.render("./general/industryEdit.ejs", {
-      session:session,
+      session: session,
       data: data,
       editInd: editInd,
       messages: req.flash(),
@@ -1253,11 +1307,13 @@ exports.Delete_m_industry = async (req, res) => {
 
 exports.m_skillPage = async (req, res) => {
   try {
-    const session=await loginModel.findOne({where:{role:req.session.user.role}})
+    const session = await loginModel.findOne({
+      where: { role: req.session.user.role },
+    });
 
     const data = await skillModel.findAll({ where: { status: 1 } });
     return res.render("./general/skillsPage.ejs", {
-      session:session,
+      session: session,
       data: data,
       messages: req.flash(),
     });
@@ -1294,12 +1350,14 @@ exports.Save_m_skills = async (req, res) => {
 
 exports.edit_m_skills = async (req, res) => {
   try {
-    const session=await loginModel.findOne({where:{role:req.session.user.role}})
+    const session = await loginModel.findOne({
+      where: { role: req.session.user.role },
+    });
 
     const data = await skillModel.findAll({ where: { status: 1 } });
     const skill = await skillModel.findOne({ where: { id: req.params.id } });
     return res.render("./general/skillPageEdit.ejs", {
-      session:session,
+      session: session,
       data: data,
       skill: skill,
       messages: req.flash(),
@@ -1352,11 +1410,13 @@ exports.Delete_m_skills = async (req, res) => {
 
 exports.ad_ref_page = async (req, res) => {
   try {
-    const session=await loginModel.findOne({where:{role:req.session.user.role}})
+    const session = await loginModel.findOne({
+      where: { role: req.session.user.role },
+    });
 
     const data = await advert_refModel.findAll({ where: { status: 1 } });
     return res.render("./general/advert_ref.ejs", {
-      session:session,
+      session: session,
       data: data,
       messages: req.flash(),
     });
@@ -1393,12 +1453,14 @@ exports.Save_m_advert_ref = async (req, res) => {
 
 exports.edit_m_advertPage = async (req, res) => {
   try {
-    const session=await loginModel.findOne({where:{role:req.session.user.role}})
+    const session = await loginModel.findOne({
+      where: { role: req.session.user.role },
+    });
 
     const data = await advert_refModel.findAll({ where: { status: 1 } });
     const adv = await advert_refModel.findOne({ where: { id: req.params.id } });
     return res.render("./general/advPageEdit.ejs", {
-      session:session,
+      session: session,
       data: data,
       adv: adv,
       messages: req.flash(),
@@ -1466,11 +1528,13 @@ exports.Delete_m_advert_ref = async (req, res) => {
 
 exports.adminEmployee = async (req, res) => {
   try {
-    const session=await loginModel.findOne({where:{role:req.session.user.role}})
+    const session = await loginModel.findOne({
+      where: { role: req.session.user.role },
+    });
 
     const EmpData = await EmployeeModel.findAll({});
     return res.render("./admin/adminEmployee.ejs", {
-      session:session,
+      session: session,
       EmpData: EmpData,
       messages: req.flash(),
     });
@@ -1481,15 +1545,18 @@ exports.adminEmployee = async (req, res) => {
 
 exports.adminAddEmployee = async (req, res) => {
   try {
-    const session=await loginModel.findOne({where:{role:req.session.user.role}})
-    
+    const session = await loginModel.findOne({
+      where: { role: req.session.user.role },
+    });
+
     const EmpData = await EmployeeModel.findAll({ where: { status: 1 } });
     const department = await departmentModel.findAll({ where: { status: 1 } });
     const employees = await EmployeeModel.findAll({
       where: { status: 1, is_report_auth: "Y" },
     });
     return res.render("./admin/adminAddEmployee.ejs", {
-      session,session,
+      session,
+      session,
       EmpData: EmpData,
       department: department,
       employees: employees,
@@ -1608,14 +1675,16 @@ exports.Reset_Password = async (req, res) => {
 };
 exports.employeeView = async (req, res) => {
   try {
-    const session=await loginModel.findOne({where:{role:req.session.user.role}})
+    const session = await loginModel.findOne({
+      where: { role: req.session.user.role },
+    });
 
     console.log("data");
     const data = await EmployeeModel.findOne({ where: { id: req.params.id } });
     console.log("--------------employeeviewdata----------->", data);
 
     return res.render("./general/employeeView.ejs", {
-      session:session,
+      session: session,
       d: data,
       messages: req.flash(),
     });
@@ -1790,7 +1859,9 @@ exports.employeeViewEdit = async (req, res) => {
 
 exports.candidateList = async (req, res) => {
   try {
-    const session=await loginModel.findOne({where:{role:req.session.user.role}})
+    const session = await loginModel.findOne({
+      where: { role: req.session.user.role },
+    });
 
     const PData = await clientPersonalModel.findAll({
       where: { adminStatus: "Pending" },
@@ -1800,7 +1871,7 @@ exports.candidateList = async (req, res) => {
     });
     const AllData = await clientPersonalModel.findAll({});
     return res.render("./general/candidateList.ejs", {
-      session:session,
+      session: session,
       PData: PData,
       AData: AData,
       AllData: AllData,
@@ -1814,13 +1885,15 @@ exports.candidateList = async (req, res) => {
 };
 exports.Reject_accept_candidate = async (req, res) => {
   try {
+    const encoded=atob(req.params.id)
+
     const data = await clientPersonalModel.findOne({
-      where: { id: req.params.id },
+      where: { id: encoded },
     });
     if (data) {
       const approveData = await clientPersonalModel.update(
         { adminStatus: "Rejected" },
-        { where: { id: req.params.id } }
+        { where: { id:encoded } }
       );
       req.flash("error", `${data.candidate_name} Is Rejected`);
       return res.redirect("/admin/candidateList");
@@ -1837,14 +1910,17 @@ exports.Reject_accept_candidate = async (req, res) => {
 };
 exports.Approve_accept_candidate = async (req, res) => {
   try {
+    const encoded=atob(req.params.id)
     const data = await clientPersonalModel.findOne({
-      where: { id: req.params.id },
+      where: { id: encoded },
     });
+    console.log('---------',data)
+  
     const hashedPassword = md5("123456");
     if (data) {
       const approveData = await clientPersonalModel.update(
         { adminStatus: "Approved" },
-        { where: { id: req.params.id } }
+        { where: { id: encoded } }
       );
       const mailOptions = {
         from: "Support <support@gmail.com>",
@@ -1856,7 +1932,7 @@ exports.Approve_accept_candidate = async (req, res) => {
         await transporter.sendMail(mailOptions);
         const passwordAdd = await clientPersonalModel.update(
           { password: hashedPassword },
-          { where: { id: req.params.id } }
+          { where: { id:encoded } }
         );
         const checkLogin = await loginModel.findOne({
           where: { email: data.email_id },
@@ -1896,9 +1972,11 @@ exports.Approve_accept_candidate = async (req, res) => {
 
 exports.candidateView = async (req, res) => {
   try {
-    const session=await loginModel.findOne({where:{role:req.session.user.role}})
+    const session = await loginModel.findOne({
+      where: { role: req.session.user.role },
+    });
     const decodedId = atob(req.params.id);
-    console.log(decodedId)
+    console.log('------------->',decodedId);
 
     const data = await clientPersonalModel.findOne({
       where: { id: decodedId },
@@ -1940,7 +2018,7 @@ exports.candidateView = async (req, res) => {
     );
 
     const ID = await m_clientModelIndustry.findAll({
-      where: { id: decodedId},
+      where: { id: decodedId },
     });
     const IData = await Promise.all(
       ID.map(async (item) => {
@@ -1957,7 +2035,7 @@ exports.candidateView = async (req, res) => {
     const AllJob = await g_jobModel.findAll({ where: { status: 1 } });
     console.log("cleint personal data------------>", data);
     return res.render("./general/candidateViewEdit.ejs", {
-      session:session,
+      session: session,
       data: data,
       data1: data1,
       SD: sData,
@@ -1977,11 +2055,36 @@ exports.candidateView = async (req, res) => {
   }
 };
 
-exports.updateCandidate1 = async (req, res) => {
+exports.updateCandidate1 = async (req, res,next) => {
   try {
     console.log("---------------------->1keyur<-------------", req.files);
     // console.log('----------------------req.body',req.files.profile_image)
+    
+  const data1=await clientPersonalModel.findOne({where:{id:req.params.id}})
+  if(req.body.email_id==data1.email_id){
+    console.log(data1)
+    console.log(data1.id)
+    // next()
+  }else{
+    const checkEmail_id=await loginModel.findOne({where:{email:req.body.email_id}})
+    if(!checkEmail_id){
+      if(data1.adminStatus=='Approved'){
+        const updateEmail=await loginModel.update({email:req.body.email_id},{where:{login_random:data1.client_random}})
+        console.log('all is ok')
+
+      }else{
+        console.log('This Email Not Approved')
+      }
+      // next()
+    }else{
+      req.flash('error','Email Already In Database')
+      return res.redirect('/admin/candidateList')
+    }
+  }
     console.log(req.body);
+    console.log("---------->",req.file)
+    // console.log(req.params.id)
+    console.log(data1.id)
 
     console.log("3", req.files);
     console.log("hiii");
@@ -2030,7 +2133,7 @@ exports.updateCandidate1 = async (req, res) => {
         console.log("candidate dashboard fil2e-------------->", updateClient1);
 
         const updateClient = await clientPersonalModel.update(updateClient1, {
-          where: { id: req.params.id },
+          where: { id: data1.id },
         });
         console.log("candidate dashboard file-------------->", updateClient);
         req.flash("success", "Data Updated Successfully");
@@ -2059,7 +2162,7 @@ exports.updateCandidate1 = async (req, res) => {
         console.log("candidate dashboard fil2e-------------->", updateClient1);
 
         const updateClient = await clientPersonalModel.update(updateClient1, {
-          where: { id: req.params.id },
+          where: { id: data1.id },
         });
         console.log("candidate dashboard file-------------->", updateClient);
         req.flash("success", "Data Updated Succesfully");
@@ -2089,15 +2192,15 @@ exports.updateCandidate1 = async (req, res) => {
         console.log("candidate dashboard fil2e-------------->", updateClient1);
 
         const updateClient = await clientPersonalModel.update(updateClient1, {
-          where: { id: req.params.id },
+          where: { id: data1.id },
         });
         console.log("candidate dashboard file-------------->", updateClient);
         req.flash("success", "Data Updated Succesfully");
         return res.redirect("/admin/candidateList");
-      } else {
-        console.log("1");
+      }else{
+        console.log("111");
         const candidateBody = req.body;
-
+  
         // const addClient=await clientPersonalModel.create({
         //     candidate_name:candidateBody.candidate_name,
         //     advert_ref:candidateBody.advert_ref,
@@ -2117,14 +2220,16 @@ exports.updateCandidate1 = async (req, res) => {
         //     current_position:candidateBody.current_position,
         //   })
         const upDAta = await clientPersonalModel.update(candidateBody, {
-          where: { id: req.params.id },
+          where: { id: data1.id },
         });
         console.log("candidate dashboard file1-------------->", upDAta);
         req.flash("success", "Candidate Data Updated successfully ");
         return res.redirect("/admin/candidateList");
+
       }
-    }else{
-      console.log("1");
+      
+    } else {
+      console.log("111");
       const candidateBody = req.body;
 
       // const addClient=await clientPersonalModel.create({
@@ -2146,7 +2251,7 @@ exports.updateCandidate1 = async (req, res) => {
       //     current_position:candidateBody.current_position,
       //   })
       const upDAta = await clientPersonalModel.update(candidateBody, {
-        where: { id: req.params.id },
+        where: { id: data1.id },
       });
       console.log("candidate dashboard file1-------------->", upDAta);
       req.flash("success", "Candidate Data Updated successfully ");

@@ -181,11 +181,13 @@ exports.clientView=async(req,res)=>{
 exports.recruitmentView=async(req,res)=>{
   try {
     const session=await loginModel.findOne({where:{role:req.session.user.role}})
+    const s=await loginModel.findOne({where:{email:req.session.user.email}})
+
 
     const data=await recruitmentModel.findAll({where:{client_name:req.session.user.id}})
     console.log(data)
 
-    return res.render('./clientdashboard/recruitmentView.ejs',{session:session,data:data,messages:req.flash()})
+    return res.render('./clientdashboard/recruitmentView.ejs',{session:session,data:data,s:s,messages:req.flash()})
   } catch (error) {
     console.log(error)
     req.flash('error','Something Went Wrong')
@@ -231,31 +233,18 @@ exports.saveRecruitment=async(req,res)=>{
     const randomStringLength = dateString.length;
     
     const randomString = generateRandomString(randomStringLength) + dateString;
-
-    const skillsData = [];
-    for (var i = 0; i < recruitmentBody.recruit_skills.length; i++) {
-      skillsData.push({
-        skill_id: recruitmentBody.recruit_skills[i],
-        // Add any other skill-related properties here
-      });
+    const skillData1={
+      skill_id:req.body.recruit_skills
     }
-    const industryData = [];
-    for (var i = 0; i < recruitmentBody.recruit_industry.length; i++) {
-      industryData.push({
-        industry_id: recruitmentBody.recruit_industry[i],
-        // Add any other skill-related properties here
-      });
+    const industryData ={
+    industry_id:req.body.recruit_industry
     }
-    console.log('skilldata------->',skillsData)
-    console.log('1--------->',industryData)
-    const skillsDataJSON = JSON.stringify(skillsData);
-
     const addRecruitment=await recruitmentModel.create({
       recruit_department:recruitmentBody.recruit_department,
       no_position:recruitmentBody.no_position,
       current_salary:recruitmentBody.current_salary,
       desired_salary:recruitmentBody.desired_salary,
-      recruit_skills:skillsData,
+      recruit_skills:skillData1,
       recruit_industry:industryData,
       client_name:req.session.user.id,
       r_random:randomString
@@ -275,7 +264,7 @@ exports.saveRecruitment=async(req,res)=>{
     //     r_random:randomString
     //   })
     // }
-    console.log('1--------->',skillsData)
+    // console.log('1--------->',skillsData)
     console.log('1--------->',industryData)
     console.log('data------------->',addRecruitment)
     // }
@@ -293,22 +282,21 @@ exports.saveRecruitment=async(req,res)=>{
 exports.Recruitment_edit = async (req, res) => {
   try {
     const session=await loginModel.findOne({where:{role:req.session.user.role}})
-
     const data = await recruitmentModel.findOne({ where: { id: req.params.id } });
     const industry = await g_industryModel.findAll({ where: { status: 1 } });
     const skills = await skillModel.findAll({ where: { status: 1 } });
     console.log('edit recruitment-------->', data);
 
     // Parse the "data" field containing skills from JSON to an array
-    const d = JSON.parse(data.skills);
-    const d1=JSON.parse(d)
+    // const d = JSON.parse(data.skills);
+    // const d1=JSON.parse(d)
     const recDepart = await departmentModel.findAll({ where: { status: 1 } });
     return res.render('./clientdashboard/editRecruitment.ejs', {
       session:session,
       data: data,
       recDepart: recDepart,
       industry: industry,
-      skills: d1,
+      skills: skills,
       messages: req.flash(),
     });
   } catch (error) {

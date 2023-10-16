@@ -35,58 +35,35 @@
             <input type="number" name="no_position" class="form-control" placeholder="No. of Positions" min="0" autocomplete="off" required value="<%=data.no_position %>">
         </div>
         <hr>
-                      <!-- <span class="col-12 text-info text-center"><h4>CLIENT GROUP EXPERIENCE</h4></span>
-                        <?php 
-                        $savedArray = array();
-
-                        foreach ($editlist_indus as $key => $value) {
-                            $savedArray[] = $value->industury_id;
-                        }
-
-                        foreach ($list_indus as $key => $value) { ?>
-                            <div class="form-group col-md-2 col-sm-4 form-check mb-2">
-                                <input type="checkbox" class="form-check-input" name="candidate_industry[]" id="candidate_industry_<?php echo $value->id; ?>" value="<?php echo $value->id; ?>" <?php if (in_array($value->id, $savedArray)) echo 'checked'; ?>>
-                                <label class="form-check-label" for="candidate_industry_<?php echo $value->id; ?>"><?php echo $value->indusry_name; ?></label>
-                            </div>
-                        <?php } ?>
-
-
-                    <hr>
-                    <span class="col-12 text-info text-center"><h4>SKILLS</h4></span>
-                    <?php 
-                        $savedArray2 = array();
-
-                        foreach ($editlist_skill as $key => $value) {
-                            $savedArray2[] = $value->skill_id;
-                        }
-                     foreach ($list_skills as $key => $value) { ?>
-                      <div class="form-group col-md-2 col-sm-4 form-check mb-2">
-                        <input type="checkbox" class="form-check-input" name="recruit_skills[]" id="recruit_skills_<?php echo $value->id; ?>" value="<?php echo $value->id; ?>" <?php if (in_array($value->id, $savedArray2)) echo 'checked'; ?>>
-                        <label class="form-check-label" for="candidate_skills_<?php echo $value->id; ?>"><?php echo $value->skill_name; ?></label>
-                      </div>
-                      <?php } ?> -->
-                      <span class="col-12 text-info text-center"><h4>CLIENT GROUP EXPERIENCE</h4></span>
-                      <% industry.forEach(function(indust,index){%>
-                        <div class="form-group col-md-2 col-sm-4 form-check mb-2">
-                        <input type="checkbox" class="form-check-input" name="recruit_industry[]" id="candidate_industry_<%= indust.id %>" value="<%=indust.id%>">
-                        <label class="form-check-label" for="candidate_industry_<%=indust.id%>"><%=indust.industry_name%></label>
-                      </div>
-                    <%}) %>
-
-                      
-
-                    <hr>
-                    <span class="col-12 text-info text-center"><h4>SKILLS</h4></span>
-                    <% skills.forEach(function(skill, index) { %>
-                        <div class="form-group col-md-2 col-sm-4 form-check mb-2">
-                          <input type="checkbox" class="form-check-input" name="recruit_skills[]" id="recruit_skills_<%= skill.id %>" value="<%= skill.id %>"
-                          <% if (data.some(item => item.skill_id === skill.id)) { %>
-                            checked
-                          <% } %>
-                          >
-                          <label class="form-check-label" for="recruit_skills_<%= skill.id %>"><%= skill.skill_name %></label>
-                        </div>
-                      <% }) %>
+                 
+        <span class="col-12 text-info text-center"><h4>CLIENT GROUP EXPERIENCE</h4></span>
+        <% industry.forEach(function(indust) { %>
+          <div class="form-group col-md-2 col-sm-4 form-check mb-2">
+            <input type="checkbox" class="form-check-input" name="recruit_industry[]" id="candidate_industry_<%= indust.id %>" value="<%= indust.id %>"
+            <% if (data.recruit_industry && data.recruit_industry.includes(indust.id.toString())) { %>
+              checked
+            <% } %>
+            >
+            <label class="form-check-label" for="candidate_industry_<%= indust.id %>"><%= indust.industry_name %></label>
+          </div>
+        <% }) %>
+        
+        
+        
+        <hr>
+        <span class="col-12 text-info text-center"><h4>SKILLS</h4></span>
+        <% skills.forEach(function(skill) { %>
+          <div class="form-group col-md-2 col-sm-4 form-check mb-2">
+            <input type="checkbox" class="form-check-input" name="recruit_skills[]" id="recruit_skills_<%= skill.id %>" value="<%= skill.id %>"
+            <% if (data.recruit_skills && data.recruit_skills.includes(skill.id.toString())) { %>
+              checked
+            <% } %>
+            >
+            <label class="form-check-label" for="recruit_skills_<%= skill.id %>"><%= skill.skill_name %></label>
+          </div>
+        <% }) %>
+        
+        
                       
 
         <hr>

@@ -140,7 +140,7 @@
                                         <div class="tab-pane fade show active" id="profile" role="tabpanel">
                                             <div class="pt-4">
                                                 
-	  <form role="form" action="/admin/updateCandidate1/<%=data.id%>" method="post"   class="form-valide-with-icon needs-validation" novalidate="" >  
+	  <form role="form" action="/admin/updateCandidate1/<%=data.id%>" method="post" enctype="multipart/form-data"  class="form-valide-with-icon needs-validation" novalidate="" >  
 	        
            <div class="row">
             <div class="form-group col-md-6 col-sm-6">
@@ -278,7 +278,7 @@
            <div class="form-group col-md-6 col-sm-6">
 	           
 	            <label>Profile Image </label>
-	            <input type="file"  name="profile_image" class="form-control" value="" accept="image/*">
+	            <input type="file"  name="profile_image" class="form-control" value="<%= data.profile_image%>" accept="image/*">
 	            <input type="hidden"  name="oldprofile_image" class="form-control" value="<%= data.profile_image%>" >
 	        </div>
 
