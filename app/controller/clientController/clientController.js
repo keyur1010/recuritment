@@ -281,8 +281,9 @@ exports.saveRecruitment=async(req,res)=>{
 
 exports.Recruitment_edit = async (req, res) => {
   try {
+    const encoded=atob(req.params.id)
     const session=await loginModel.findOne({where:{role:req.session.user.role}})
-    const data = await recruitmentModel.findOne({ where: { id: req.params.id } });
+    const data = await recruitmentModel.findOne({ where: { id: encoded } });
     const industry = await g_industryModel.findAll({ where: { status: 1 } });
     const skills = await skillModel.findAll({ where: { status: 1 } });
     console.log('edit recruitment-------->', data);
@@ -321,7 +322,9 @@ exports.Recruitment_edit1=async(req,res)=>{
 }
 exports.Recruitment_delete=async(req,res)=>{
   try {
-    const data=await recruitmentModel.destroy({where:{id:req.params.id}})
+    const encoded=atob(req.params.id)
+
+    const data=await recruitmentModel.destroy({where:{id:encoded}})
     req.flash('success','Recruitment Deleted Successfully')
     return res.redirect('/client/recruitmentView')
   } catch (error) {

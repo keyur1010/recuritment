@@ -36,8 +36,8 @@
         <td><%=d.recruit_department%></td>
         <td><%=d.no_position%></td>   
         <td>
-            <a href="/client/Recruitment_edit/<%=d.id%>" class="btn btn-primary shadow btn-xs sharp me-1"><i class="fas fa-pencil-alt"></i></a>
-            <a href="/client/Recruitment_delete/<%=d.id%>" class="btn btn-danger shadow btn-xs sharp me-1"><i class="fas fa-trash"></i></a>
+            <a href="/client/Recruitment_edit/<%= Buffer.from(d.id.toString()).toString('base64') %>" class="btn btn-primary shadow btn-xs sharp me-1"><i class="fas fa-pencil-alt"></i></a>
+            <a href="/client/Recruitment_delete/<%= Buffer.from(d.id.toString()).toString('base64') %>" class="btn btn-danger shadow btn-xs sharp me-1"><i class="fas fa-trash"></i></a>
         </td>
     </tr>
     <%}) %>

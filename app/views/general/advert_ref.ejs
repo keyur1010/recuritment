@@ -60,8 +60,8 @@
                                                 <td><%=d.ad_ref_name%></td>
                                                 <td>
                                                     <div class="d-flex">
-                                                        <a href="/admin/edit_m_advertPage/<%=d.id%>" class="btn btn-primary shadow btn-xs sharp me-1"><i class="fas fa-pencil-alt"></i></a>
-                                                        <a onclick="return confirm('Are you sure to delete ')"  href="/admin/Delete_m_advert_ref/<%=d.id%>" class="btn btn-danger shadow btn-xs sharp"><i class="fa fa-trash"></i></a>
+                                                        <a href="/admin/edit_m_advertPage/<%= Buffer.from(d.id.toString()).toString('base64') %>" class="btn btn-primary shadow btn-xs sharp me-1"><i class="fas fa-pencil-alt"></i></a>
+                                                        <a onclick="return confirm('Are you sure to delete ')"  href="/admin/Delete_m_advert_ref/<%= Buffer.from(d.id.toString()).toString('base64') %>" class="btn btn-danger shadow btn-xs sharp"><i class="fa fa-trash"></i></a>
                                                     </div>                                              
                                                 </td>                                               
                                             </tr>

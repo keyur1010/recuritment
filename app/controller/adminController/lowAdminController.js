@@ -157,10 +157,11 @@ exports.m_newClientCreate=async(req,res)=>{
 
 exports.m_approveBtn=async(req,res)=>{
     try {
-      const data=await clientModel.findOne({where:{id:req.params.id}})
+      const encoded=atob(req.params.id)
+      const data=await clientModel.findOne({where:{id:encoded}})
       if(data.admin_status=="Pending"){
         const updatebtn=await clientModel.update({admin_status:"Approved"},{where:{
-          id:req.params.id
+          id:encoded
         }})  
         req.flash('success','Client Approved')
         return res.redirect('/m_admin/m_clientList')
@@ -190,7 +191,8 @@ exports.m_approveBtn=async(req,res)=>{
 
 exports.m_clientDelete=async(req,res)=>{
     try {
-        const data=await clientModel.update({isDeleted:1},{where:{id:req.params.id}})
+      const encoded=atob(req.params.id)
+        const data=await clientModel.update({isDeleted:1},{where:{id:encoded}})
         req.flash('success','Client Deleted')
         return res.redirect('/m_admin/m_clientList')
       } catch (error) {
@@ -202,9 +204,10 @@ exports.m_clientDelete=async(req,res)=>{
 
 exports.m_clientEdit=async(req,res)=>{
     try {
+      const encoded=atob(req.params.id)
     const session=await loginModel.findOne({where:{role:req.session.user.role}})
 
-      const data=await clientModel.findOne({where:{id:req.params.id}})
+      const data=await clientModel.findOne({where:{id:encoded}})
       console.log('data-------------------------->',data)
       const json_data=JSON.parse(data.dataValues.services)
       // console.log(service_data)
@@ -223,6 +226,7 @@ exports.m_clientEdit=async(req,res)=>{
 
   exports.m_clientEdit1=async(req,res)=>{
     try {
+      const enco=btoa(req.params.id)
       const {client_name,type,registered_address,contract_name,contract_position,contract_number,contract_mobile,contract_email,website,industry,vat_number,registration_no,client_logo,img_url,subscrption_level_agreed,payroll_subsribe,employement_contract,service,services,finance_name,finance_position,finance_number,finance_mobile,finance_email,finance_credit_limit,finance_debit_details,billing_name,billing_position,billing_number,billing_mobile,billing_email,} = req.body;
       const clientCheck=await clientModel.findOne({where:{id:req.params.id}})
       if(clientCheck.contract_email==req.body.contract_email){
@@ -263,7 +267,7 @@ exports.m_clientEdit=async(req,res)=>{
         console.log('client edit 1------------->',data)
         const updateForm1=await clientModel.update(newBody,{ where: { id: req.params.id } })
         req.flash('success','Client Edited Successfully')
-        return res.redirect(`/m_admin/m_clientEdit/${req.params.id}`)
+        return res.redirect(`/m_admin/m_clientEdit/${enco}`)
         }
         else{
     
@@ -272,7 +276,7 @@ exports.m_clientEdit=async(req,res)=>{
           console.log('client edit 1------------->',data)
           const updateForm1=await clientModel.update(newBody,{ where: { id: req.params.id } })
           req.flash('success','Client Edited Successfully')
-          return res.redirect(`/m_admin/m_clientEdit/${req.params.id}`)
+          return res.redirect(`/m_admin/m_clientEdit/${enco}`)
         }
       }else{
         const loginCheck=await loginModel.findOne({where:{email:req.body.contract_email}})
@@ -316,7 +320,7 @@ exports.m_clientEdit=async(req,res)=>{
           const updateForm1=await clientModel.update(newBody,{ where: { id: req.params.id } })
           const login1=await loginModel.update({email:contract_email},{where:{login_random:data.login_random}})
           req.flash('success','Client Edited Successfully')
-          return res.redirect(`/m_admin/m_clientEdit/${req.params.id}`)
+          return res.redirect(`/m_admin/m_clientEdit/${enco}`)
           }
           else{
       
@@ -327,7 +331,7 @@ exports.m_clientEdit=async(req,res)=>{
           const login1=await loginModel.update({email:contract_email},{where:{login_random:data.login_random}})
 
             req.flash('success','Client Edited Successfully')
-            return res.redirect(`/m_admin/m_clientEdit/${req.params.id}`)
+            return res.redirect(`/m_admin/m_clientEdit/${enco}`)
           }
         }else{
           req.flash('error','Email Already Exist')
@@ -346,12 +350,13 @@ exports.m_clientEdit=async(req,res)=>{
   }
   exports.m_clientEdit2=async(req,res)=>{
     try {
+      const enco=btoa(req.params.id)
       const newData=req.body
       const data=await clientModel.findOne({where:{id:req.params.id}})
       console.log('data2------------------>',data)
       const updateForm2=await clientModel.update(newData,{where:{id:req.params.id}})
       req.flash('success','Client Edited Successfully')
-      return res.redirect(`/m_admin/m_clientEdit/${req.params.id}`)
+      return res.redirect(`/m_admin/m_clientEdit/${enco}`)
     } catch (error) {
       console.log(error)
       req.flash('error','Something Went Wrong')
@@ -362,13 +367,14 @@ exports.m_clientEdit=async(req,res)=>{
   
   exports.m_clientEdit3=async(req,res)=>{
     try {
+      const enco=btoa(req.params.id)
       const newData=req.body
       const data=await clientModel.findOne({where:{id:req.params.id}})
       console.log('data3------------------>',data)
       const updateForm2=await clientModel.update(newData,{where:{id:req.params.id}})
       req.flash('success','Client Edited Successfully')
 
-      return res.redirect(`/m_admin/m_clientEdit/${req.params.id}`)
+      return res.redirect(`/m_admin/m_clientEdit/${enco}`)
     } catch (error) {
       console.log(error)
       req.flash('error','Something Went Wrong')

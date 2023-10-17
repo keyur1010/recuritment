@@ -99,8 +99,8 @@
                                                     <%= formattedEndDate %>
                                                   </td>
                                                 <td class="jsgrid-align-center ">
-                                                    <a href="/admin/edit_fin_year/<%=d.id%>" title="Edit" class="btn btn-sm btn-primary "><i class="fa fa-edit"></i></a>
-                                                    <a onclick="return confirm('Are you sure to delete this data?')" href="/admin/Delete_fin_year/<%=d.id%>" title="Delete" class="btn btn-sm btn-danger "><i class="fa fa-trash"></i></a>
+                                                    <a href="/admin/edit_fin_year/<%= Buffer.from(d.id.toString()).toString('base64') %>" title="Edit" class="btn btn-sm btn-primary "><i class="fa fa-edit"></i></a>
+                                                    <a onclick="return confirm('Are you sure to delete this data?')" href="/admin/Delete_fin_year/<%= Buffer.from(d.id.toString()).toString('base64') %>" title="Delete" class="btn btn-sm btn-danger "><i class="fa fa-trash"></i></a>
                                                 </td>
                                             </tr>
                                             <%})%>

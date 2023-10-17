@@ -221,8 +221,8 @@ exports.clientList = async (req, res) => {
 
 exports.clientEdit = async (req, res) => {
   try {
-    const encoded=atob(req.params.id)
-    console.log('encoded',encoded)
+    const encoded = atob(req.params.id);
+    console.log("encoded", encoded);
     const data = await clientModel.findOne({ where: { id: encoded } });
     const session = await loginModel.findOne({
       where: { role: req.session.user.role },
@@ -256,7 +256,7 @@ exports.clientEdit = async (req, res) => {
 
 exports.clientDelete = async (req, res) => {
   try {
-    const encoded=atob(req.params.id)
+    const encoded = atob(req.params.id);
     const data = await clientModel.findOne({ where: { id: encoded } });
     const dataDelete = await clientModel.update(
       { isDeleted: 1 },
@@ -279,7 +279,7 @@ exports.clientDelete = async (req, res) => {
 
 exports.approveBtn = async (req, res) => {
   try {
-    const encoded=atob(req.params.id)
+    const encoded = atob(req.params.id);
     const data = await clientModel.findOne({ where: { id: encoded } });
     console.log(data);
     if (data.admin_status == "Pending") {
@@ -319,9 +319,9 @@ exports.approveBtn = async (req, res) => {
 
 exports.clientEdit1 = async (req, res) => {
   try {
-    const enco=btoa(req.params.id)
-    console.log('enco------->',enco)
- 
+    const enco = btoa(req.params.id);
+    console.log("enco------->", enco);
+
     const {
       client_name,
       type,
@@ -358,16 +358,20 @@ exports.clientEdit1 = async (req, res) => {
     const checkData = await loginModel.findOne({
       where: { email: contract_email },
     });
-    const datacheckemail=await clientModel.findOne({where:{id:req.params.id}})
-    if(datacheckemail.contract_email==req.body.contract_email){
-console.log('email not changed')
-    }else{
-      const checkD=await loginModel.findOne({where:{email:contract_email}})
-      if(!checkD){
-        console.log('everything Okkk')
-      }else{
-        req.flash('error','Change Email Email Already Exist')
-        return res.redirect(`/admin/clientEdit/${enco}`)
+    const datacheckemail = await clientModel.findOne({
+      where: { id: req.params.id },
+    });
+    if (datacheckemail.contract_email == req.body.contract_email) {
+      console.log("email not changed");
+    } else {
+      const checkD = await loginModel.findOne({
+        where: { email: contract_email },
+      });
+      if (!checkD) {
+        console.log("everything Okkk");
+      } else {
+        req.flash("error", "Change Email Email Already Exist");
+        return res.redirect(`/admin/clientEdit/${enco}`);
       }
     }
 
@@ -415,7 +419,7 @@ console.log('email not changed')
           { email: contract_email },
           { where: { login_random: data.login_random } }
         );
-      
+
         req.flash("success", "Data Update Successfully");
         return res.redirect(`/admin/clientEdit/${enco}`);
       } else {
@@ -572,6 +576,7 @@ console.log('email not changed')
 };
 exports.clientEdit2 = async (req, res) => {
   try {
+    const encoded = btoa(req.params.id);
     const newData = req.body;
     const data = await clientModel.findOne({ where: { id: req.params.id } });
     console.log("data2------------------>", data);
@@ -579,7 +584,7 @@ exports.clientEdit2 = async (req, res) => {
       where: { id: req.params.id },
     });
     req.flash("success", "Form Data Updated");
-    return res.redirect(`/admin/clientEdit/${req.params.id}`);
+    return res.redirect(`/admin/clientEdit/${encoded}`);
   } catch (error) {
     console.log(error);
     req.flash("error", "Something Went Wrong");
@@ -589,6 +594,7 @@ exports.clientEdit2 = async (req, res) => {
 
 exports.clientEdit3 = async (req, res) => {
   try {
+    const encoded = btoa(req.params.id);
     const newData = req.body;
     const data = await clientModel.findOne({ where: { id: req.params.id } });
     console.log("data3------------------>", data);
@@ -596,7 +602,7 @@ exports.clientEdit3 = async (req, res) => {
       where: { id: req.params.id },
     });
     req.flash("success", "Form Data Updated");
-    return res.redirect(`/admin/clientEdit/${req.params.id}`);
+    return res.redirect(`/admin/clientEdit/${encoded}`);
   } catch (error) {
     console.log(error);
     req.flash("error", "Something Went Wrong");
@@ -661,7 +667,7 @@ exports.Save_m_departments = async (req, res) => {
 
 exports.editDepartment = async (req, res) => {
   try {
-    const encoded=atob(req.params.id)
+    const encoded = atob(req.params.id);
     const editData = await departmentModel.findOne({
       where: { id: encoded },
     });
@@ -732,9 +738,9 @@ exports.editDepartment1 = async (req, res) => {
 
 exports.deleteDepartment = async (req, res) => {
   try {
-    const encoded=atob(req.params.id)
+    const encoded = atob(req.params.id);
     const data = await departmentModel.findOne({
-      where: { id: encoded},
+      where: { id: encoded },
     });
     const datadestroy = await departmentModel.destroy({
       where: { id: encoded },
@@ -747,8 +753,6 @@ exports.deleteDepartment = async (req, res) => {
     return res.redirect("/login");
   }
 };
-
-
 
 exports.editCompany = async (req, res) => {
   try {
@@ -929,7 +933,7 @@ exports.Save_fin_year = async (req, res) => {
 
 exports.edit_fin_year = async (req, res) => {
   try {
-    const encoded=atob(req.params.id)
+    const encoded = atob(req.params.id);
     const session = await loginModel.findOne({
       where: { role: req.session.user.role },
     });
@@ -976,7 +980,7 @@ exports.edit_fin_year1 = async (req, res) => {
 };
 exports.Delete_fin_year = async (req, res) => {
   try {
-    const encoded=atob(req.params.id)
+    const encoded = atob(req.params.id);
     const data = await fin_yearsModel.destroy({ where: { id: encoded } });
 
     req.flash("success", "Data Deleted Successfully");
@@ -1036,13 +1040,14 @@ exports.g_jobAdd = async (req, res) => {
 
 exports.jobTItleEdit = async (req, res) => {
   try {
+    const enc = atob(req.params.id);
     const session = await loginModel.findOne({
       where: { role: req.session.user.role },
     });
-    const encoded=atob(req.params.id)
+    const encoded = atob(req.params.id);
 
     const data = await g_jobModel.findAll({ where: { status: 1 } });
-    const editJob = await g_jobModel.findOne({ where: { id: req.params.id } });
+    const editJob = await g_jobModel.findOne({ where: { id: enc } });
     return res.render("./general/jobTItleEdit.ejs", {
       session: session,
       data: data,
@@ -1165,13 +1170,15 @@ exports.Save_m_industry = async (req, res) => {
 
 exports.edit_m_industry = async (req, res) => {
   try {
+    const encoded = atob(req.params.id);
+
     const session = await loginModel.findOne({
       where: { role: req.session.user.role },
     });
 
     const data = await g_industryModel.findAll({ where: { status: 1 } });
     const editInd = await g_industryModel.findOne({
-      where: { id: req.params.id },
+      where: { id: encoded },
     });
     return res.render("./general/industryEdit.ejs", {
       session: session,
@@ -1192,12 +1199,25 @@ exports.g_industryEdit = async (req, res) => {
     const data = await g_industryModel.findOne({
       where: { id: req.params.id },
     });
+    console.log("industry Data---------->", data);
     if (data) {
-      const updateData = await g_industryModel.update(newData, {
-        where: { id: req.params.id },
+      const industry_data = await g_industryModel.findOne({
+        where: { industry_name: req.body.industry_name },
       });
-      req.flash("success", `${data.industry_name} Is Updated`);
-      return res.redirect("/login");
+      console.log("--------------", industry_data);
+      if (!industry_data) {
+        const updateData = await g_industryModel.update(newData, {
+          where: { id: req.params.id },
+        });
+        req.flash("success", `${data.industry_name} Is Updated`);
+        return res.redirect("/admin/m_industry");
+      } else {
+        if (industry_data.industry_name == req.body.industry_name) {
+          console.log("Data As Is It Is");
+          req.flash('error','Data Already In Database')
+          return res.redirect('/admin/m_industry')
+        }
+      }
     } else {
       console.log("data not submited");
       req.flash("error", `${data.industry_name} Not Updated`);
@@ -1212,11 +1232,13 @@ exports.g_industryEdit = async (req, res) => {
 
 exports.Delete_m_industry = async (req, res) => {
   try {
+    const encoded = atob(req.params.id);
+
     const data1 = await g_industryModel.findOne({
-      where: { id: req.params.id },
+      where: { id: encoded },
     });
     const data = await g_industryModel.destroy({
-      where: { id: req.params.id },
+      where: { id: encoded },
     });
     req.flash("success", `${data1.industry_name} Is Deleted`);
     return res.redirect("/admin/m_industry");
@@ -1275,13 +1297,14 @@ exports.Save_m_skills = async (req, res) => {
 };
 
 exports.edit_m_skills = async (req, res) => {
-  try {
+  try { 
+    const encoded=atob(req.params.id)
     const session = await loginModel.findOne({
       where: { role: req.session.user.role },
     });
 
     const data = await skillModel.findAll({ where: { status: 1 } });
-    const skill = await skillModel.findOne({ where: { id: req.params.id } });
+    const skill = await skillModel.findOne({ where: { id:encoded } });
     return res.render("./general/skillPageEdit.ejs", {
       session: session,
       data: data,
@@ -1299,15 +1322,27 @@ exports.edit_m_skills1 = async (req, res) => {
   try {
     const newData = req.body;
     const data = await skillModel.findOne({ where: { id: req.params.id } });
+    console.log('Data------>0',data)
     if (data) {
-      const updateData = await skillModel.update(newData, {
-        where: { id: req.params.id },
-      });
-      req.flash("success", `${data.skill_name} Is Skill Updated`);
-      return res.redirect("/admin/m_skillPage");
+      if(data.skill_name==req.body.skill_name){
+        console.log('data is it is')
+        return res.redirect('/admin/m_skillPage')
+      }else{
+        const checkSkill=await skillModel.findOne({where:{skill_name:req.body.skill_name}})
+        if(!checkSkill){
+          const updateData = await skillModel.update(newData, {
+            where: { id: req.params.id },
+          });
+          req.flash("success", `${data.skill_name} Is Skill Updated`);
+          return res.redirect("/admin/m_skillPage");
+        }else{
+          req.flash('error','Skill Already Exist Change Skill Name')
+          return res.redirect('/admin/m_skillPage')
+        }
+      }
     } else {
       console.log("data not submited");
-      req.flash("error", `${data.skill_name} Is Not Updated`);
+      req.flash("error", `Data Is Not Updated`);
       return res.redirect("/admin/m_skillPage");
     }
   } catch (error) {
@@ -1319,8 +1354,9 @@ exports.edit_m_skills1 = async (req, res) => {
 
 exports.Delete_m_skills = async (req, res) => {
   try {
-    const d = await skillModel.findOne({ where: { id: req.params.id } });
-    const data = await skillModel.destroy({ where: { id: req.params.id } });
+    const encoded=atob(req.params.id)
+    const d = await skillModel.findOne({ where: { id: encoded } });
+    const data = await skillModel.destroy({ where: { id: encoded } });
     req.flash("success", `${d.skill_name} Is Deleted`);
     return res.redirect("/admin/m_skillPage");
   } catch (error) {
@@ -1355,6 +1391,7 @@ exports.ad_ref_page = async (req, res) => {
 
 exports.Save_m_advert_ref = async (req, res) => {
   try {
+    
     console.log("skilll post --------->", req.body);
     const data = await advert_refModel.findOne({
       where: { ad_ref_name: req.body.ad_ref_name },
@@ -1382,9 +1419,10 @@ exports.edit_m_advertPage = async (req, res) => {
     const session = await loginModel.findOne({
       where: { role: req.session.user.role },
     });
+    const encoded=atob(req.params.id)
 
     const data = await advert_refModel.findAll({ where: { status: 1 } });
-    const adv = await advert_refModel.findOne({ where: { id: req.params.id } });
+    const adv = await advert_refModel.findOne({ where: { id: encoded } });
     return res.render("./general/advPageEdit.ejs", {
       session: session,
       data: data,
@@ -1400,6 +1438,7 @@ exports.edit_m_advertPage = async (req, res) => {
 
 exports.edit_m_advert_ref = async (req, res) => {
   try {
+    // const encoded=atob(req.params.id)
     const newData = req.body;
     const data = await advert_refModel.findOne({
       where: { id: req.params.id },
@@ -1434,10 +1473,11 @@ exports.edit_m_advert_ref = async (req, res) => {
 };
 
 exports.Delete_m_advert_ref = async (req, res) => {
-  const d = await advert_refModel.findOne({ where: { id: req.params.id } });
+  const encoded=atob(req.params.id)
+  const d = await advert_refModel.findOne({ where: { id: encoded } });
   try {
     const data = await advert_refModel.destroy({
-      where: { id: req.params.id },
+      where: { id: encoded},
     });
     req.flash("success", `${d.ad_ref_name} Is Deleted SuccessFully`);
     return res.redirect("/admin/ad_ref_page");
@@ -1471,7 +1511,6 @@ exports.adminEmployee = async (req, res) => {
 
 exports.adminAddEmployee = async (req, res) => {
   try {
-
     const session = await loginModel.findOne({
       where: { role: req.session.user.role },
     });
@@ -1602,14 +1641,14 @@ exports.Reset_Password = async (req, res) => {
 };
 exports.employeeView = async (req, res) => {
   try {
-    const encoded=atob(req.params.id)
-    console.log(encoded)
+    const encoded = atob(req.params.id);
+    console.log(encoded);
     const session = await loginModel.findOne({
       where: { role: req.session.user.role },
     });
 
     console.log("data");
-    const data = await EmployeeModel.findOne({ where: { id: encoded} });
+    const data = await EmployeeModel.findOne({ where: { id: encoded } });
     console.log("--------------employeeviewdata----------->", data);
 
     return res.render("./general/employeeView.ejs", {
@@ -1814,7 +1853,7 @@ exports.candidateList = async (req, res) => {
 };
 exports.Reject_accept_candidate = async (req, res) => {
   try {
-    const encoded=atob(req.params.id)
+    const encoded = atob(req.params.id);
 
     const data = await clientPersonalModel.findOne({
       where: { id: encoded },
@@ -1822,7 +1861,7 @@ exports.Reject_accept_candidate = async (req, res) => {
     if (data) {
       const approveData = await clientPersonalModel.update(
         { adminStatus: "Rejected" },
-        { where: { id:encoded } }
+        { where: { id: encoded } }
       );
       req.flash("error", `${data.candidate_name} Is Rejected`);
       return res.redirect("/admin/candidateList");
@@ -1839,12 +1878,12 @@ exports.Reject_accept_candidate = async (req, res) => {
 };
 exports.Approve_accept_candidate = async (req, res) => {
   try {
-    const encoded=atob(req.params.id)
+    const encoded = atob(req.params.id);
     const data = await clientPersonalModel.findOne({
       where: { id: encoded },
     });
-    console.log('---------',data)
-  
+    console.log("---------", data);
+
     const hashedPassword = md5("123456");
     if (data) {
       const approveData = await clientPersonalModel.update(
@@ -1861,7 +1900,7 @@ exports.Approve_accept_candidate = async (req, res) => {
         await transporter.sendMail(mailOptions);
         const passwordAdd = await clientPersonalModel.update(
           { password: hashedPassword },
-          { where: { id:encoded } }
+          { where: { id: encoded } }
         );
         const checkLogin = await loginModel.findOne({
           where: { email: data.email_id },
@@ -1905,7 +1944,7 @@ exports.candidateView = async (req, res) => {
       where: { role: req.session.user.role },
     });
     const decodedId = atob(req.params.id);
-    console.log('------------->',decodedId);
+    console.log("------------->", decodedId);
 
     const data = await clientPersonalModel.findOne({
       where: { id: decodedId },
@@ -1984,36 +2023,42 @@ exports.candidateView = async (req, res) => {
   }
 };
 
-exports.updateCandidate1 = async (req, res,next) => {
+exports.updateCandidate1 = async (req, res, next) => {
   try {
     console.log("---------------------->1keyur<-------------", req.files);
     // console.log('----------------------req.body',req.files.profile_image)
-    
-  const data1=await clientPersonalModel.findOne({where:{id:req.params.id}})
-  if(req.body.email_id==data1.email_id){
-    console.log(data1)
-    console.log(data1.id)
-    // next()
-  }else{
-    const checkEmail_id=await loginModel.findOne({where:{email:req.body.email_id}})
-    if(!checkEmail_id){
-      if(data1.adminStatus=='Approved'){
-        const updateEmail=await loginModel.update({email:req.body.email_id},{where:{login_random:data1.client_random}})
-        console.log('all is ok')
 
-      }else{
-        console.log('This Email Not Approved')
-      }
+    const data1 = await clientPersonalModel.findOne({
+      where: { id: req.params.id },
+    });
+    if (req.body.email_id == data1.email_id) {
+      console.log(data1);
+      console.log(data1.id);
       // next()
-    }else{
-      req.flash('error','Email Already In Database')
-      return res.redirect('/admin/candidateList')
+    } else {
+      const checkEmail_id = await loginModel.findOne({
+        where: { email: req.body.email_id },
+      });
+      if (!checkEmail_id) {
+        if (data1.adminStatus == "Approved") {
+          const updateEmail = await loginModel.update(
+            { email: req.body.email_id },
+            { where: { login_random: data1.client_random } }
+          );
+          console.log("all is ok");
+        } else {
+          console.log("This Email Not Approved");
+        }
+        // next()
+      } else {
+        req.flash("error", "Email Already In Database");
+        return res.redirect("/admin/candidateList");
+      }
     }
-  }
     console.log(req.body);
-    console.log("---------->",req.file)
+    console.log("---------->", req.file);
     // console.log(req.params.id)
-    console.log(data1.id)
+    console.log(data1.id);
 
     console.log("3", req.files);
     console.log("hiii");
@@ -2126,10 +2171,10 @@ exports.updateCandidate1 = async (req, res,next) => {
         console.log("candidate dashboard file-------------->", updateClient);
         req.flash("success", "Data Updated Succesfully");
         return res.redirect("/admin/candidateList");
-      }else{
+      } else {
         console.log("111");
         const candidateBody = req.body;
-  
+
         // const addClient=await clientPersonalModel.create({
         //     candidate_name:candidateBody.candidate_name,
         //     advert_ref:candidateBody.advert_ref,
@@ -2154,9 +2199,7 @@ exports.updateCandidate1 = async (req, res,next) => {
         console.log("candidate dashboard file1-------------->", upDAta);
         req.flash("success", "Candidate Data Updated successfully ");
         return res.redirect("/admin/candidateList");
-
       }
-      
     } else {
       console.log("111");
       const candidateBody = req.body;
