@@ -24,13 +24,13 @@ const r_industryModel=db.r_industryModel
 exports.clientPage = async (req, res) => {
   try {
     console.log("client page");
-    const session=await loginModel.findOne({where:{role:req.session.user.role}})
+    // const session=await loginModel.findOne({where:{role:req.session.user.role}})
 
     const industry=await g_industryModel.findAll({where:{status:1}})
     const advref=await advert_refModel.findAll({where:{status:1}})
     const skills=await skillModel.findAll({where:{status:1}})
     const jobs=await g_jobModel.findAll({where:{status:1}})
-    return res.render("./clientSign.ejs",{session:session,industry:industry,skills:skills,jobs:jobs,advref:advref,messages:req.flash()});
+    return res.render("./clientSign.ejs",{industry:industry,skills:skills,jobs:jobs,advref:advref,messages:req.flash()});
   } catch (error) {
     console.log(error);
     req.flash('error','Something Went Wrong')

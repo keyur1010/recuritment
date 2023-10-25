@@ -7,7 +7,7 @@ const  loginController=require('../app/controller/loginController')
 
 router.get('/login',loginController.loginPage)
 router.post('/loginUser',loginController.loginUser)
-
+router.get('/profile',loginController.Profile)
 router.get('/',loginController.logout)
 
 

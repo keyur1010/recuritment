@@ -183,7 +183,6 @@ exports.newClientCreate = async (req, res) => {
         role: "Client",
         login_random: randomString,
       });
-      // console.log("data---------->", data);
 
       req.flash("success", "data post successfully");
       return res.redirect("/admin/clientList");

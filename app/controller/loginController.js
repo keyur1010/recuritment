@@ -2,6 +2,9 @@ const { Sequelize, DataTypes } = require("sequelize");
 const db = require("../../config/database");
 const md5 = require("md5");
 const loginModel = db.loginModel;
+const EmployeeModel=db.EmployeeModel
+const clientModel=db.clientModel
+const clientPersonalModel=db.clientPersonalModel
 
 exports.loginPage = async (req, res) => {
   try {
@@ -74,4 +77,31 @@ exports.logout = async (req, res) => {
     
   }
 };
+
+
+exports.Profile=async(req,res)=>{
+  try {
+    const session=await loginModel.findOne({where:{role:req.session.user.role}})
+    let user;
+    if(session.role=='Admin'){
+      user=await EmployeeModel.findOne({where:{email:req.session.user.email}})
+    }else if(session.role=='Client'){
+      user=await clientModel.findOne({where:{contract_email:req.session.user.email}})
+    }else if(session.role=='Candidate'){
+      user=await clientPersonalModel.findOne({where:{email_id:req.session.user.email}})
+
+    }
+    console.log('user---------->',user)
+
+    return res.render('./profile.ejs',{session:session,user:user,messages:req.flash()})
+  } catch (error) {
+    console.log(error)
+    req.flash('error','Something Went Wrong')
+    return res.redirect('/login')
+  }
+}
+
+
+
+
 
