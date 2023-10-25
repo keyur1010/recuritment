@@ -1,0 +1,292 @@
+
+<%- include( '../main/header.ejs' ) %>
+<%- include( '../main/sidebar.ejs',{session:session} ) %>
+<script>
+    function formatDate(dateString) {
+      const date = new Date(dateString);
+      const day = date.getDate();
+      const month = date.getMonth() + 1; // Months are zero-based, so add 1
+      const year = date.getFullYear();
+      return `${day}/${month}/${year}`;
+    }
+  </script>
+<div class="content-body">
+    <div class="container-fluid">
+
+        <div class="d-sm-flex d-block justify-content-between align-items-center mb-4">
+            <div class="card-action coin-tabs mt-3 mt-sm-0">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" data-bs-toggle="tab" href="#AllStatus">All Status</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="tab" href="#pending">Pending</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="tab" href="#approved">Approved</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="tab-content">
+                    <div class="tab-pane fade show active" id="AllStatus">
+                        <div class="table-responsive">
+                            <table class="table display mb-4 dataTablesCard order-table card-table text-black application" id="application-tbl1">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Candidate Name</th>
+                                        <th>Mobile No</th>
+                                        <th>Email Id</th>
+                                        <th>Advert Ref.</th>
+                                        <th>Current Position</th>
+                                        <th>Status</th>
+                                        <th>Add On</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% AllData.forEach(function(all,index){ %>
+                                        <tr>
+                                            <td>#<%=all.client_random%></td>
+                                            <td><%=all.candidate_name%></td>
+                                            <td class="wspace-no">
+                                                <span class="text-secoundry fs-14 font-w600">
+                                                    <i class="fas fa-phone-alt me-2"></i>
+                                                    <%=all.mobile_number%>
+                                                </span>
+                                            </td>
+                                            <td><%=all.email_id%></td>
+                                            <td><%=all.advert_ref %></td>
+                                            <td><%=all.current_position%></td>
+                                            <td>
+                                                <span class="btn bgl-secondary light btn-rounded btn-sm"><%=all.adminStatus%></span>
+                                            </td>
+                                            <td>
+                                                <% const endDate = new Date(all.createdAt); %>
+                                                <% const formattedEndDate = String(endDate.getDate()).padStart(2, '0') + '/' + String(endDate.getMonth() + 1).padStart(2, '0') + '/' + endDate.getFullYear(); %>
+                                                <%= formattedEndDate %>
+                                              </td>
+                                              <td>
+                                                <div class="dropdown text-center">
+                                                    <div class="btn-link" data-bs-toggle="dropdown">
+                                                        <i class="fa fa-ellipsis-h"></i>
+                                                    </div>
+                                                    <div class="dropdown-menu dropdown-menu-right">
+                                                        <a class="dropdown-item text-success" href="/admin/candidateView/<%= Buffer.from(all.id.toString()).toString('base64') %>">
+                                                            <i class="far fa-eye me-1 text-success"></i>View Profile
+                                                        </a>
+                                                        <!-- Render "Accept" and "Reject" buttons only if the status is not "approved" -->
+                                                        <% if (all.adminStatus !== 'Approved') { %>
+                                                            <a class="dropdown-item text-black accept-button" href="/admin/Approve_accept_candidate/<%= Buffer.from(all.id.toString()).toString('base64') %>">
+                                                                <i class="far fa-check-circle me-1 text-success"></i>Accept Application
+                                                            </a>
+                                                            <a class="dropdown-item text-black reject-button" href="/admin/Reject_accept_candidate/<%= Buffer.from(all.id.toString()).toString('base64') %>">
+                                                                <i class="far fa-times-circle me-1 text-danger"></i>Reject Application
+                                                            </a>
+                                                        <% } else { %>
+                                                            <!-- Only "Reject" button for "Approved" status -->
+                                                            <a class="dropdown-item text-black reject-button" href="/admin/Reject_accept_candidate/<%= Buffer.from(all.id.toString()).toString('base64') %>">
+                                                                <i class="far fa-times-circle me-1 text-danger"></i>Reject Application
+                                                            </a>
+                                                        <% } %>
+                                                    </div>
+                                                    
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    <%})%>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="pending">
+                        <div class="table-responsive">
+                            <table class="table display mb-4 dataTablesCard order-table card-table text-black application" id="application-tbl1">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Candidate Name</th>
+                                        <th>Mobile No</th>
+                                        <th>Email Id</th>
+                                        <th>Advert Ref.</th>
+                                        <th>DOB</th>
+                                        <th>Current Position</th>
+                                        <th>Current Pay Status</th>
+                                        <th>Notice Period</th>
+                                        <th>Status</th>
+                                        <th>Add On</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% PData.forEach(function(PD,index){%>
+
+                                        <tr>
+                                            <td>#<%=PD.client_random%></td>
+                                            <td><%=PD.candidate_name%></td>
+                                            <td class="wspace-no">
+                                                <span class="text-secoundry fs-14 font-w600">
+                                                    <i class="fas fa-phone-alt me-2"></i>
+                                                    <%=PD.mobile_number%>
+                                                </span>
+                                            </td>
+                                            <td><%=PD.email_id%></td>
+                                            <td><%=PD.advert_ref%></td>
+                                            <td>
+                                                <% const endDate11 = new Date(PD.candidate_dob); %>
+                                                <% const formattedEndDate11 = String(endDate11.getDate()).padStart(2, '0') + '/' + String(endDate11.getMonth() + 1).padStart(2, '0') + '/' + endDate11.getFullYear(); %>
+                                                <%= formattedEndDate11 %>
+                                              </td>
+                                            <td><%=PD.current_position%></td>
+                                            <td><%=PD.current_pay_status%></td>
+                                            <td><%=PD.notice_period%></td>
+                                            <td>
+                                                <span class="btn bgl-secondary light btn-rounded btn-sm"><%=PD.adminStatus%></span>
+                                            </td>
+                                            <td>
+                                                <% const endDate = new Date(PD.createdAt); %>
+                                                <% const formattedEndDate = String(endDate.getDate()).padStart(2, '0') + '/' + String(endDate.getMonth() + 1).padStart(2, '0') + '/' + endDate.getFullYear(); %>
+                                                <%= formattedEndDate %>
+                                              </td>
+                                            <td>
+                                                <div class="dropdown text-center">
+                                                    <div class="btn-link" data-bs-toggle="dropdown">
+                                                        <i class="fa fa-ellipsis-h"></i>
+                                                    </div>
+                                                    <div class="dropdown-menu dropdown-menu-right">
+                                                        <a class="dropdown-item text-success" href="/admin/candidateView/<%= Buffer.from(PD.id.toString()).toString('base64') %>">
+                                                            <i class="far fa-eye me-1 text-success"></i>View Profile
+                                                        </a>
+                                                       
+                                                            <a class="dropdown-item text-black accept-button" href="/admin/Approve_accept_candidate/<%= Buffer.from(PD.id.toString()).toString('base64') %>">
+                                                                <i class="far fa-check-circle me-1 text-success"></i>Accept Application
+                                                            </a>PD
+                                                            <a class="dropdown-item text-black reject-button" href="/admin/Reject_accept_candidate/<%= Buffer.from(PD.id.toString()).toString('base64') %>">
+                                                                <i class="far fa-times-circle me-1 text-danger"></i>Reject Application
+                                                            </a>
+                                                        </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <%}) %>
+                                    </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="approved">
+                        <div class="table-responsive">
+                            <table class="table display mb-4 dataTablesCard order-table card-table text-black application" id="application-tbl1">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Candidate Name</th>
+                                        <th>Mobile No</th>
+                                        <th>Email Id</th>
+                                        <th>Advert Ref.</th>
+                                        <th>DOB</th>
+                                        <th>Current Position</th>
+                                        <th>Current Pay Status</th>
+                                        <th>Notice Period</th>
+                                        <th>Status</th>
+                                        <th>Add On</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% AData.forEach(function(AD,index){%>
+                                        <tr>
+
+                                                <td>#<%=AD.client_random%></td>
+                                                <td><%=AD.candidate_name%></td>
+                                                <td class="wspace-no">
+                                                    <span class="text-secoundry fs-14 font-w600">
+                                                        <i class="fas fa-phone-alt me-2"></i>
+                                                        <%=AD.mobile_number%>
+                                                </span>
+                                            </td>
+                                            <td><%=AD.email_id%></td>
+                                            <td><%=AD.advert_ref%></td>
+                                            <td>
+                                                <% const endDate1 = new Date(AD.candidate_dob); %>
+                                                <% const formattedEndDate1 = String(endDate1.getDate()).padStart(2, '0') + '/' + String(endDate1.getMonth() + 1).padStart(2, '0') + '/' + endDate1.getFullYear(); %>
+                                                <%= formattedEndDate1 %>
+                                              </td>
+                                            <td><%=AD.current_position%></td>
+                                            <td><%=AD.current_pay_status%></td>
+                                            <td><%=AD.notice_period%></td>
+                                            <td>
+                                                <span class="btn bgl-secondary light btn-rounded btn-sm"><%=AD.adminStatus%></span>
+                                            </td>
+                                            <td>
+                                                <% const endDate = new Date(AD.createdAt); %>
+                                                <% const formattedEndDate = String(endDate.getDate()).padStart(2, '0') + '/' + String(endDate.getMonth() + 1).padStart(2, '0') + '/' + endDate.getFullYear(); %>
+                                                <%= formattedEndDate %>
+                                              </td>
+                                            <td>
+                                                <div class="dropdown text-center">
+                                                    <div class="btn-link" data-bs-toggle="dropdown">
+                                                        <i class="fa fa-ellipsis-h"></i>
+                                                    </div>
+                                                    <div class="dropdown-menu dropdown-menu-right  viewButton">
+                                                    
+                                                        <a class="dropdown-item text-success" href="/admin/candidateView/<%= Buffer.from(AD.id.toString()).toString('base64') %>">
+                                                            <i class="far fa-eye me-1 text-success"></i>View Profile
+                                                        </a>
+                                                            <a class="dropdown-item text-black reject-button" href="/admin/Reject_accept_candidate/<%= Buffer.from(AD.id.toString()).toString('base64') %>">
+                                                                <i class="far fa-times-circle me-1 text-danger"></i>Reject Application
+                                                            </a>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <%}) %>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<%- include( '../main/footer.ejs' ) %>
+<script>
+    $(document).ready(function() {
+        $("#li-list_pend").addClass('active');
+        $("#li-candidate").addClass('active');
+        $('#li-candidate').addClass('show');
+    });
+</script>
+<script>
+    function hideButtonsBasedOnStatus() {
+        var statusElements = document.querySelectorAll('.btn-rounded');
+
+        statusElements.forEach(function(element) {
+            var status = element.innerText.trim().toLowerCase();
+            var acceptButton = element.parentElement.querySelector('.accept-button');
+            var rejectButton = element.parentElement.querySelector('.reject-button');
+            // var rejectButton = element.parentElement.querySelector('.viewButton');
+
+            if (status === 'approved') {
+                acceptButton.style.display = 'none';
+                rejectButton.style.display = 'none';
+                // viewButton.style.display = 'none';
+            } else {
+                acceptButton.style.display = 'block';
+                rejectButton.style.display = 'block';
+                // viewButton.style.display = 'block';
+            }
+        });
+    }
+
+    hideButtonsBasedOnStatus();
+</script>

@@ -1,0 +1,308 @@
+<%- include( '../main/header.ejs' ) %>
+<%- include( '../main/sidebar.ejs',{session:session} ) %>
+
+  <div class="content-body">
+            <!-- row -->
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-xl-12">
+            <div class="profile-back">
+              <img src="/assets/images/profile1.jpg" alt="">
+              <!-- <div class="social-btn">
+                <a href="javascript:void(0);" class="btn btn-light social">245 Following</a>
+                <a href="javascript:void(0);" class="btn btn-light social">872 Followers</a>
+                <a href="javascript:void(0);" class="btn btn-primary">Update Profile</a>
+              </div> -->
+            </div>
+            <div class="profile-pic d-flex">
+
+                <% if (clientdata && clientdata.client_logo) { %>
+                    <img src="/uploads/<%= clientdata.client_logo %>" class="img-circle" />
+                  <% } else { %>
+                    <img src="/assets/images/candidate/user.jpg" class="img-circle" />
+                  <% } %>
+
+              <div class="profile-info2">
+                <h2 class="mb-0"><%=clientdata.client_name %></h2>
+                <h4><%=clientdata.contract_name%></h4>
+                <span class="d-block"><i class="fas fa-map-marker-alt me-2"></i><%=clientdata.registered_address%></span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="col-xl-12 col-xxl-12 col-lg-12 mt-lg-5 mt-0">
+            <div class="row">
+              <div class="col-xl-12 col-xxl-12">
+                <div class="card">
+                  
+                  <div class="card-body">
+                     <div class="custom-tab-1">
+                                       <ul class="nav nav-tabs">
+                                        <li class="nav-item">
+                                            <a class="nav-link active" data-bs-toggle="tab" href="#profile"><i class="la la-home me-2"></i> Profile</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" data-bs-toggle="tab" href="#service"><i class="la la-user me-2"></i> Service</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" data-bs-toggle="tab" href="#fianance"><i class="la la-phone me-2"></i> Finanace</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" data-bs-toggle="tab" href="#billing"><i class="la la-envelope me-2"></i> Billing</a>
+                                        </li>
+                                       </ul>
+                                    <div class="tab-content">
+                                        <div class="tab-pane fade show active" id="profile" role="tabpanel">
+                                            <div class="pt-4">
+                                                
+  <!-- <form role="form" action="<?php echo base_url('clients/updateClient') ?>" method="post"   enctype="multipart/form-data" class="form-valide-with-icon needs-validation" novalidate="" >   -->
+        
+           <div class="row ">
+
+            <div class="form-group col-md-4">
+            <label>Client Name</label>
+            <input type="text" class="form-control" id="client_name"  name="client_name" placeholder="Enter Client name" autocomplete="off" required="" value="<%=clientdata.client_name%>" readonly>
+          </div>
+          <div class="form-group col-md-4">
+            <label>Type</label>
+            <select name="type" id="type" class="default-select form-control wide mb-2"  required>
+              <option value="<%=clientdata.type%>"><%=clientdata.type%></option>
+            </select>
+          </div>
+          <div class="form-group col-md-4">
+            <label>Registered Address</label>
+            <textarea class="form-control" id="registered_address"  name="registered_address" placeholder="Enter  Address" autocomplete="off" readonly><%=clientdata.registered_address%></textarea>
+          </div>
+
+          <h6 class="text-info"><u>Contract Contact Details</u></h6>
+          <div class="form-group col-md-4">
+            <label>Name</label>
+            <input type="text" class="form-control" id="contract_name" name="contract_name" autocomplete="off" value="<%=clientdata.contract_name%>" readonly>
+          </div>
+          <div class="form-group col-md-4">
+            <label>Position</label>
+            <input type="text" class="form-control" id="contract_position" name="contract_position" autocomplete="off" value="<%=clientdata.contract_position%>" readonly>
+          </div>
+          <div class="form-group col-md-4">
+            <label>Number</label>
+            <input type="text" class="form-control" id="contract_number" name="contract_number" autocomplete="off" value="<%=clientdata.contract_number%>" readonly>
+          </div>
+          <div class="form-group col-md-4">
+            <label>Mobile</label>
+            <input type="text" class="form-control" id="contract_mobile" name="contract_mobile" autocomplete="off" value="<%=clientdata.contract_mobile%>" readonly>
+          </div>
+          <div class="form-group col-md-4">
+            <label>Email</label>
+            <input type="text" class="form-control" id="contract_email" name="contract_email" autocomplete="off" value="<%=clientdata.contract_email%>" readonly>
+          </div>
+
+
+          <h6 class="text-info"><u>Other Details</u></h6>
+          <div class="form-group col-md-4">
+            <label>Website</label>
+            <input type="text" class="form-control" id="website" name="website" autocomplete="off" value="<%=clientdata.website%>" readonly>
+          </div> 
+          <div class="form-group col-md-4">
+            <label>Industry</label>
+            <input type="text" class="form-control" id="industry" name="industry"  autocomplete="off" value="<%= clientdata.industry%>" readonly>
+          </div> 
+          <div class="form-group col-md-4">
+            <label>VAT Number</label>
+            <input type="text" class="form-control" id="vat_number" name="vat_number"  autocomplete="off" value="<%= clientdata.vat_number%>" readonly>
+          </div> 
+          <div class="form-group col-md-4">
+            <label>Company Registration Number</label>
+            <input type="text" class="form-control" id="registration_no" name="registration_no"  autocomplete="off" value="<%=clientdata.registration_no%>" readonly>
+          </div> 
+
+          <div class="form-group col-md-2">
+            <label>Client Logo</label>
+            <input type="file" class="form-file-input form-control" id="client_logo"  name="client_logo" accept="image/*" onChange="img_pathUrl(this);" >
+             <input type="hidden"  name="oldclient_logo" class="form-control" value="<%=clientdata.client_logo%>" readonly>
+          </div>
+          <div class="col-md-2">
+            <img src="/uploads/<%=clientdata.client_logo%>" id="img_url" class="img_url" height="150px" width="180px"><br>
+          </div>
+
+          <div class="form-group col-md-4">
+            <label>Subscription level agreed</label>
+            <input type="text" class="form-control" id="subscrption_level_agreed" name="subscrption_level_agreed"  autocomplete="off" value="<%=clientdata.subscrption_level_agreed%>" readonly>
+          </div>
+          
+          <div class="form-group col-md-4">
+            <label>Payroll Facility Subscribed</label>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="payroll_subsribe" value="Y" required <%= clientdata.payroll_subsribe === 'Y' ? 'checked' : '' %> readonly>
+              <label class="form-check-label">
+                YES
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="payroll_subsribe" value="N" required <%= clientdata.payroll_subsribe === 'N' ? 'checked' : '' %> readonly>
+              <label class="form-check-label">
+                NO
+              </label>
+            </div>
+          </div>
+          
+          <div class="form-group col-md-4">
+            <label>Employment contract supplied if no payroll</label>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="employement_contract" value="Y" required <%= clientdata.employement_contract === 'Y' ? 'checked' : '' %> readonly>
+              <label class="form-check-label">
+                YES
+              </label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="employement_contract" value="N" required <%= clientdata.employement_contract === 'N' ? 'checked' : '' %> readonly>
+              <label class="form-check-label">
+                NO
+              </label>
+            </div>
+          </div>
+          
+            
+          <hr>
+           <!-- <div  class="form-group col-md-12">
+            <input type="hidden"  id="client_id"  name="client_id"  value="<?php echo $clientdata->client_id; ?>" readonly>
+          <button  id="btnSubmit"   onClick="return confirm('Are you sure to submit data!!!')"  type="submit" class="btn btn-info btn-sm">Update Profile</button>
+          </div>
+ -->    </div>
+    <!-- </form> -->
+
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade" id="service">
+                                            <div class="pt-4">
+                                                <div class="table-responsive ">
+                              <table id="example23" class="table  table-bordered table-sm" cellspacing="0" width="100%">
+                                  <thead>
+                                      <tr>
+                                          <th >Name</th>
+                                  <th >Position</th>
+                                  <th >Number</th>
+                                  <th >Mobile No</th>
+                                  <th >Email Id</th>
+                                  <th >Address</th>
+                                  <th></th>
+                                      </tr>
+                                  </thead>
+                                 
+                                  <tbody>
+                                    <% for (let i = 0; i < json_data.service_name.length; i++) { %>
+                                      <tr>
+                                        <td><%=json_data.service_name[i] %></td> 
+                                        <td><%=json_data.service_position[i] %></td>
+                                        <td><%=json_data.service_number[i] %></td> 
+                                        <td><%=json_data.service_mobile[i] %></td> 
+                                        <td><%=json_data.service_email[i] %></td>
+                                        <td><%=json_data.service_address[i] %></td>
+			                                   
+			                                  
+			                                   
+                                        </tr>
+                                        <% } %>
+                                  </tbody>
+                              </table>
+                          </div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade" id="fianance">
+                                            <div class="pt-4">
+                                               <form role="form" action="<?php echo base_url('clients/Updatefinance') ?>" method="post"   enctype="multipart/form-data" class="form-valide-with-icon needs-validation" novalidate="" >  
+        
+                             <div class="row ">
+                             
+       <div class="form-group col-md-4">
+            <label>Name</label>
+            <input type="text" class="form-control" id="finance_name" name="finance_name" autocomplete="off" value="<%=clientdata.finance_name%>" readonly>
+          </div>
+          <div class="form-group col-md-4">
+            <label>Position</label>
+            <input type="text" class="form-control" id="finance_position" name="finance_position" autocomplete="off" value="<%=clientdata.finance_position%>"  readonly>
+          </div>
+          <div class="form-group col-md-4">
+            <label>Number</label>
+            <input type="text" class="form-control" id="finance_number" name="finance_number" autocomplete="off" value="<%=clientdata.finance_number %>" readonly>
+          </div>
+          <div class="form-group col-md-4">
+            <label>Mobile</label>
+            <input type="text" class="form-control" id="finance_mobile" name="finance_mobile" autocomplete="off" value="<%=clientdata.finance_mobile %>" readonly>
+          </div>
+          <div class="form-group col-md-4">
+            <label>Email</label>
+            <input type="text" class="form-control" id="finance_email" name="finance_email" autocomplete="off" value="<%=clientdata.finance_email %>" readonly>
+          </div>
+          <div class="form-group col-md-4">
+            <label>Credit Limit</label>
+            <input type="text" class="form-control" id="finance_credit_limit" name="finance_credit_limit" autocomplete="off" value="<%=clientdata.finance_credit_limit%>" readonly>
+          </div>
+          <div class="form-group col-md-4">
+            <label>Direct Debit Details (TBC) </label>
+            <input type="text" class="form-control" id="finance_debit_details" name="finance_debit_details" autocomplete="off" value="<%=clientdata.finance_debit_details%>" readonly>
+          </div>
+
+                            <!-- <div  class="form-group col-md-12">
+                              <input type="hidden" class="form-control"  id="client_id"  name="client_id" placeholder="" autocomplete="off" value="<?php echo $clientdata->client_id; ?>">
+                            <button  id="btnSubmit"   onClick="return confirm('Are you sure to submit data!!!')"  type="submit" class="btn btn-success btn-sm">Update Details</button>
+                            </div>
+                          -->  
+                        </div>
+                        </form>
+                      </div>
+                                        </div>
+                                        
+                                        
+                                        
+                                        <div class="tab-pane fade" id="billing">
+                                            <div class="pt-4">
+      <!-- <form role="form" action="<?php echo base_url('clients/UpdateBilling') ?>" method="post"   enctype="multipart/form-data" class="form-valide-with-icon needs-validation" novalidate="" >   -->
+        
+                             <div class="row ">
+       <div class="form-group col-md-4">
+            <label>Name</label>
+            <input type="text" class="form-control" id="billing_name" name="billing_name" readonly autocomplete="off" value="<%=clientdata.billing_name%>" >
+          </div>
+          <div class="form-group col-md-4">
+            <label>Position</label>
+            <input type="text" class="form-control" id="billing_position" name="billing_position" readonly autocomplete="off" value="<%=clientdata.billing_position%>"  >
+          </div>
+          <div class="form-group col-md-4">
+            <label>Number</label>
+            <input type="text" class="form-control" id="billing_number" name="billing_number" readonly autocomplete="off" value="<%=clientdata.billing_number %>" >
+          </div>
+          <div class="form-group col-md-4">
+            <label>Mobile</label>
+            <input type="text" class="form-control" id="billing_mobile" name="billing_mobile" readonly autocomplete="off" value="<%=clientdata.billing_mobile%>" >
+          </div>
+          <div class="form-group col-md-4">
+            <label>Email</label>
+            <input type="text" class="form-control" id="billing_email" name="billing_email" readonly autocomplete="off" value="<%=clientdata.billing_email%>" >
+          </div>
+         
+
+              <div  class="form-group col-md-12">
+                <!-- <input type="hidden" class="form-control"  id="client_id"  name="client_id" placeholder="" autocomplete="off" value="<?php echo $clientdata->client_id; ?>">
+              <button  id="btnSubmit"   onClick="return confirm('Are you sure to submit data!!!')"  type="submit" class="btn btn-success btn-sm">Update Details</button> -->
+              </div>
+                            </div>
+                        </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                      
+                  </div>
+                  
+                </div>
+              </div>
+              
+              
+            </div>
+          </div>
+        </div>
+            </div>
+        </div>  
+        <%- include( '../main/footer.ejs' ) %>

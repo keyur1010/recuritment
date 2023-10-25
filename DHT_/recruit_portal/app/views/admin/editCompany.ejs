@@ -1,0 +1,173 @@
+<%- include('../main/header.ejs')%>
+<%- include( '../main/sidebar.ejs',{session:session} ) %>
+<div class="content-body">
+    <div class="container-fluid">
+        
+        <div class="row page-titles">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item active"><a href="javascript:void(0)">Company Profile</a></li>
+            </ol>
+        </div> 
+               <div class="row">
+                    <div class="col-12">
+                        <div class="card card-outline-info">
+                            <!-- <div class="card-header border-bottom">
+                                <h4 class="m-b-0"><i class="fa fa-user-o" aria-hidden="true"></i> Company Profile<span class="pull-right " ></span></h4>
+                            </div> -->
+                           
+                            <div class="card-body">
+
+                                <form class="row" method="post" action="/admin/editCompany1/<%= findCompany.id%>"  enctype="multipart/form-data">
+                                    <!-- <input type="hidden" value="<?php echo $findCompany->comp_id; ?>" name="comp_id"> -->
+                                    <div class="form-group col-md-3 m-t-20">
+                                        <label>Company Full Name</label>
+                                        <input type="text" name="company_name" class="form-control form-control-line" placeholder="Company Full Name" value="<%= findCompany.company_name %>" >
+                                    </div>
+                                    <div class="form-group col-md-3 m-t-20">
+                                        <label>Company Short Name (3 letter)</label>
+                                        <input type="text" id="" name="shrtname" class="form-control form-control-line" placeholder="Company Short Name" minlength="3" maxlength="3" value="<%= findCompany.shrtname %>"  readonly>
+                                    </div>
+                                    <div class="form-group col-md-3 m-t-20">
+                                        <label>Proprietor</label>
+                                        <input type="text" name="proprietor" class="form-control form-control-line" value="<%= findCompany.proprietor %>">
+                                    </div>
+                                    <div class="form-group col-md-3 m-t-20">
+                                        <label>Phone</label>
+                                        <input type="text" name="phone" class="form-control" value="<%= findCompany.phone %>" placeholder="Enter Contact Number" minlength="10" maxlength="10">
+                                    </div>
+                                    <div class="form-group col-md-3 m-t-20">
+                                        <label>Phone 2 (Optional)</label>
+                                        <input type="text" name="phone2" class="form-control" value="<%= findCompany.phone2 %>" placeholder="Enter Contact Number" minlength="10" maxlength="10">
+                                    </div>
+                                    <div class="form-group col-md-3 m-t-20">
+                                        <label>Email Id</label>
+                                        <input type="email" name="email" class="form-control" value="<%= findCompany.email %>" placeholder="Enter Email">
+                                    </div>
+                                    <div class="form-group col-md-3 m-t-20">
+                                        <label>Email Id (Optional)</label>
+                                        <input type="email" name="email2" class="form-control" value="<%= findCompany.email2 %>" placeholder="Enter Email">
+                                    </div>
+                                    
+                                    <!-- Continue adding the rest of your form fields following the same pattern -->
+                                    
+                                    <div class="form-group col-md-3 m-t-20">
+                                        <label>PIN Code</label>
+                                        <input type="number" min="0" max="999999" name="pin_code" class="form-control" value="<%= findCompany.pin_code %>" placeholder="" >
+                                    </div>
+                                    <div class="form-group col-md-3 m-t-20">
+                                        <label>Place</label>
+                                        <input type="text" name="place" class="form-control" value="<%= findCompany.place %>" placeholder="" >
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label for="state">State</label>
+                                        <input type="text" name="state" class="form-control" value="<%= findCompany.state %>" placeholder="State">
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label>State Code</label>
+                                        <input type="number" class="form-control" id="state_code" name="state_code" value="<%= findCompany.state_code %>" placeholder="State Code" autocomplete="off">
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label>Company Address</label>
+                                        <textarea class="form-control" id="address" name="company_address" placeholder="Enter Company Address" autocomplete="off"><%= findCompany.company_address %></textarea>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label for="phone">Tax Applicable</label>
+                                        <select class="form-control" name="gst_applicable">
+                                            <option value="<%= findCompany.gst_applicable %>"><%= findCompany.gst_applicable %></option>
+                                            <option value="YES">YES</option>
+                                            <option value="NO">NO</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label for="phone">GST No.</label>
+                                        <input type="text" class="form-control" id="gst_no" name="gst_no" placeholder="Enter GST Number" value="<%= findCompany.gst_no %>" autocomplete="off">
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label for="phone">PAN No.</label>
+                                        <input
+                                          type="text"
+                                          class="form-control"
+                                          id="pan_no"
+                                          name="pan_no"
+                                          placeholder="Enter PAN Number"
+                                          value="<%=findCompany.pan_no%>"
+                                          autocomplete="off"
+                                        />
+                                      </div>
+                                    <div class="form-group col-md-4">
+                                        <label for="permission">Website</label>
+                                        <input type="text" class="form-control" value="<%= findCompany.website %>" id="website" name="website" autocomplete="off">
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label for="phone">Company Logo</label>
+                                        <input type="file" class="form-control" name="company_logo" autocomplete="off">
+                                    </div>
+                                    
+                                    <span class="col-12 text-info">Other API</span>
+                                    
+                                    <div class="col-md-4">
+                                        <label for="address">Whatsapp API</label>
+                                        <input type="text" class="form-control" name="wp_api_key" id="wp_api_key" value="<%= findCompany.wp_api_key %>" >
+                                    </div>
+                                    
+                                    <div class="form-group col-md-6">
+                                        <label>Map Distance API Key</label>
+                                        <input type="text" class="form-control" id="distance_api_key"  value="<%= findCompany.distance_api_key %>" name="distance_api_key" placeholder="" autocomplete="off">
+                                    </div>
+                                    
+                                    <span class="col-12 mt-4 border-top border-primary"><strong>=>Sending Mail (SMTP) Configuration</strong></span>
+                                    <div class="col-md-4">
+                                        <label for="address">Host</label>
+                                        <input type="text" class="form-control" name="smtp_host" id="smtp_host" value="<%= findCompany.smtp_host %>" >
+                                    </div>
+                                    
+                                    <!-- Add the remaining SMTP configuration fields here -->
+                                    <div class="col-md-4">
+                                        <label for="address" >Port</label>
+                                            <input type="text" class="form-control" name="smtp_port" id="smtp_port" value="<%=findCompany.smtp_port%>" inputmode="numeric" pattern="[0-9]{1,6}" oninput="this.value = this.value.replace(/[^0-9]/g, '').substring(0, 6)">
+
+                                        </div>
+                                        <div class="col-md-4">
+                                        <label for="address" >Sender Mail Id</label>
+                                            <input type="text" class="form-control" name="smtp_sender_id" id="smtp_sender_id" value="<%=findCompany.smtp_sender_id%>" >
+                                        </div>
+                                        <div class="col-md-4">
+                                        <label for="address" >Password</label>
+                                            <input type="password" class="form-control" name="smtp_password" id="smtp_password" value="<%=findCompany.smtp_password%>" >
+                                        </div>
+                                        <div class="col-md-4">
+                                        <label for="address" >Secure</label>
+                                            <input type="text" class="form-control" name="smtp_secure" id="smtp_secure" value="<%=findCompany.smtp_secure%>" >
+                                        </div>
+                                        <div class="col-md-4">
+                                        <label for="address" >Name</label>
+                                            <input type="text" class="form-control" name="smtp_name" id="smtp_name" value="<%=findCompany.smtp_name%>" >
+                                        </div>
+                                    <div class="col-md-12">
+                                        <label for="address">Default CC Mail Ids (Add multiple email ids separated by ' , ')</label>
+                                        <input type="text" class="form-control" name="default_cc_mailid" id="default_cc_mailid" value="<%= findCompany.default_cc_mailid %>" >
+                                    </div>
+                                    
+
+                                    <div class="form-actions col-md-12 mt-4">
+                                        <button type="submit" class="btn btn-info btn-sm"> <i class="fa fa-check"></i> Update Details</button>
+                                        
+                                    </div>
+                                </form>
+                            </div>
+
+                           
+                        </div>
+                    </div>
+                </div>
+              </div>
+          </div>
+
+<%- include('../main/footer.ejs') %>
+<script>
+$(document).ready(function() {
+   $("#li-company_profile").addClass('active');
+$("#masterMain").addClass('active');
+$('#masterMain').addClass('show');
+});
+</script>

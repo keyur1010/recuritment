@@ -1,0 +1,554 @@
+<?php $this->load->view('include/header'); ?>
+<?php $this->load->view('include/sidebar'); ?>
+
+    <div class="page-body">
+        <div class="container-fluid">        
+            <div class="page-title">
+                <div class="row">
+                    <div class="col-6">
+                        <h3>Vehicle Details</h3>
+                    </div>
+                    <div class="col-6">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item">
+                                <a href="<?php echo base_url(); ?>">                                       
+                                    <svg class="stroke-icon">
+                                        <use href="<?php echo base_url(); ?>assets/svg/icon-sprite.svg#stroke-home"> Dashboard</use>
+                                    </svg>
+                                </a>
+                            </li>
+                            <li class="breadcrumb-item active">Vehicle Details</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Container-fluid starts-->
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                      
+
+                        <div class="card-body">
+                        <form role="form" action="<?php echo base_url('vehicle/saveVehicle') ?>" method="post" id="createForm"  enctype="multipart/form-data">
+          <div class="row">
+       
+
+          <div class="form-group col-md-3">
+            <label>Vehicle Type</label>
+            <select class="form-control" value="" id="vehicle_type" name="vehicle_type">
+              <option value="" selected disabled>Select</option>
+
+              <option value="Own" >Own</option>
+              <option value="Own Personal" >Own Attached</option>
+              <option value="Market" >Market</option>
+</select>
+          </div>
+
+          <div class="form-group col-md-3">
+            <label>Vehicle No.</label>
+            <input type="text" class="form-control" id="vehicle_no" name="vehicle_no"  placeholder="Enter Vehicle Number" autocomplete="off">
+          </div>
+
+          <div class="form-group col-md-3" id="vehicleowner">
+            <label>Vehicle Owner</label>
+            <input type="text" class="form-control" id="vehicle_owner" name="vehicle_owner" placeholder="Enter Vehicle Owner" autocomplete="off">
+          </div>
+
+           <div class="form-group col-md-3" id="ownerpan">
+            <label>Vehicle Through</label>
+            <input type="text" class="form-control" id="owner_vehicle_through" name="owner_vehicle_through" placeholder="Vehicle Got Through"  autocomplete="off">
+          </div>
+
+          <div class="form-group col-md-3" id="ownerpan">
+            <label>Owner Pan No.</label>
+            <input type="text" class="form-control" id="owner_pan_no" name="owner_pan_no" placeholder="Enter Owner Pan No."  autocomplete="off">
+          </div>
+
+          <div class="form-group col-md-3" id="ownermobile">
+            <label>Owner Mobile No.</label>
+            <input type="text" class="form-control" id="owner_mobile_no" name="owner_mobile_no" placeholder="Enter Owner Mobile No."   autocomplete="off">
+          </div>
+<!-- 
+          <div class="form-group col-md-3">
+            <label>Driver Name</label>
+            <input type="text" class="form-control" id="driver_name" name="driver_name" placeholder="Enter Driver Name"  autocomplete="off">
+          </div>
+-->
+          
+          <div class="form-group col-md-3">
+            <label>Category</label>
+            <input type="text" class="form-control" id="category" name="category" placeholder=""  autocomplete="off">
+          </div>
+
+          <div class="form-group col-md-3">
+            <label>Make</label>
+            <input type="text" class="form-control" id="vehicle_made" name="vehicle_made"  placeholder="Enter Vehicle Made" autocomplete="off">
+          </div>
+
+          <div class="form-group col-md-3">
+            <label>Model*</label>
+            <input type="text" class="form-control" id="vehicle_model" name="vehicle_model" placeholder="Enter Vehicle Model" autocomplete="off">
+          </div>
+
+          <div class="form-group col-md-3">
+            <label>No. of Tyres</label>
+            <input type="text" class="form-control" id="num_of_tyres" name="num_of_tyres"  placeholder="Enter Number of tyre" autocomplete="off">
+          </div>
+
+          <div class="form-group col-md-3">
+            <label>Type of Tyre</label>
+            <select class="form-control" name="tyre_type" id="tyre_type" required>
+
+              <option value="" selected disabled >Select</option>
+                                            <option value="Michelin" >Michelin</option>
+                                            <option value="Bridgestone" >Bridgestone</option>
+                                            <option value="Continental" >Continental</option>
+                                            <option value="Goodyear" >Goodyear</option>
+                                            <option value="Sumitomo" >Sumitomo</option>
+                                            <option value="Hankook" >Hankook</option>
+                                            <option value="Pirelli" >Pirelli</option>
+                                            <option value="Yokohama" >Yokohama</option>
+                                            <option value="ZC Rubber" >ZC Rubber</option>
+                                            <option value="Maxxis" >Maxxis</option>
+                                            <option value="Toyo" >Toyo</option>
+                                            <option value="Linglong" >Linglong</option>
+                                            <option value="Cooper" >Cooper</option>
+                                            <option value="Apollo" >Apollo</option>
+                                            <option value="Sailun" >Sailun</option>
+                                            <option value="MRF" >MRF</option>
+                                            <option value="Kumho" >Kumho</option>
+                                            <option value="Nokian" >Nokian</option>
+                                            <option value="Nexen" >Nexen</option>
+                                            <option value="Double Coin" >Double Coin</option>
+                                            <option value="JK" >JK</option>
+                                            <option value="Triangle" >Triangle</option>
+                                            <option value="Titan" >Titan</option>
+                                            <option value="CEAT" >CEAT</option>
+                                            <option value="Kenda" >Kenda</option>
+                                            <option value="Trelleborg" >Trelleborg</option>
+                                            <option value="Guizhou Tyre" >Guizhou Tyre</option>
+                                            <option value="Prinx Chengshan" >Prinx Chengshan</option>
+                                            <option value="Aeolus" >Aeolus</option>
+          </select>
+            </div>
+
+          <div class="form-group col-md-3">
+            <label>Load Capacity (TON)</label>
+            <input type="text" class="form-control" id="load_capacity" name="load_capacity"  placeholder="Enter Load Capacity of vehicle" autocomplete="off">
+          </div>
+
+          <div class="form-group col-md-3">
+            <label>Fuel Tank Capacity (ltr)</label>
+            <input type="text" class="form-control" id="fuel_tank_capacity" name="fuel_tank_capacity"  placeholder="Enter Fuel Tank Capacity" autocomplete="off">
+          </div>
+
+          <div class="form-group col-md-3">
+            <label>Body Type</label>
+            <select class="form-control" name="body_type" id="body_type" required>
+
+              <option value="" selected disabled >Select</option>
+
+              <option value="Trailer" >Trailer</option>
+                                            <option value="Pack" >Pack</option>
+                                           <option value="Open" >Open</option>
+                                            <option value="Hard Lode" >Hard Lode</option>
+
+
+          </select>
+            </div>
+
+          <div class="form-group col-md-3">
+            <label>Chasis Number</label>
+            <input type="text" class="form-control" id="chasis_number" name="chasis_number"    placeholder="Enter Chasis Number" autocomplete="off">
+          </div>
+          <div class="form-group col-md-3">
+            <label>Engine Number</label>
+            <input type="text" class="form-control" id="engine_number" name="engine_number"    placeholder="Enter Engine Number" autocomplete="off">
+          </div>
+          <div class="form-group col-md-3">
+            <label>Reg Date</label>
+            <input type="date" class="form-control" id="reg_number" name="reg_number" placeholder="Enter Reg. Number"    autocomplete="off">
+          </div>
+
+          <div class="form-group col-md-3">
+            <label>Fastag Number</label>
+            <input type="text" class="form-control" id="fasttag_number" name="fasttag_number"  placeholder="Enter Fasttag Number" autocomplete="off">
+          </div>
+          <div class="form-group col-md-3">
+            <label>Kit Number</label>
+            <input type="text" class="form-control" id="kit_no" name="kit_no"  placeholder="Enter Fasttag Number" autocomplete="off">
+          </div>
+
+          <div class="form-group col-md-3">
+            <label>Passing Date</label>
+            <input type="date" class="form-control" id="passing_date" name="passing_date"     autocomplete="off">
+          </div>
+          <div class="form-group col-md-3">
+            <label>5 Year Permit</label>
+            <input type="date" class="form-control" id="five_y_permit" name="five_y_permit" placeholder=""  autocomplete="off" >
+          </div> 
+
+          <div class="form-group col-md-3">
+            <label>Attchment RC</label>
+           
+
+            <input type="file" class="form-control" id="attchment_rc" name="attchment_rc">
+          </div>
+
+          <div class="form-group col-md-3">
+            <label>Add Photo</label>
+           
+
+            <input type="file" class="form-control" id="add_photo" name="add_photo">
+          </div>
+
+
+          <div class="col-md-12 mt-2 text-info">
+           <u><h5>State Permit</h5></u>
+          </div>
+          <div class="form-group col-md-3">
+            <label>Permit Number*</label>
+            <input type="text" class="form-control" id="permit_no" name="permit_no"   placeholder="Enter Permit No." autocomplete="off">
+          </div>
+          <div class="form-group col-md-3">
+            <label>Valid From*</label>
+            <input type="date" class="form-control" id="permit_valid_from" name="permit_valid_from"   autocomplete="off">
+          </div>
+          <div class="form-group col-md-3">
+            <label>Valid To*</label>
+            <input type="date" class="form-control" id="permit_valid_to" name="permit_valid_to"   autocomplete="off">
+          </div>
+
+          <div class="form-group col-md-3">
+            <label>Upload Permit</label>
+           
+
+            <input type="file" class="form-control" id="upload_permit" name="upload_permit">
+          </div>
+
+          <div class="col-md-12 mt-2 text-info">
+           <u><h5>National Permit</h5></u>
+          </div>
+
+          <div class="form-group col-md-3">
+            <label>National Permit Number*</label>
+            <input type="text" class="form-control" id="national_permit_no" name="national_permit_no"   placeholder="Enter Permit No." autocomplete="off">
+          </div>
+
+          <div class="form-group col-md-3">
+            <label>Valid From*</label>
+            <input type="date" class="form-control" id="national_permit_valid_from" name="national_permit_valid_from"   autocomplete="off">
+          </div>
+
+          <div class="form-group col-md-3">
+            <label>Valid To*</label>
+            <input type="date" class="form-control" id="national_permit_valid_to" name="national_permit_valid_to"    autocomplete="off">
+          </div>
+
+          <div class="form-group col-md-3">
+            <label>Upload National Permit</label>
+        
+
+            <input type="file" class="form-control" id="upload_national_permit" name="upload_national_permit">
+          </div>
+
+          <div class="col-md-12 mt-2 text-info">
+            <u><h5>Insurance Details</h5></u>
+          </div>
+
+          <div class="form-group col-md-3">
+            <label>Insurance Company*</label>
+            <input type="text" class="form-control" id="insurance_company" name="insurance_company"   placeholder="Enter Insurance Company" autocomplete="off">
+          </div>
+
+          <div class="form-group col-md-3">
+            <label>Policy Number*</label>
+            <input type="text" class="form-control" id="policy_number" name="policy_number"   placeholder="Enter Policy Number" autocomplete="off">
+          </div>
+
+          <div class="form-group col-md-3">
+            <label>Valid From*</label>
+            <input type="date" class="form-control" id="insurance_valid_from" name="insurance_valid_from"   autocomplete="off">
+          </div>
+
+          <div class="form-group col-md-3">
+            <label>Valid To*</label>
+            <input type="date" class="form-control" id="insurance_valid_to" name="insurance_valid_to"    autocomplete="off">
+          </div>
+
+          <div class="form-group col-md-3">
+            <label>Upload Insurance</label>
+          
+            <input type="file" class="form-control" id="upload_insurance" name="upload_insurance">
+          </div>
+
+
+          <div class="col-md-12 mt-2 text-info">
+           <u><h5>PUC Details</h5></u>
+          </div>
+          <div class="form-group col-md-3">
+            <label>PUC Number*</label>
+            <input type="text" class="form-control" id="puc_number" name="puc_number"    placeholder="Enter PUC Number" autocomplete="off">
+          </div>
+          <div class="form-group col-md-3">
+            <label>Valid From*</label>
+            <input type="date" class="form-control" id="puc_valid_from" name="puc_valid_from"   autocomplete="off">
+          </div>
+          <div class="form-group col-md-3">
+            <label>Valid To*</label>
+            <input type="date" class="form-control" id="puc_valid_to" name="puc_valid_to"    autocomplete="off">
+          </div>
+
+          <div class="form-group col-md-3">
+            <label>Upload PUC</label>
+           
+
+            <input type="file" class="form-control" id="upload_puc" name="upload_puc">
+          </div>
+
+
+          <div class="col-md-12 mt-2 text-info">
+           <u><h5>Fitness Details</h5></u>
+          </div>
+
+          <div class="form-group col-md-3">
+            <label>Certificate Number*</label>
+            <input type="text" class="form-control" id="fitness_cer_number" name="fitness_cer_number"   placeholder="Enter Insurance Company" autocomplete="off">
+          </div>
+
+          <div class="form-group col-md-3">
+            <label>Valid From*</label>
+            <input type="date" class="form-control" id="fitness_valid_from" name="fitness_valid_from"     autocomplete="off">
+          </div>
+
+          <div class="form-group col-md-3">
+            <label>Valid To*</label>
+            <input type="date" class="form-control" id="fitness_valid_to" name="fitness_valid_to"    autocomplete="off">
+          </div>
+
+          <div class="form-group col-md-3">
+            <label>Upload Fitness</label>
+           
+            <input type="file" class="form-control" id="upload_fitness" name="upload_fitness">
+          </div>
+
+
+
+          <div class="col-md-12 mt-2 text-info">
+           <u><h5>Calibration Details</h5></u>
+          </div>
+          <div class="form-group col-md-3">
+            <label>Calibration Number*</label>
+            <input type="text" class="form-control" id="calibration_number" name="calibration_number"   placeholder="Enter Insurance Company" autocomplete="off">
+          </div>
+          <div class="form-group col-md-3">
+            <label>Valid From*</label>
+            <input type="date" class="form-control" id="calibration_from" name="calibration_from"   autocomplete="off">
+          </div>
+          <div class="form-group col-md-3">
+            <label>Valid To*</label>
+            <input type="date" class="form-control" id="calibration_to" name="calibration_to"  autocomplete="off">
+          </div>
+
+          <div class="form-group col-md-3">
+            <label>Upload Calibration</label>
+           
+
+            <input type="file" class="form-control" id="upload_calibration" name="upload_calibration">
+          </div>
+
+
+
+          <div class="col-md-12 mt-2 text-info">
+           <u><h5>Explosive Details</h5></u>
+          </div>
+          <div class="form-group col-md-3">
+            <label>Explosive Number*</label>
+            <input type="text" class="form-control" id="explosive_number" name="explosive_number"  placeholder="Enter Insurance Company" autocomplete="off">
+          </div>
+          <div class="form-group col-md-3">
+            <label>Valid From*</label>
+            <input type="date" class="form-control" id="explosive_from" name="explosive_from"    autocomplete="off">
+          </div>
+          <div class="form-group col-md-3">
+            <label>Valid To*</label>
+            <input type="date" class="form-control" id="explosive_to" name="explosive_to"    autocomplete="off">
+          </div>
+
+          <div class="form-group col-md-3">
+            <label>Upload Explosive</label>
+           
+            <input type="file" class="form-control" id="upload_explosive" name="upload_explosive">
+          </div>
+
+          <div class="col-md-12 mt-2 text-info">
+           <u><h5>Fuel Card</h5></u>
+          </div>
+          <div class="form-group col-md-3">
+            <label>Card Name</label>
+            <input type="text" class="form-control" id="fuel_card_name" name="fuel_card_name"  placeholder="Enter Insurance Company" autocomplete="off">
+          </div>
+          <div class="form-group col-md-3">
+            <label>FC Number</label>
+            <input type="text" class="form-control" id="fuel_fc_number" name="fuel_fc_number"    autocomplete="off">
+          </div>
+          <div class="form-group col-md-3">
+            <label>Printed Vehicle No</label>
+            <input type="text" class="form-control" id="fuel_vehicle_no" name="fuel_vehicle_no"    autocomplete="off">
+          </div>
+
+          
+
+          <div class="col-md-12 mt-2 text-info">
+           <u><h5>Other Details</h5></u>
+          </div>
+
+          <div class="form-group col-md-12">
+            <table  class="table-responsive table-bordered" id="contact_table" width="100%">
+              <thead>
+                <tr>
+                  <th style="width:20%">Document Name</th>
+                  <th style="width:20%">Document No</th>
+                  <th style="width:20%">Valid From</th>
+                  <th style="width:20%">Valid To</th>
+                  <th style="width:20%">Upload Document</th>
+                  <th style="width:4%">
+                    <button type="button" id="add_row" class="btn btn-info btn-sm"><i class="fa fa-plus"></i></button>
+
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+
+
+      
+                <tr id="row_1">
+                  <td>
+                    <input type="text" name="documentname[]" data-row-id="row_1" id="documentname_1"  class="form-control" >
+                  </td>
+                  <td>
+                    <input type="text" name="documentno[]" data-row-id="row_1" id="documentno_1" class="form-control"  aria-invalid="false" >
+                  </td>
+                  <td>
+                    <input type="date" name="validfrom[]" data-row-id="row_1" id="validfrom_1" class="form-control"  aria-invalid="false" >
+                  </td>
+                  <td>
+                    <input type="date" name="validto[]" data-row-id="row_1" id="validto_1" class="form-control"  aria-invalid="false" >
+                  </td>
+                  <td>
+                    <input type="file" name="upload_other_document[]" data-row-id="row_1" id="upload_other_document_1" class="form-control"  aria-invalid="false" >
+                  </td>
+                  <td>
+                    <button type="button" class="btn btn-danger btn-sm" onclick="removeRow('1')"><i class="fa fa-trash"></i></button>
+                  </td>
+                </tr>
+              
+
+              </tbody>
+            </table>
+          </div>
+          <div class="form-group col-md-12" >
+          <button style="float: left;" type="submit" class="btn btn-primary">Save</button>
+          </div>
+
+    </div>
+      </form>
+
+
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+</div>
+<?php $this->load->view('include/footer'); ?>
+
+      
+
+<script>
+
+$(document).ready(function() {
+  $("#li-master").addClass('menu-open');
+    $("#link-master").addClass('active');
+   $('#vehicle').addClass('active');
+  $('#manageTable').DataTable({});
+
+  $('#vehicleowner').hide();
+      $('#ownermobile').hide();
+      $('#ownerpan').hide();
+});
+
+$("#vehicle_type").change(function() {
+    if ($(this).val() == "Own") {
+      $('#vehicleowner').hide();
+      $('#ownermobile').hide();
+      $('#ownerpan').hide();
+
+    }else{
+      $('#vehicleowner').show();
+      $('#ownermobile').show();
+      $('#ownerpan').show();
+    }
+
+  })
+
+var base_url = "<?php echo base_url(); ?>";
+  $(document).ready(function() 
+  {
+    $(".select_group").select();
+    $("#add_row").unbind('click').bind('click', function() 
+    {
+      var table = $("#contact_table");
+      var count_table_tbody_tr = $("#contact_table tbody tr").length;
+      var row_id = count_table_tbody_tr + 1;  
+
+      var html = '<tr id="row_'+row_id+'">'+
+          '<td>'+
+            '<input type="text" data-row-id="'+row_id+'" name="documentname[]" id="documentname_'+row_id+'"  class="form-control" >'+
+          '</td>'+
+          '<td>'+
+            '<input type="text" name="documentno[]" data-row-id="'+row_id+'" id="documentno_'+row_id+'" class="form-control"  aria-invalid="false" >'+
+          '</td>'+
+          '<td>'+
+            '<input type="date" name="validfrom[]" data-row-id="'+row_id+'" id="validfrom_'+row_id+'" class="form-control"  aria-invalid="false" >'+
+          '</td>'+
+          '<td>'+
+            '<input type="date" name="validto[]" data-row-id="'+row_id+'" id="validto_'+row_id+'" class="form-control"  aria-invalid="false" >'+
+          '</td>'+
+          '<td>'+
+          '<input type="file" name="upload_other_document[]" id="upload_other_document_' + row_id + '" class="form-control " autocomplete="off"  placeholder=""   >' +
+  '</td>' +
+          '<td>'+
+            '<button type="button" class="btn btn-danger btn-sm" onclick="removeRow(\''+row_id+'\')"><i class="fa fa-trash"></i></button>'+
+          '</td>'+
+        '</tr>';
+
+        if(count_table_tbody_tr >= 1) 
+        {
+          $("#contact_table tbody tr:last").after(html);
+        }
+        else 
+        {
+          $("#contact_table tbody").html(html);
+        }
+      return false;
+    });
+
+  });
+
+  function removeRow(tr_id)
+  {
+    $("#contact_table tbody tr#row_"+tr_id).remove();
+  }
+
+  function removeFunc(id)
+{
+    $("#d_c_id").val(id);
+    $('#removeModal').modal('show');
+}
+</script>

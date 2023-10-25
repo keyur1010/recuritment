@@ -1,0 +1,97 @@
+const {Sequelize,DataTypes}=require('sequelize')
+
+
+module.exports=(sequelize,DataTypes)=>{
+    const companyModel=sequelize.define('companyModel',{
+        company_name:{
+            type:DataTypes.STRING,
+        },
+        shrtname:{
+            type:DataTypes.STRING,
+        },
+        proprietor:{
+            type:DataTypes.STRING,
+        },
+        phone:{
+            type:DataTypes.STRING,
+        },
+        phone2:{
+            type:DataTypes.STRING,
+        },
+        email:{
+            type:DataTypes.STRING,
+        },
+        email2:{
+            type:DataTypes.STRING,
+        },
+        pin_code:{
+            type:DataTypes.INTEGER,
+        },
+        place:{
+            type:DataTypes.STRING,
+        },
+        state:{
+            type:DataTypes.STRING,
+        },
+        state_code:{
+            type:DataTypes.STRING,
+        },
+        company_address:{
+            type:DataTypes.STRING,
+        },
+        gst_applicable:{
+            type:Sequelize.ENUM('YES','NO')
+        },
+        address:{
+            type:DataTypes.STRING,
+        },
+        gst_no:{
+            type:DataTypes.STRING,
+        },
+        pan_no:{
+            type:DataTypes.STRING,
+        },
+        website:{
+            type:DataTypes.STRING,
+        },
+        company_logo:{
+            type:DataTypes.STRING,
+        },
+        password:{
+            type:DataTypes.STRING,
+        },
+        wp_api_key:{
+            type:DataTypes.STRING
+        },
+        distance_api_key:{
+            type:DataTypes.STRING,
+        },
+        smtp_host:{
+            type:DataTypes.STRING,
+        },
+        smtp_port:{
+            type:DataTypes.STRING,
+        },
+        smtp_sender_id:{
+            type:DataTypes.STRING,
+        },
+        smtp_password:{
+            type:DataTypes.STRING,
+        },
+        smtp_secure:{
+            type:DataTypes.STRING,
+        },
+        smtp_name:{
+            type:DataTypes.STRING,
+        },
+        default_cc_mailid:{
+            type:DataTypes.STRING,
+        },
+        createdBy:{
+            type:DataTypes.INTEGER
+        }
+        
+
+    });
+    return companyModel
+}

@@ -1,0 +1,194 @@
+<%- include('../main/header.ejs')%>
+<%- include( '../main/sidebar.ejs',{session:session} ) %>
+<div class="content-body">
+            <div class="container-fluid">
+                
+                
+                <div class="row page-titles">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item active"><a href="javascript:void(0)">Users</a></li>
+                        <li class="breadcrumb-item"><a href="javascript:void(0)">View Profile</a></li>
+                    </ol>
+                </div>
+                <!-- row -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="profile card card-body px-3 pt-3 pb-0">
+                            <div class="profile-head">
+                                <div class="photo-content">
+                                    <div class="cover-photo rounded"></div>
+                                </div>
+                                <div class="profile-info">
+                                  
+                                    <div class="profile-details">
+                                        <div class="profile-name px-3 pt-2">
+                                            <h4 class="text-primary mb-0"><%=d.fname %> <%= d.lname %></h4>
+                                            <p><%=d.contact%></p>
+                                        </div>
+                                        <div class="profile-email px-2 pt-2">
+                                            <h4 class="text-muted mb-0"><%=d.email %></h4>
+                                            <p>Email</p>
+                                        </div>
+                                        <div class="dropdown ms-auto">
+                                            <a href="#" class="btn btn-primary light sharp" data-bs-toggle="dropdown" aria-expanded="true"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="18px" height="18px" viewbox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"></rect><circle fill="#000000" cx="5" cy="12" r="2"></circle><circle fill="#000000" cx="12" cy="12" r="2"></circle><circle fill="#000000" cx="19" cy="12" r="2"></circle></g></svg></a>
+                                            <ul class="dropdown-menu dropdown-menu-end">
+                                                <li class="dropdown-item"><i class="fa fa-user-circle text-primary me-2"></i> View profile</li>
+                                                <li class="dropdown-item"><i class="fa fa-users text-primary me-2"></i> Add to btn-close friends</li>
+                                                <li class="dropdown-item"><i class="fa fa-plus text-primary me-2"></i> Add to group</li>
+                                                <li class="dropdown-item"><i class="fa fa-ban text-primary me-2"></i> Block</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    
+                    <div class="col-xl-8">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="profile-tab">
+                                    <div class="custom-tab-1">
+                                        <ul class="nav nav-tabs">
+                                            <li class="nav-item"><a href="#myprofile" data-bs-toggle="tab" class="nav-link active show">Basic Info</a>
+                                            </li>
+                                             <li class="nav-item"> <a href="#password" data-bs-toggle="tab" class="nav-link "> Change Password</a> </li>
+                                            
+                                        </ul>
+                                        <div class="tab-content">
+                                            <div id="myprofile" class="tab-pane fade active show">
+                                                <div class="my-post-content pt-3">
+                                                    
+                                                    <form id="basic-form" class="row" action="/admin/employeeViewEdit/<%=d.id%>" method="post" enctype="multipart/form-data">
+
+
+                                            <div class="form-group col-md-4 m-t-10">
+                                                <label>Username</label>
+                                                <input type="text" class="form-control form-control-line" name="em_username" value="<%=d.em_username%>" readonly minlength="3" required>
+                                            </div>
+
+                                            <div class="form-group col-md-4 m-t-10">
+                                                <label>First Name</label>
+                                                <input type="text" class="form-control form-control-line" placeholder="Your first name" name="fname" value="<%=d.fname%>"  required>
+                                            </div>
+                                            <div class="form-group col-md-4 m-t-10">
+                                                <label>Last Name </label>
+                                                <input type="text" id="" name="lname" class="form-control form-control-line" value="<%=d.lname%>" placeholder="Your last name" >
+                                            </div>
+
+                                            <div class="form-group col-md-4 m-t-10">
+                                                <label>Status</label>
+                                                <select name="status" class="form-control custom-select" required>
+                                                  <option value="true" <%= (d.status == 1) ? 'selected' : '' %>>ACTIVE</option>
+                                                  <option value="false" <%= (d.status == 0) ? 'selected' : '' %>>INACTIVE</option>
+                                                </select>
+                                            </div>
+                                              
+
+                                            <div class="form-group col-md-3">
+                                                <label>Have Reporting Authoroty</label><br>
+                                                <input type="checkbox" name="is_report_auth" value='Y' <%= d.is_report_auth == 'Y' ? 'checked' : "" %> >
+                                              </div>
+                                              
+
+                                            
+
+                                            <div class="form-group col-md-4 m-t-10">
+                                                <label>Contact Number </label>
+                                                <input type="text" class="form-control" placeholder="" name="contact"  value="<%=d.contact%>" minlength="10" maxlength="15">
+                                            </div>
+                                            <div class="form-group col-md-4 m-t-10">
+                                                <label>Address</label>
+                                                <textarea class="form-control" placeholder="" name="em_address" ><%=d.em_address%></textarea>
+
+                                            </div>
+                                            <div class="form-group col-md-4 m-t-10">
+                                                <label>Email </label>
+                                                <input type="email" id="email" name="email" class="form-control" placeholder="Ex- name@gmail.com" value="<%=d.email%>">
+                                            </div>
+                                            <div class="form-group col-md-4 m-t-10">
+                                                <label>Role*</label>
+                                                <select name="role" class="form-control custom-select" required>
+                                                    <option value="<%=d.role %>"><%=d.role %></option>
+                                                    <option value="ADMIN">ADMIN</option>
+                                                </select>
+                                            </div>
+
+
+                                            <div class="form-group col-md-12 m-t-10">
+                                                <!-- Display current value in the src attribute of the img tag -->
+                                                <img src="./../../uploads/<%= d.image_url %>" class="" width="100px" />
+                                                
+                                                <!-- Display current value in the value attribute of the input tag -->
+                                                <input type="file"  name="image_url" class="form-control" value="<%= d.image_url %>">
+                                            </div>
+                                                <div class="form-actions col-md-12">
+                                                    
+                                                    <button type="submit" class="btn btn-info btn-sm"> <i class="fa fa-check"></i> Update</button>
+                                                    <button type="button" class="btn btn-info btn-sm">Cancel</button>
+                                                </div>
+                                        </form>
+                                                   
+                                                </div>
+                                            </div>
+                                            
+
+                                    <div id="password" class="tab-pane fade">
+                                <form class="row mt-4" action="/admin/Reset_Password/<%=d.id%>" method="post" >
+                                <div class="form-group col-md-6 m-t-20">
+                                    <label>Old Password</label>
+                                    <input type="text" class="form-control" name="old" value="" placeholder="old password" required minlength="6">
+                                </div>
+                                <div class="form-group col-md-6 m-t-20">
+                                    <label>Password</label>
+                                    <input type="text" class="form-control" name="new1" value="" required minlength="6">
+                                </div>
+                                <div class="form-group col-md-6 m-t-20">
+                                    <label>Confirm Password</label>
+                                    <input type="text" id="" name="new2" class="form-control " required minlength="6">
+                                </div>
+                                <div class="form-actions col-md-12">
+                                    <button type="submit" class="btn btn-info pull-right"> <i class="fa fa-check"></i> Save</button>
+                                </div>
+                            </form>
+                                            </div>
+
+                                            
+                                        </div>
+                                    </div>
+                                   
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+<%- include('../main/footer.ejs')%>
+
+
+<script>
+    $(document).ready(function() {
+      // Reference the file input element for the "Image" field
+      const fileInput = document.querySelector('input[name="image_url"]');
+    
+      // Add an event listener to the file input's change event
+      fileInput.addEventListener('change', function() {
+        // Get the selected file from the input
+        const selectedFile = this.files[0];
+    
+        // Check if a file is selected
+        if (selectedFile) {
+          // Check if the file size exceeds 5MB (5 * 1024 * 1024 bytes)
+          if (selectedFile.size > 5 * 1024 * 1024) {
+            alert('File size exceeds the maximum allowed (5MB).');
+            // Clear the file input to prevent submission
+            this.value = '';
+          }
+        }
+      });
+    });
+    </script>
+    

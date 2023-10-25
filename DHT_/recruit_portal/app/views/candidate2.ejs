@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en" class="h-100">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="keywords" content="">
+  <meta name="author" content="DHT Solutions">
+  <meta name="robots" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <style type="text/css">
+    .featured-image {
+      width: 300px;
+      border: 1px solid #000;
+      /* Additional styles... */
+    }
+  </style>
+
+  <!-- PAGE TITLE HERE -->
+  <title>DHT | HRMS</title>
+
+  <!-- FAVICONS ICON -->
+  <link rel="shortcut icon" type="image/png" href="/assets/images/favicon.png">
+  <link rel="stylesheet" href="/assets/vendor/select2/css/select2.min.css">
+  <link href="/assets/vendor/jquery-nice-select/css/nice-select.css" rel="stylesheet">
+  <link href="/assets/css/style.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"> -->
+</head>
+<body>
+  <div class="container-fluid mt-5">
+    <div class="row">
+      <div class="col-md-11 col-sm-12 m-auto">
+        <div class="card p-3" style="border-radius: 20px; ">
+          <div class="card-header text-center">
+            <a href="/client/client" class="btn btn-primary btn-sm"><i class="fa fa-arrow-left"></i> Back To
+              Login</a>
+            <h4>Register Compliance Information</h4>
+          </div>
+          <div class="card-body">
+            <style>
+              label {
+                font-weight: 600;
+              }
+              form {
+                background-color: lavender;
+                border-style:ridge;
+                padding: 1%;
+              }
+            </style>
+            <form role="form" action="/client/savecomplianceInfo" method="post" enctype="multipart/form-data"
+              class="form-group form-valide-with-icon needs-validation" novalidate="" >
+              <div class="row">
+                <div class="form-group col-md-2 mt-4">
+                  <span><h6>* Passport Or Biometric Card</h6></span>
+                </div>
+                <div class="form-group col-md-4">
+                  <label class="form-label"> <i class="text-danger"></i> </label>
+                  <input type="text" class="form-control" id="passport" name="passport2"
+                    placeholder="Enter Passport Number/Biometric Number" autocomplete="off" required="">
+                </div>
+                <div class="form-group col-md-4">
+                  <label class="form-label"> <i class="text-danger"></i> </label>
+                  <input type="file" class="form-control" id="passport_file" name="passport_file" autocomplete="off" required="">
+                </div>
+                <div  class="form-group col-md-2 mt-4">
+                 <button type="button" class="btn btn-success btn-sm removeRow" ><i class="fa fa-eye"></i></button>
+              </div>
+            </div>
+              <div class="row">
+                <div class="form-group col-md-2 mt-4">
+                  <span><h6>* Copy Of Visa Card</h6></span>
+                </div>
+                <div class="form-group col-md-4">
+                  <label class="form-label"> <i class="text-danger"></i></label>
+                  <input type="text" class="form-control" id="visa" name="visa1" placeholder="Enter visa  Number"
+                    autocomplete="off" required="">
+                </div>
+                <div class="form-group col-md-4">
+                  <label class="form-label"> <i class="text-danger"></i> </label>
+                  <input type="file" class="form-control" id="visa_file" name="visa_file" autocomplete="off" required="">
+                </div>
+                <div  class="form-group col-md-2 mt-4">
+                 <button type="button" class="btn btn-success btn-sm removeRow" ><i class="fa fa-eye"></i></button>
+              </div>
+              </div>
+              <div class="row">
+                <div class="form-group col-md-2 mt-4">  
+                  <span><h6>* Proof Of National Insurance</h6></span>
+                </div>
+                <div class="form-group col-md-4">
+                  <label class="form-label"> <i class="text-danger"></i></label>
+                  <input type="text" class="form-control" id="National_insurance" name="National_insurance1"
+                    placeholder="Enter National Insurance Number" autocomplete="off" required="">
+                </div>
+                <div class="form-group col-md-4">
+                  <label class="form-label"> <i class="text-danger"></i> </label>
+                  <input type="file" class="form-control" id="national_file" name="national_file" autocomplete="off"
+                    required="">
+
+                </div>
+                <div  class="form-group col-md-2 mt-4">
+                 <button type="button" class="btn btn-success btn-sm removeRow" ><i class="fa fa-eye"></i></button>
+              </div>
+              </div>
+              <div class="row">
+                <div class="form-group col-md-2 mt-4">
+                  <span><h6>* DBS Certificate</h6></span>
+                </div>
+                <div class="form-group col-md-4 ">
+                  <label class="form-label"> <i class="text-danger"></i></label>
+                  <input type="text" class="form-control" id="dbs_certificate" name="dbs_certificate"
+                    placeholder="Enter DBS Certificate Number" autocomplete="off" required="">
+                </div>
+                <div class="form-group col-md-4">
+                  <label class="form-label"> <i class="text-danger"></i> </label>
+                  <input type="file" class="form-control" id="dbs_file" name="dbs_file" autocomplete="off" required="">
+                </div>
+               <div  class="form-group col-md-2 mt-4">
+                 <button type="button" class="btn btn-success btn-sm removeRow" ><i class="fa fa-eye"></i></button>
+              </div>
+              </div>
+              <hr>
+              <div class="form-group col-md-4" style="font-size:20px; font-weight:bold; font-family: inherit; ">
+                <span><u>Address Of Proof</u></span>
+              </div>
+              <div class="row">
+                <div class="form-group col-md-2 mt-4">
+                  <span><h6>* Address1</h6></span>
+                </div>
+                <div class="form-group col-md-4">
+                  <label class="form-label"> <i class="text-danger"></i> </label>
+                  <input type="text" class="form-control" id="add1" placeholder="Enter Identity Name" name="add1"
+                    autocomplete="off" required="">
+                </div>
+                <div class="form-group col-md-3">
+                  <label class="form-label"> <i class="text-danger"></i> </label>
+                  <input type="text" class="form-control" id="num1" placeholder="Enter Identity Address Number"
+                    name="num1" autocomplete="off" required="">
+                </div>
+                <div class="form-group col-md-3">
+                  <label class="form-label"> <i class="text-danger"></i> </label>
+                  <input type="file" class="form-control" id="file1" name="file1" autocomplete="off" required="">
+                </div>
+              </div>
+              <div class="row">
+                <div class="form-group col-md-2 mt-4">
+                  <span><h6>* Address2</h6></span>
+                </div>
+                <div class="form-group col-md-4">
+                  <label class="form-label"> <i class="text-danger"></i> </label>
+                  <input type="text" class="form-control" id="add2" placeholder="Enter Identity Name" name="add2"
+                    autocomplete="off" required="">
+                </div>
+                <div class="form-group col-md-3">
+                  <label class="form-label"> <i class="text-danger"></i> </label>
+                  <input type="text" class="form-control" id="num2" placeholder="Enter Identity Address Number"
+                    name="num2" autocomplete="off" required="">
+                </div>
+                <div class="form-group col-md-3">
+                  <label class="form-label"> <i class="text-danger"></i> </label>
+                  <input type="file" class="form-control" id="file2" name="file2" autocomplete="off" required="">
+                </div>
+              </div>
+              <hr>
+                <div class="form-group col-md-4" style="font-size:20px; font-weight:bold; font-family: inherit;">
+                  <span><u>Passport Size Photo</u></span>
+                </div> 
+              <div class="row form-group col-md-12">
+                <div class="form-group col-md-3">
+                  <label>Profile Image</label>
+                  <input type="file" class="form-file-input form-control " id="profile_image"  name="profile_image1" accept="image/*" onChange="img_pathUrl(this);" >
+                </div>
+                  <div class="form-group col-md-6">
+                    <img src="" id="img_url" class="img_url" height="150px" width="180px"><br>
+                  </div>
+              </div>
+              <hr>
+              <div class="row">
+                  <div class="form-group col-md-4" style="font-size:20px; font-weight:bold; font-family: inherit;">
+                    <span><u>Proof Of Qualifications</u></span>
+                  </div><br>  
+                  <div class="form-group col-md-12">
+                    <div class=" table-responsive">
+                      <table class="table table-bordered" style="border-radius:inherit; border-color: black; background-color: lavender;  width:100% ;" id="contact_table">
+                        <thead>
+                          <tr>
+                            <th style="width:30%">Qualification</th>
+                            <th style="width:30%">CGPA/Marks</th>
+                            <th style="width:30%;">File Upload</th>
+                            <th style="width:10%;"><button type="button" id="add_row" class="btn btn-info btn-sm"><i class="fa fa-plus"></i></button></th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr id="row_1" class="rows" >
+                          <td>
+                                  <input type="text-danger" class="form-control" id = "qualification_1"    name="qualification[]" placeholder="Qualification">
+                            
+                           </td>
+                            <td>
+                                  <input type="number" name="marks[]" id = "marks_1" class="form-control" placeholder="cgpa/Marks">
+                            </td>
+                            <td>
+                                  <input type="file" name="fileMull[]" id = "file_1" class="form-control"  placeholder="Qualification">
+                            </td>
+                            <td>
+                                  <button type="button" class="btn btn-danger btn-sm removeRow" onclick="removeRow('1')"><i class="fa fa-trash"></i></button>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div><hr>
+                    <div class="form-group col-md-12 " style="font-size:20px; font-weight:bold; font-family: inherit;">
+                    <span><u>*Training Qualification</u></span><br>
+                    </div><br><br>
+                  <div class="form-group col-md-12 row">
+                       <?php foreach ($list_comp as $key => $value) { ?>
+                    <div class="form-group  col-sm-4  mb-2 " style="font-size:15px; font-family:inherit ;" >
+
+                    <input type="checkbox" class="form-check-input" name="complianceinfo[]"  id="complianceinfo_<?php echo $value->id; ?>" value="<?php echo $value->id; ?>">
+                    <label class="form-check-label" for="complianceinfo_<?php echo $value->id; ?>"><?php echo $value->training_name; ?></label>
+                  </div>
+                  
+               <?php } ?>
+                    </div>
+                  </div>
+                <div  class="form-group col-md-12" ><center> 
+          <button  type="reset" class="btn btn-primary btn-sm">Reset</button>
+          <button  id="btnSubmit"   onClick="return confirm('Are you sure to submit data!!!')"  type="submit" class="btn btn-success btn-sm">Submit Data</button></center>
+          </div>
+           
+      
+         </div>
+         </form>
+         </div>
+         </div>
+        </div>
+      <div class="footer">
+        <div class="copyright">
+          <p>
+            Copyright
+            © Designed &amp; Developed by
+            <a target="_blank" href="https://dht.net.in">DHT Solutions</a> 2022
+          </p>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script src="/assets/vendor/global/global.min.js"></script>
+  <script src="/assets/vendor/jquery-nice-select/js/jquery.nice-select.min.js"></script>
+  <script src="/assets/vendor/select2/js/select2.full.min.js"></script>
+  <script src="/assets/js/plugins-init/select2-init.js"></script>
+  <script src="/assets/js/custom.min.js"></script>
+  <script src="/assets/js/dlabnav-init.js"></script>
+  <script src="/assets/js/demo.js"></script>
+  <script>
+    $(".select2").select2();
+  </script>
+  <script>
+    (function () {
+      'use strict'
+
+      // Fetch all the forms we want to apply custom Bootstrap validation styles to
+      var forms = document.querySelectorAll('.needs-validation')
+
+      // Loop over them and prevent submission
+      Array.prototype.slice.call(forms)
+        .forEach(function (form) {
+          form.addEventListener('submit', function (event) {
+            if (!form.checkValidity()) {
+              event.preventDefault()
+              event.stopPropagation()
+            }
+
+            form.classList.add('was-validated')
+          }, false)
+        })
+    })()
+  </script>
+
+</html>
+<script type="text/javascript">
+  $(document).ready(function () {
+   $('#add_row').unbind('click').bind('click',function(){
+    var table = $('#contact_table');
+    var count_table_tbody_tr = $("#contact_table tbody tr").length;
+    var row_id = count_table_tbody_tr + 1;  
+    var html = '<tr id="row_'+row_id+'" class="rows">'+
+        '<td>'+
+          ' <input type="text-danger" class="form-control"  data-row-id="'+row_id+'" name="qualification[]" id = "qualification_'+row_id+'" placeholder="Qualification"> '+
+        '</td>'+
+        '<td>'+
+          ' <input type="text" name="marks[]" class="form-control" id="marks_'+row_id+'" placeholder="Cgpa/Marks"> '+
+        '</td>'+
+        '<td>'+
+          '<input type="file" name="file[]" id = "file_'+row_id+'" class="form-control" >'+
+        '</td>'+
+       
+        '<td>'+
+          '<button type="button" class="btn btn-danger btn-sm removeRow" onclick="removeRow(\''+row_id+'\')"><i class="fa fa-trash"></i></button>'+
+        '</td>'+
+          '</tr>';
+
+          if(count_table_tbody_tr >= 1) 
+          {
+              $("#contact_table tbody tr:last").after(html);
+          }
+          else 
+          {
+            $("#contact_table tbody").html(html);
+          }
+          idchange();
+      return false;
+      });  
+
+
+   });
+
+    function removeRow(tr_id)
+    {
+      var table = $("#contact_table");
+      var count_table_tbody_tr = $("#contact_table tbody tr").length;
+
+      if(count_table_tbody_tr>1)
+      {
+          $("#contact_table tbody tr#row_"+tr_id).remove();
+          idchange();
+      }
+      else
+      {
+          alert("There should be atleast one row !");
+      }
+    }
+
+    function img_pathUrl(input)
+    {
+        $('#img_url')[0].src = (window.URL ? URL : webkitURL).createObjectURL(input.files[0]);
+    }
+
+</script>

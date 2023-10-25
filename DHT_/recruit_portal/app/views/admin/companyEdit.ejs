@@ -1,0 +1,251 @@
+<!-- no need  -->
+
+
+<!-- <%- include( '../main/header.ejs' ) %>
+ <%- include( '../main/sidebar.ejs',{session:session} ) %>
+
+<div class="content-body">
+  <div class="row page-titles">
+    <div class="col-md-5 align-self-center">
+      <h3 class="text-themecolor">
+        <i class="fa fa-university" aria-hidden="true"></i> Company
+      </h3>
+    </div>
+    <div class="col-md-7 align-self-center">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+        <li class="breadcrumb-item active">Company</li>
+      </ol>
+    </div>
+  </div>
+  <div class="message"></div>
+  <div class="container-fluid">
+    <div class="row m-b-10">
+      <div class="col-12"></div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+       
+
+          <div class="card-body">
+            <form class="row" method="post" action="/admin/editCompany1/<%= findCompany.id %>">
+              <div class="form-group col-md-3 m-t-20">
+                <label>Company Full Name</label>
+                <input
+                  type="text"
+                  name="company_name" value="<%= findCompany.company_name %>"
+                  class="form-control form-control-line"
+                  placeholder="Company Full Name"
+                  required
+                />
+              </div>
+              <div class="form-group col-md-3 m-t-20">
+                <label>Company Short Name(3 letter)</label>
+                <input
+                  type="text"
+                  id=""
+                  name="shrtname"  value="<%= findCompany.shrtname %>"
+                  class="form-control form-control-line"
+                  placeholder="Company Short Name"
+                  minlength="3"
+                  maxlength="3"
+                  required
+                />
+              </div>
+
+              <div class="form-group col-md-3 m-t-20">
+                <label>Propririetor </label>
+                <input
+                  type="text"
+                  name="proprietor"  value="<%= findCompany.proprietor %>"
+                  class="form-control form-control-line"
+                />
+              </div>
+
+              <div class="form-group col-md-3 m-t-20">
+                <label>Phone</label>
+                <input
+                  type="number"
+                  name="phone"
+                  class="form-control"
+                  value="<%= findCompany.phone %>"
+                  placeholder="Enter Contact Number"
+                  minlength="10"
+                  maxlength="10"
+                />
+              </div>
+              <div class="form-group col-md-3 m-t-20">
+                <label>Phone 2( Optional)</label>
+                <input
+                  type="number"
+                  name="phone2"
+                  value="<%= findCompany.phone2 %>"
+                  class="form-control"
+                  value=""
+                  placeholder="Enter Contact Number"
+                  minlength="10"
+                  maxlength="10"
+                />
+              </div>
+
+              <div class="form-group col-md-3 m-t-20">
+                <label>Email Id(Login ID)</label>
+                <input
+                  type="email"
+                  name="email"
+                  class="form-control"
+                  value="<%= findCompany.email %>"
+                  placeholder="Enter Email"
+                  autocomplete="off"
+                />
+              </div>
+              <div class="form-group col-md-3 m-t-20">
+                <label>Email Id(Optional)</label>
+                <input
+                  type="email"
+                  name="email2"
+                  class="form-control"
+                  value="<%= findCompany.email2 %>"
+                  placeholder="Enter Email"
+                  autocomplete="off"
+                />
+              </div>
+              <div class="form-group col-md-3 m-t-20">
+                <label for="state">State</label>
+                <input
+                  type="text"
+                  name="state"
+                  class="form-control"
+                  value="<%= findCompany.state %>"
+                  placeholder="State"
+                />
+              </div>
+              <div class="form-group col-md-3">
+                <label>State Code</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  id="state_code"
+                  name="state_code"
+                  value="<%= findCompany.state_code %>"
+                  placeholder="State Code"
+                  autocomplete="off"
+                />
+              </div>
+              <div class="form-group col-md-3">
+                <label>Company Address</label>
+                <textarea
+                  class="form-control"
+                  id="address"
+                  name="address"
+                  placeholder="Enter Company Address"
+                  autocomplete="off"
+                ><%= findCompany.address %></textarea>
+              </div>
+              
+              <div class="form-group col-md-3">
+                <label for="phone">GST Applicable</label>
+                <select class="form-control" name="gst_applicable">
+                  <option value="YES" <% if (findCompany.gst_applicable === 'YES') { %>selected<% } %>>YES</option>
+                  <option value="NO" <% if (findCompany.gst_applicable === 'NO') { %>selected<% } %>>NO</option>
+                </select>
+              </div>
+              <div class="form-group col-md-3">
+                <label for="phone">GST No.</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="gst_no"
+                  value="<%= findCompany.gst_no %>"
+                  name="gst_no"
+                  placeholder="Enter GST Number"
+                  autocomplete="off"
+                />
+              </div>
+              <div class="form-group col-md-3">
+                <label for="phone">PAN No.</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="pan_no"
+                  value="<%= findCompany.pan_no %>"
+                  name="pan_no"
+                  placeholder="Enter PAN Number"
+                  value=""
+                  autocomplete="off"
+                />
+              </div>
+              <div class="form-group col-md-4">
+                <label for="permission">Website</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="website"
+                  value="<%= findCompany.website %>"
+                  name="website"
+                  autocomplete="off"
+                />
+              </div>
+              <div class="form-group col-md-3">
+                <label for="phone">Company Logo</label>
+                <input
+                  type="file"
+                  class="form-control"
+                  value="<%= findCompany.company_logo %>"
+                  name="company_logo"
+                  autocomplete="off"
+                />
+              </div>
+              <div class="col-12"></div>
+              <div class="form-group col-md-4">
+                <label>Password </label>
+                <input
+                  id="txtPassword"
+                  type="text"
+                  name="password"
+                  class="form-control"
+                  value="<%= findCompany.password %>"
+                  placeholder="**********"
+                  autocomplete="off"
+                  required=""
+                />
+              </div>
+              <div class="form-group col-md-4">
+                <label>Confirm Password </label>
+                <input
+                  id="txtConfirmPassword"
+                  type="password"
+                  name="confirm"
+                  class="form-control"
+                  value="<%= findCompany.password %>"
+                  placeholder="**********"
+                  autocomplete="off"
+                />
+              </div>
+
+              <div class="form-actions col-md-12">
+                <button id="btnSubmit" type="submit" class="btn btn-info">
+                  <i class="fa fa-check"></i> Update Company
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <%- include( '../main/footer.ejs' ) %>
+    <script>
+      $(function () {
+        $("#btnSubmit").click(function () {
+          var password = $("#txtPassword").val();
+          var confirmPassword = $("#txtConfirmPassword").val();
+          if (password != confirmPassword) {
+            alert("Passwords does not match,Please Enter a Valid Password.");
+            return false;
+          }
+        });
+      });
+    </script>
+  </div>
+</div> -->

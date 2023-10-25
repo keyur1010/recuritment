@@ -1,0 +1,634 @@
+<%- include( '../main/header.ejs' ) %>
+<%- include( '../main/sidebar.ejs',{session:session} ) %>
+
+	<div class="content-body">
+            <!-- row -->
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-xl-12">
+						<div class="profile-back">
+							<img src="/assets/images/profile1.jpg" alt="">
+							<div class="social-btn">
+								<a href="javascript:void(0);" class="btn btn-light social">245 Following</a>
+								<a href="javascript:void(0);" class="btn btn-light social">872 Followers</a>
+							</div>
+						</div>
+						<div class="profile-pic d-flex">
+                            <% if (data && data.profile_image) { %>
+                                <img src="/uploads/<%= data.profile_image %>" class="img-circle" />
+                            <% } else { %>
+                                <img src="/assets/images/candidate/user.jpg" class="img-circle" />
+                            <% } %>
+
+							<div class="profile-info2">
+								<h2 class="mb-0"><%=data.candidate_name %></h2>								<h4><%=data.current_position %></h4>
+								<span class="d-block"><i class="fas fa-map-marker-alt me-2"></i><%=data.address_line_1%>   <%=data.address_line_2%>  <%=data.country%>   <%=data.post_code%></span>
+							</div>
+						</div>
+					</div>
+					<div class="col-xl-3 col-xxl-4 col-lg-6 mt-5">
+						<div class="row">
+							<div class="col-xl-12">
+								<div class="card">
+
+									<div class="card-body">
+										<h4 class="fs-20 font-w600 my-4">Contact</h4>
+										<div class="d-flex flex-wrap">	
+											<div class="d-flex contacts-social align-items-center mb-3  me-sm-5 me-0">
+												<span class="mr-1">
+													<i class="fas fa-phone-alt"></i>
+												</span>
+												<div>
+													<span>Phone</span>
+													<h5 class="mb-0 fs-18"><%=data.countryCode%><%=data.mobile_number %></h5>
+												</div>
+											</div>
+											<div class="d-flex contacts-social align-items-center mb-3">
+												<span class="mr-1">
+													<i class="fas fa-envelope-open"></i>
+												</span>
+												<div>
+													<span>Email</span>
+													<h5 class="mb-0 fs-13"><%=data.email_id %></h5>
+												</div>
+											</div>
+											<div class="d-flex contacts-social align-items-center mb-3">
+												<span class="mr-1">
+													<i class="fas fa-home"></i>
+												</span>
+												<div>
+													<span>Address</span>
+													<h5 class="mb-0 fs-13"><%=data.address_line_1%> , <%=data.address_line_2%> <br><%=data.post_code%> , <%=data.country %></h5>
+												</div>
+											</div>
+										</div>
+									</div>
+
+									<div class="card-header border-1">
+										<h4 class="fs-10">Skills</h4>
+									</div>
+									<div class="card-body">
+                                        <% SD.forEach(RSkill => { %>
+                                                <div class="d-flex align-items-end  pb-1 justify-content-between">
+                                                    <span class="fs-14 font-w500"><%= RSkill.skill_name %></span>
+                                                </div>
+                                                <% }); %>
+									</div>
+									<hr>
+									<div class="card-header border-1">
+										<h4 class="fs-10">Industry</h4>
+									</div>
+									<div class="card-body">
+                                        <% ID.forEach(i => { %>
+                                            <div class="d-flex align-items-end  pb-1 justify-content-between">
+                                                <span class="fs-14 font-w500"><%= i.industry_name %></span>
+                                            </div>
+                                            <% }); %>
+									</div>
+									<hr>
+									<div class="card-header border-1">
+										<h4 class="fs-10">Job Titles</h4>
+									</div>
+									<div class="card-body">
+                                        <% JD.forEach(job => { %>
+                                            <div class="d-flex align-items-end  pb-1 justify-content-between">
+                                                <span class="fs-14 font-w500"><%= job.job_title_name %></span>
+                                            </div>
+                                            <% }); %>
+									</div>
+
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-xl-9 col-xxl-8 col-lg-6 mt-lg-5 mt-0">
+						<div class="row">
+							<div class="col-xl-12 col-xxl-12">
+								<div class="card">
+									
+									<div class="card-body">
+										
+										 <div class="custom-tab-1">
+                                   		 <ul class="nav nav-tabs">
+                                        <li class="nav-item">
+                                            <a class="nav-link active" data-bs-toggle="tab" href="#profile"><i class="la la-home me-2"></i> Profile</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" data-bs-toggle="tab" href="#contact"><i class="la la-user me-2"></i> Contact</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" data-bs-toggle="tab" href="#paydetails"><i class="la la-phone me-2"></i>  Pay Details</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" data-bs-toggle="tab" href="#jobreq"><i class="la la-envelope me-2"></i> Job Requirements</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" data-bs-toggle="tab" href="#compliance"><i class="la la-envelope me-2"></i> Compliance </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" data-bs-toggle="tab" href="#jobevents"><i class="la la-envelope me-2"></i> Job Events </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" data-bs-toggle="tab" href="#communication"><i class="la la-envelope me-2"></i> Communication </a>
+                                        </li>
+                                    </ul>
+                                    <div class="tab-content">
+                                        <div class="tab-pane fade show active" id="profile" role="tabpanel">
+                                            <div class="pt-4">
+                                                
+	  <form role="form" action="/candidate/updateCandidate1" method="post" enctype="multipart/form-data"  class="form-valide-with-icon needs-validation"  novalidate="" >  
+	        
+           <div class="row">
+            <div class="form-group col-md-6 col-sm-6">
+            <label class="form-label">Name <i class="text-danger">*</i> </label>
+            <input type="hidden" value="<%= data.id %>" name="candidate_id">
+            <input type="text" class="form-control" id="candidate_name"  name="candidate_name" placeholder="Enter Full name" autocomplete="off" required="" value="<%=data.candidate_name%>">
+          </div>
+          
+          <div class="form-group col-md-6 col-sm-6">
+          <label >Advert Reference <i class="text-danger">*</i></label>
+          <select class="default-select form-control"  name="advert_ref" id="advert_ref" required="">
+            <option value="">-Select-</option>
+            <% AD.forEach(function(value) { %>
+              <option value="<%= value.ad_ref_name %>" <%= data.advert_ref == value.ad_ref_name ? 'selected' : '' %>>
+                  <%= value.ad_ref_name %>
+                </option>
+                <% }); %>
+              </select>
+          </div>
+
+          <div class="form-group col-md-6 col-sm-6">
+            <label>Mobile Number <i class="text-danger">*</i></label>
+            <input type="text" class="form-control" id="mobile_number"  name="mobile_number" placeholder="Enter Mobile Number" autocomplete="off" required="" value="<%=data.mobile_number%>">
+          </div>
+
+          <div class="form-group col-md-6 col-sm-6">
+            <label>Email Id <i class="text-danger">*</i></label>
+            <input type="text" class="form-control" id="email_id"  name="email_id" placeholder="Enter Email Id" autocomplete="off" required="" value="<%=data.email_id%>">
+          </div>
+ 
+          <span class="col-12 "></span>
+           <div class="form-group col-md-6 col-sm-6">
+            <label>Driver / Car Owner</label>
+            <input type="text" class="form-control" id="driver_car_owner"  name="driver_car_owner"  autocomplete="off" value="<%=data.driver_car_owner%>">
+          </div>
+          <div class="form-group col-md-6 col-sm-6">
+            <label>DOB <i class="text-danger">*</i></label>
+            <input type="date" class="form-control" id="candidate_dob" name="candidate_dob" autocomplete="off" required  value="<%= data.candidate_dob ? data.candidate_dob.toISOString().split('T')[0] : '' %>">
+          </div>
+          
+
+          
+          <div class="form-group col-md-6 col-sm-6">
+            <label>DBS <i class="text-danger">*</i></label>
+             <select class="form-control default-select"  name="dbs" id="dbs" required="">
+            <option value="<%=data.dbs%>"><%=data.dbs%></option>
+            <option value="NO DBS">NO DBS</option>
+            <option value="Current DBS Number">Current DBS Number</option>
+            <option value="Any Disclosures">Any Disclosures</option>
+            <option value="Registered for online update service">Registered for online update service</option>
+          </select>
+          </div>
+
+
+
+          <div class="form-group col-md-6">
+            <label>Passport (if non EU, what visa)</label>
+            <input type="text" class="form-control" id="passport"  name="passport" placeholder="Passport (if non EU, what visa)" autocomplete="off" value="<%=data.passport%>">
+          </div>
+          <hr>
+         
+
+         
+         
+
+            <div class="form-group col-md-3 col-sm-4">
+            <label>Desired Hourly Rate</label>
+            <input type="text" class="form-control"  id="desired_salary"  name="desired_salary"  autocomplete="off" value="<%=data.desired_salary%>">
+          </div>
+
+          <div class="form-group col-md-3 col-sm-4">
+            <label>Notice Period</label>
+            <input type="text" class="form-control"  id="notice_period"  name="notice_period"  autocomplete="off" value="<%=data.notice_period%>" >
+          </div>
+
+
+              <div class="form-group col-md-3 col-sm-6">
+                  <label>Current Pay Status</label>
+                  <select class="default-select form-control wide mb-2" name="current_pay_status" id="current_pay_status" required="">
+                    <option value="<%=data.current_pay_status%>"><%=data.current_pay_status%></option>
+                    <option value="PAYE">PAYE</option>
+                    <option value="UMBRELLA">UMBRELLA</option>
+                    
+                  </select>
+               
+              </div>
+
+
+
+          <div class="form-group col-md-3 col-sm-4">
+            <label>Current Hourly Rate</label>
+            <input type="text" class="form-control"  id="current_salary"  name="current_salary"  autocomplete="off" value="<%=data.current_salary%>">
+          </div>
+
+           <div class="col-12 mt-4"></div>
+          <div class="form-group col-md-12	 col-sm-6">
+            <label>Most Recent / Current Position <small>also Company Name/Line Manager</small> </label>
+            <input type="text" class="form-control"  id="current_position"  name="current_position"  autocomplete="off" required value="<%=data.current_position%>">
+          </div>
+
+
+        
+          
+          <div class="form-group col-md-12 col-sm-6">
+            <label>Reason for leaving ( perm job or agency )</label>
+            <input type="text" class="form-control"  id="reason_for_leave"  name="reason_for_leave" placeholder="detailed,probe,explore,motivators..." autocomplete="off" value="<%=data.reason_for_leave%>">
+          </div>
+      
+           <div class="form-group col-md-6 col-sm-6">
+	           
+	            <label>Profile Image </label>
+	            <input type="file"  name="profile_image" class="form-control" value="<%=data.profile_image%>" accept="image/*">
+              
+	            <input type="hidden"  name="oldprofile_image" class="form-control" value="<%=data.profile_image%>" >
+            </div>
+            
+            <div class="form-group col-md-6 col-sm-6">
+              <label>Upload CV</label>
+                  <input type="file" name="upload_cv" class="form-control" value="<%=data.upload_cv%>" >
+                </div>
+          <hr>
+           <div  class="form-group col-md-12">
+           	<!-- <input type="hidden" class="form-control"  id="candidate_id"  name="candidate_id" placeholder="" autocomplete="off" value="<?php echo $cand_data->candidate_id; ?>"> -->
+          <button  id="btnSubmit"   onClick="return confirm('Are you sure to submit data!!!')"  type="submit" class="btn btn-success btn-sm" >Update Profile</button>
+
+		<!-- <?php if(!empty($cand_data->upload_cv)) { ?> -->
+			<a class="btn btn-primary btn-sm" href="/candidate/downloadFile"  download><i class="fa fa-file"> </i> Download CV</a>
+		<!-- <?php } ?> -->
+
+
+          </div>
+
+        
+
+</div>
+</form>
+
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade" id="contact">
+                                            <div class="pt-4">
+			                    <form role="form" action="/candidate/updateCandidate2" method="post"  class="form-valide-with-icon needs-validation" novalidate="" >  
+	        
+           <div class="row">
+            <div class="form-group col-md-6 col-sm-6">
+            <label class="form-label">Address Line 1 <i class="text-danger">*</i> </label>
+             <input type="text" class="form-control" id="address_line_1"  name="address_line_1" placeholder="Enter Address Line 1" autocomplete="off" required="" value="<%=data.address_line_1%>">
+          </div>
+          <div class="form-group col-md-6 col-sm-6">
+            <label class="form-label">Address Line 2 </label>
+             <input type="text" class="form-control" id="address_line_2"  name="address_line_2" placeholder="Enter Address Line 2" autocomplete="off"  value="<%=data.address_line_2%>">
+          </div>
+          <div class="form-group col-md-6 col-sm-6">
+            <label class="form-label">Landline No.  </label>
+             <input type="number" class="form-control" id="landline_no"  name="landline_no" placeholder="Enter Landline No." autocomplete="off"  value="<%=data.landline_no%>">
+          </div>
+          <div class="form-group col-md-6 col-sm-6">
+            <label class="form-label">Post Code  </label>
+             <input type="text" class="form-control" id="post_code"  name="post_code" placeholder="Enter Post Code" autocomplete="off"  value="<%=data.post_code%>">
+          </div>
+          <div class="form-group col-md-6 col-sm-6">
+            <label class="form-label">Visa  </label>
+             <input type="text" class="form-control" id="visa"  name="visa" placeholder="Enter Visa" autocomplete="off"  value="<%=data.visa%>">
+          </div>
+          <div class="form-group col-md-6 col-sm-6">
+            <label class="form-label">Email Address  </label>
+             <input type="email" class="form-control" id="email"  name="email" placeholder="Enter Email Address" autocomplete="off"  value="<%=data.email_id%>">
+          </div>
+          <h4 class="text-primary">Social Media</h4>
+          <div class="form-group col-md-6 col-sm-6">
+            <label class="form-label">Instagram  </label>
+             <input type="text" class="form-control" id="ig"  name="ig" placeholder="Enter Instagram Id" autocomplete="off"  value="<%=data.ig%>">
+          </div>
+          <div class="form-group col-md-6 col-sm-6">
+            <label class="form-label">Facebook  </label>
+             <input type="text" class="form-control" id="fb"  name="fb" placeholder="Enter Facebook Id" autocomplete="off"  value="<%=data.fb%>">
+          </div>
+          <div class="form-group col-md-6 col-sm-6">
+            <label class="form-label">Twitter/X  </label>
+             <input type="text" class="form-control" id="twitter"  name="twitter" placeholder="Enter Twitter/X Id" autocomplete="off"  value="<%=data.twitter%>">
+          </div>
+          <div class="form-group col-md-6 col-sm-6">
+            <label class="form-label">TikTok  </label>
+             <input type="text" class="form-control" id="tiktok"  name="tiktok" placeholder="Enter Tiktok Id" autocomplete="off"  value="<%=data.tiktok%>">
+          </div>
+      <div  class="form-group col-md-12">
+          	<input type="hidden" class="form-control"  id="candidate_id"  name="candidate_id" placeholder="" autocomplete="off" value="<%=data.candidate_id%>">
+          <button  id="btnSubmit"   onClick="return confirm('Are you sure to submit data!!!')"  type="submit" class="btn btn-success btn-sm">Update Details</button>
+          </div>
+      </div>
+  </form>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade" id="paydetails">
+                                            <div class="pt-4">
+                                               <form role="form" action="/candidate/updateCandidate3" method="post" class="form-valide-with-icon needs-validation" novalidate="" >  
+        
+									           <div class="row ">
+									           
+									          <span class="text-primary col-12">Umbrella Company</span>
+									           <div class="form-group col-md-4 col-sm-6">
+									            <label>Umbrella Company Name</label>
+									            <input type="text" class="form-control"  id="umbrella_comp_name"  name="umbrella_comp_name" placeholder="" autocomplete="off" value="<%=data.umbrella_comp_name%>">
+									          </div>
+									          <div class="form-group col-md-4 col-sm-6">
+									            <label>Umbrella Company Email Address</label>
+									            <input type="email" class="form-control"  id="umbrella_comp_address"  name="umbrella_comp_address" placeholder="" autocomplete="off" value="<%=data.umbrella_comp_address%>">
+									          </div>
+									          <div class="form-group col-md-4 col-sm-6">
+									            <label>Umbrella Company Number</label>
+									            <input type="text" class="form-control"  id="umbrella_comp_contact"  name="umbrella_comp_contact" placeholder="" autocomplete="off" value="<%=data.umbrella_comp_contact%>">
+									          </div>
+
+									          <span class="text-primary col-12">Bank Details</span>
+									           <div class="form-group col-md-6 col-sm-6">
+									            <label>Bank</label>
+									            <input type="text" class="form-control"  id="bank_name"  name="bank_name" placeholder="" autocomplete="off" value="<%=data.bank_name%>">
+									          </div>
+									          <div class="form-group col-md-6 col-sm-6">
+									            <label>Bank Address</label>
+									            <input type="text" class="form-control"  id="bank_address"  name="bank_address" placeholder="" autocomplete="off" value="<%=data.bank_address%>">
+									          </div>
+									          <div class="form-group col-md-6 col-sm-6">
+									            <label>Sort Code</label>
+									            <input type="text" class="form-control"  id="bank_sort_code"  name="bank_sort_code" placeholder="" autocomplete="off" value="<%=data.bank_sort_code%>">
+									          </div>
+									          <div class="form-group col-md-6 col-sm-6">
+									            <label>Account Number</label>
+									            <input type="text" class="form-control"  id="bank_acc_no"  name="bank_acc_no" placeholder="" autocomplete="off" value="<%=data.bank_acc_no%>">
+									          </div>
+
+									          <span class="text-primary col-4">Hourly Pay Rate Requirements</span><span class="text-danger col-8" style="font-size:13px">(Note: The actual rates may differ depending on client and negotiated rate)</span>
+									           <div class="form-group col-md-4 col-sm-6">
+									            <label>Standard Hourly Rate</label>
+									            <input type="text" class="form-control"  id="standard_hourly_rate"  name="standard_hourly_rate" placeholder="" autocomplete="off" value="<%=data.standard_hourly_rate%>">
+									          </div>
+									          <div class="form-group col-md-4 col-sm-6">
+									            <label>Sleep In Hourly Rate </label>
+									            <input type="text" class="form-control"  id="sleep_hourly_rate"  name="sleep_hourly_rate" placeholder="" autocomplete="off" value="<%=data.sleep_hourly_rate%>">
+									          </div>
+									          <div class="form-group col-md-4 col-sm-6">
+									            <label> Weekend Pay Rate </label>
+									            <input type="text" class="form-control"  id="weekend_pay_rate"  name="weekend_pay_rate" placeholder="" autocomplete="off" value="<%=data.weekend_pay_rate%>">
+									          </div>
+									          <div class="form-group col-md-4 col-sm-6">
+									            <label>Bank Holiday Pay Rate </label>
+									            <input type="text" class="form-control"  id="bank_holiday_pay_rate"  name="bank_holiday_pay_rate" placeholder="" autocomplete="off" value="<%=data.bank_holiday_pay_rate%>">
+									          </div>
+
+									         <div class="form-group col-md-8 col-sm-6">
+									            <label> National Insurance </label>
+									            <input type="text" class="form-control"  id="national_insurance"  name="national_insurance" placeholder="" autocomplete="off" value="<%=data.national_insurance%>">
+									          </div>
+
+									          <div  class="form-group col-md-12">
+									          <button  id="btnSubmit"   onClick="return confirm('Are you sure to submit data!!!')"  type="submit" class="btn btn-success btn-sm">Update Details</button>
+									          </div>
+											      </div>
+											  </form>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade" id="jobreq">
+                                          
+  <form role="form" action="/candidate/updateCandidate4" method="post"  class="form-valide-with-icon needs-validation" novalidate="" >  
+        
+           <div class="row mt-2">
+            	
+            	<span class="col-12 text-info text-center"><h4>CLIENT GROUP EXPERIENCE</h4></span>
+              <% Allindusrty.forEach(function(industry) { %>
+                <div class="form-group col-md-2 col-sm-4 form-check mb-2">
+                  <input type="checkbox" class="form-check-input" name="candidate_industry[]" id="candidate_industry_<%= industry.id %>" value="<%= industry.id %>"
+                  <% if (ID.some(mindusrty => mindusrty.id === industry.id)) { %>
+                    checked
+                  <% } %>
+                
+                  >
+                  <label class="form-check-label" for="candidate_industry_<%= industry.id %>"><%= industry.industry_name %></label>
+                </div>
+              <% }) %>
+              
+
+          <hr>
+          <span class="col-12 text-info text-center"><h4>SKILLS</h4></span>
+         
+          <% AllSkill.forEach(function(skill) { %>
+            <div class="form-group col-md-2 col-sm-4 form-check mb-2">
+              <input type="checkbox" class="form-check-input" name="candidate_skills[]" id="candidate_skills_<%= skill.id %>" value="<%= skill.id %>"
+                <% if (skillsData.skill_id.includes(String(skill.id))) { %>
+                  checked
+                <% } %>
+              >
+              <label class="form-check-label" for="candidate_skills_<%= skill.id %>"><%= skill.skill_name %></label>
+            </div>
+          <% }) %>
+          
+          
+
+
+          <hr>
+          <span class="col-12 text-info text-center"><h4>JOB TITLES</h4></span>
+          <% AllJob.forEach(function(job) { %>
+         
+            <div class="form-group col-md-2 col-sm-4 form-check mb-2">
+              	<input type="checkbox" class="form-check-input" name="job_titles[]"  id="job_titles_<%= job.id %>" value="<%= job.id %>" 
+             
+                  <% if (jobData.job_id.includes(String(job.id))) { %>
+                    checked
+                  <% } %>
+                >
+              <label class="form-check-label" for="job_titles_<%= job.id %>"><%= job.job_title_name %></label>
+             </div>
+             <%})%>
+
+      
+
+          	<div class="col-12"></div>
+          	<div class="form-group col-md-6 col-sm-6">
+	            <label> Driver  </label>
+	            <select class="form-control" name="driver" id="driver" required>
+	            	<option value="<%=data.driver%>"><%=data.driver%></option>
+	            	<option value="YES">YES</option>
+	            	<option value="NO">NO</option>
+	            </select>
+	        </div>
+	        <div class="form-group col-md-12 col-sm-12">
+
+<label for="option1">Available for Emergency shifts:  </label>
+<input type="checkbox" id="avail_for_emg_shift" name="avail_for_emg_shift" value="yes">
+
+
+
+	        </div>
+
+	        <div  class="form-group col-md-12">
+	          <button  id="btnSubmit"   onClick="return confirm('Are you sure to submit data!!!')"  type="submit" class="btn btn-success btn-sm">Update Details</button>
+	          </div>
+
+     		 </div>
+  </form>
+
+
+
+
+                                        </div>
+                                        <div class="tab-pane fade" id="compliance">
+                                            
+                                        </div>
+                                        <div class="tab-pane fade" id="jobevents">
+                                            
+                                        </div>
+                                        <div class="tab-pane fade" id="communication">
+                                            
+                                        </div>
+                                        
+
+                                    </div>
+                                </div>
+
+
+											
+									</div>
+									
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</div>
+            </div>
+        </div>	
+
+        <%- include( '../main/footer.ejs' ) %> 
+
+
+<script>
+function editaddressFunc(id)
+{ 
+  var manageTable;
+    var base_url = "<?php echo base_url(); ?>";
+  $.ajax({
+    url: base_url + 'Candidate/fetchAddDataById/'+id,
+    type: 'post',
+    dataType: 'json',
+    success:function(response) {
+      $("#id").val(response.id);
+      $("#edit_monthly_gross").val(response.monthly_gross);
+      var maxLoanAmount = response.monthly_gross * 3;
+      $("#edit_loan_amount").prop('max', maxLoanAmount);
+      $("#edit_loan_amount").val(response.loan_amount);
+      $("#edit_emi_amount").val(response.emi_amount);
+      $("#edit_req_emi").val(response.req_emi);
+    }
+  });
+
+}
+</script>
+<div id="editaddressModal" class="modal fade " tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+
+    <div class="modal-dialog modal-l">
+
+        <div class="modal-content">
+
+            <form method="post" action="<?php echo base_url('Loan/app_loan'); ?>" enctype="multipart/form-data">
+                <input type="hidden" name="id" value="<?php echo $value->id; ?>">
+
+                <div class="modal-header">
+
+                    <h4 class="modal-title" id="myModalLabel">Edit Address</h4>
+
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+
+                </div>
+
+
+
+                <div class="modal-body">
+                    <input type="hidden" id="id" name="id">
+                    <div class="form-group col-md-12">
+                    <input type="number" name="monthly_gross" id="edit_monthly_gross" class="form-control" value="" readonly> 
+                    </div>
+                    <div class="form-group col-md-12">
+                    <input type="number" name="loan_amount" id="edit_loan_amount" class="form-control" placeholder="Enter Loan Amount" autocomplete="off" oninput="calculateEmi()" required> 
+                    </div>
+                    <div class="form-group col-md-12">
+                    <input type="number" name="emi_amount" id="edit_emi_amount" class="form-control" placeholder="Enter EMI Amount" autocomplete="off" oninput="calculateEmi()" required> 
+                    </div>
+                    <div class="form-group col-md-12">
+                    <input type="number" name="req_emi" id="edit_req_emi" class="form-control" placeholder="" autocomplete="off" value="" required readonly> 
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+
+                    <button type="button" id="btn-four" class="btn btn-dark" data-dismiss="modal">Close</button>
+
+                    <button type="submit" id="btn-five" class="btn btn-info">Approve</button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div> 
+
+
+
+
+
+
+
+<script>
+  $(document).ready(function() {
+    // Reference the file input element for the "Profile Image" field
+    const profileImageInput = document.querySelector('input[name="profile_image"]');
+  
+    // Add an event listener to the "Profile Image" file input's change event
+    profileImageInput.addEventListener('change', function() {
+      // Get the selected file from the input
+      const selectedFile = this.files[0];
+  
+      // Check if a file is selected
+      if (selectedFile) {
+        // Check if the file size exceeds 5MB (5 * 1024 * 1024 bytes)
+        if (selectedFile.size > 5 * 1024 * 1024) {
+          alert('Profile Image size exceeds the maximum allowed (5MB).');
+          // Clear the file input to prevent submission
+          this.value = '';
+        }
+      }
+    });
+  
+    // Reference the file input element for the "Upload CV" field
+    const uploadCVInput = document.querySelector('input[name="upload_cv"]');
+  
+    // Add an event listener to the "Upload CV" file input's change event
+    uploadCVInput.addEventListener('change', function() {
+      // Get the selected file from the input
+      const selectedFile = this.files[0];
+  
+      // Check if a file is selected
+      if (selectedFile) {
+        // Check if the file size exceeds 5MB (5 * 1024 * 1024 bytes)
+        if (selectedFile.size > 5 * 1024 * 1024) {
+          alert('Upload CV size exceeds the maximum allowed (5MB).');
+          // Clear the file input to prevent submission
+          this.value = '';
+        }
+      }
+    });
+  });
+  </script>
+  
