@@ -103,7 +103,7 @@ exports.newClientCreate = async (req, res) => {
       billing_email,
     } = req.body;
     const checkClientemail = await loginModel.findOne({
-      where: { contract_email: contract_email },
+      where: { email: contract_email },
     });
     if (!checkClientemail) {
       const hashedPassword = md5("123456");

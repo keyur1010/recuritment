@@ -20,6 +20,8 @@ const upload = multer({ storage: storage });
 
 router.get('/client',clientController.clientPage)
 router.post('/saveCandidate',upload.fields([{name:"profile_image"},{name:"upload_cv"}]),clientController.clientLogin)
+router.get('/candidate2',clientController.candidate2)
+router.post('/savecomplianceInfo',upload.fields([{name:"passport_file"},{name:"visa_file"},{name:"national_file"},{name:"dbs_file"},{name:"file1"},{name:"file2"},{name:"profile_image1"}]),upload.array({name:'fileMull'}),clientController.savecomplianceInfo)
 router.get('/thanku',clientController.thanku)
 
 

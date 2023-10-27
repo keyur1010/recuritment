@@ -1,40 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  
- 
-  <!-- PAGE TITLE HERE -->
-  <title></title>
-  
-<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.css" /> -->
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
- <!--     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/5.4.0/jquery.min.js"></script> --> 
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- PAGE TITLE HERE -->
+    <title></title>
+
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.css" /> -->
+    <link href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+  
+    <!-- Vendor CSS Files -->
+    <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+    <link href="assets/vendor/quill/quill.snow.css" rel="stylesheet">
+    <link href="assets/vendor/quill/quill.bubble.css" rel="stylesheet">
+    <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+    <link href="assets/vendor/simple-datatables/style.css" rel="stylesheet">
+    <!--     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/5.4.0/jquery.min.js"></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
     <!-- Bootstrap CSS -->
- <!--  <link href='<?php echo base_url();?>assets/main.css' rel='stylesheet' />
+    <!--  <link href='<?php echo base_url();?>assets/main.css' rel='stylesheet' />
 <script src='<?php echo base_url();?>assets/main.js'></script> -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css"
+    />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.css" /> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.js"></script> -->
-    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js'></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"/>
-  
-  <!-- FAVICONS ICON -->
-  <link rel="shortcut icon" type="image/png" href="/assets/images/favicon.png">
-  <link href="/assets/vendor/jquery-nice-select/css/nice-select.css" rel="stylesheet">
-  <link href="/assets/vendor/owl-carousel/owl.carousel.css" rel="stylesheet">
-  <link href="/assets/vendor/datatables/css/jquery.dataTables.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="/assets/vendor/toastr/css/toastr.min.css">
-     <link rel="stylesheet" href="/assets/vendor/select2/css/select2.min.css">
-     <style>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    />
+
+    <!-- FAVICONS ICON -->
+    <link
+      rel="shortcut icon"
+      type="image/png"
+      href="/assets/images/favicon.png"
+    />
+    <link
+      href="/assets/vendor/jquery-nice-select/css/nice-select.css"
+      rel="stylesheet"
+    />
+    <link
+      href="/assets/vendor/owl-carousel/owl.carousel.css"
+      rel="stylesheet"
+    />
+    <link
+      href="/assets/vendor/datatables/css/jquery.dataTables.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/assets/vendor/toastr/css/toastr.min.css" />
+    <link rel="stylesheet" href="/assets/vendor/select2/css/select2.min.css" />
+    <style>
       /* Add CSS styles for the flash message */
       #flash-message {
         position: fixed;
@@ -42,291 +70,127 @@
         right: 10px;
         z-index: 9999;
       }
-      </style>
-  <!-- Style css -->
-    <link href="/assets/css/style.css" rel="stylesheet">
+    </style>
+    <!-- Style css -->
+    <link href="/assets/css/style.css" rel="stylesheet" />
 
+    <!-- <link href='<?php echo base_url();?>assets/main.css' rel='stylesheet' /> -->
 
-<!-- <link href='<?php echo base_url();?>assets/main.css' rel='stylesheet' /> -->
-
-
-<!-- calendar -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.css" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/css/bootstrap.css" />
-
-  
-</head>
-<body data-sidebar-position="fixed" >
-
-    <!--*******************
-        Preloader start
-    ********************-->
-    <!-- <div id="preloader">
-    <div class="lds-ripple">
-      <div></div>
-      <div></div>
-    </div>
-    </div> -->
-    <!--*******************
-        Preloader end
-    ********************-->
-
-    <!--**********************************
-        Main wrapper start
-    ***********************************-->
+    <!-- calendar -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/css/bootstrap.css"
+    />
+  </head>
+  <body data-sidebar-position="fixed">
+ 
     <div id="main-wrapper">
-
-
       <% if (messages.error) { %>
-      <div class="alert alert-danger" id="flash-message"><%= messages.error %></div>
-      <% } else if (messages.success) { %>
-        <div class="alert alert-success" id="flash-message"><%= messages.success %></div>
-      <% } %>
-            <div class="header-content">
-
-      <div class="nav-header">
-        <!-- <a href="<?php echo base_url(); ?>" class="brand-logo"> -->
-            <a href="" class="brand-logo">
-                <img src="/assets/images/favicon.png"  alt="" style="height: 100%;" >
-            </a>
-            <div class="nav-control">
-                <div class="hamburger">
-                    <span class="line"></span><span class="line"></span><span class="line"></span>
-                </div>
-            </div>
-        </div>
-
-
-
-
-
-                  
-  
-            <div class="header">
-                <nav class="navbar navbar-expand">
-                    <div class="collapse navbar-collapse justify-content-between">
-                        <div class="header-left">
-              <div class="dashboard_bar">
-                                 <!-- <?php if (isset($page_title)) {
-                                  echo $page_title;
-                                } else{ echo $settingsvalue->sitetitle; } ?>  -->
-                            </div>
-              <div class="nav-item d-flex align-items-center">
-                <div class="input-group search-area">
-                  <input type="text" class="form-control" placeholder="">
-                  <span class="input-group-text"><a href="javascript:void(0)"><i class="flaticon-381-search-2"></i></a></span>
-                </div>
-                <div class="plus-icon">
-                  <a href="javascript:void(0);"><i class="fas fa-plus"></i></a>
-                </div>
-              </div>
-                        </div>
-                        <ul class="navbar-nav header-right">
-              <li class="nav-item dropdown notification_dropdown">
-                                <a class="nav-link bell-link " href="javascript:void(0);">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="22.871" viewbox="0 0 24 22.871">
-                  <g data-name="Layer 2" transform="translate(-2 -2)">
-                  <path id="Path_9" data-name="Path 9" d="M23.268,2H4.73A2.733,2.733,0,0,0,2,4.73V17.471A2.733,2.733,0,0,0,4.73,20.2a.911.911,0,0,1,.91.91v1.94a1.82,1.82,0,0,0,2.83,1.514l6.317-4.212a.9.9,0,0,1,.5-.153h4.436a2.742,2.742,0,0,0,2.633-2L25.9,5.462A2.735,2.735,0,0,0,23.268,2Zm.879,2.978-3.539,12.74a.915.915,0,0,1-.88.663H15.292a2.718,2.718,0,0,0-1.514.459L7.46,23.051v-1.94a2.733,2.733,0,0,0-2.73-2.73.911.911,0,0,1-.91-.91V4.73a.911.911,0,0,1,.91-.91H23.268a.914.914,0,0,1,.879,1.158Z" transform="translate(0 0)"></path>
-                  <path id="Path_10" data-name="Path 10" d="M7.91,10.82h4.55a.91.91,0,1,0,0-1.82H7.91a.91.91,0,1,0,0,1.82Z" transform="translate(-0.45 -0.63)"></path>
-                  <path id="Path_11" data-name="Path 11" d="M16.1,13H7.91a.91.91,0,1,0,0,1.82H16.1a.91.91,0,1,0,0-1.82Z" transform="translate(-0.45 -0.99)"></path>
-                  </g>
-                </svg>
-                  <span class="badge light text-white bg-primary rounded-circle">76</span>
-                                </a>
-              </li> 
-              <li class="nav-item dropdown notification_dropdown">
-                                <a class="nav-link" href="javascript:void(0);" role="button" data-bs-toggle="dropdown">
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewbox="0 0 24 24">
-                    <g data-name="Layer 2" transform="translate(-2 -2)">
-                    <path id="Path_20" data-name="Path 20" d="M22.571,15.8V13.066a8.5,8.5,0,0,0-7.714-8.455V2.857a.857.857,0,0,0-1.714,0V4.611a8.5,8.5,0,0,0-7.714,8.455V15.8A4.293,4.293,0,0,0,2,20a2.574,2.574,0,0,0,2.571,2.571H9.8a4.286,4.286,0,0,0,8.4,0h5.23A2.574,2.574,0,0,0,26,20,4.293,4.293,0,0,0,22.571,15.8ZM7.143,13.066a6.789,6.789,0,0,1,6.78-6.78h.154a6.789,6.789,0,0,1,6.78,6.78v2.649H7.143ZM14,24.286a2.567,2.567,0,0,1-2.413-1.714h4.827A2.567,2.567,0,0,1,14,24.286Zm9.429-3.429H4.571A.858.858,0,0,1,3.714,20a2.574,2.574,0,0,1,2.571-2.571H21.714A2.574,2.574,0,0,1,24.286,20a.858.858,0,0,1-.857.857Z"></path>
-                    </g>
-                  </svg>
-                                    <span class="badge light text-white bg-primary rounded-circle">4</span>
-                                </a>
-                                <div class="dropdown-menu dropdown-menu-end">
-                                    <div id="DZ_W_Notification1" class="widget-media dlab-scroll p-3" style="height:380px;">
-                    <ul class="timeline">
-                      <li>
-                        <div class="timeline-panel">
-                          <div class="media me-2">
-                            <img alt="image" width="50" src="/assets/images/avatar/1.jpg">
-                          </div>
-                          <div class="media-body">
-                            <h6 class="mb-1">Dr sultads Send you Photo</h6>
-                            <small class="d-block">29 July 2020 - 02:26 PM</small>
-                          </div>
-                        </div>
-                      </li>
-                      <li>
-                        <div class="timeline-panel">
-                          <div class="media me-2 media-info">
-                            KG
-                          </div>
-                          <div class="media-body">
-                            <h6 class="mb-1">Resport created successfully</h6>
-                            <small class="d-block">29 July 2020 - 02:26 PM</small>
-                          </div>
-                        </div>
-                      </li>
-                      <li>
-                        <div class="timeline-panel">
-                          <div class="media me-2 media-success">
-                            <i class="fa fa-home"></i>
-                          </div>
-                          <div class="media-body">
-                            <h6 class="mb-1">Reminder : Treatment Time!</h6>
-                            <small class="d-block">29 July 2020 - 02:26 PM</small>
-                          </div>
-                        </div>
-                      </li>
-                       <li>
-                        <div class="timeline-panel">
-                          <div class="media me-2">
-                            <img alt="image" width="50" src="/assets/images/avatar/1.jpg">
-                          </div>
-                          <div class="media-body">
-                            <h6 class="mb-1">Dr sultads Send you Photo</h6>
-                            <small class="d-block">29 July 2020 - 02:26 PM</small>
-                          </div>
-                        </div>
-                      </li>
-                      <li>
-                        <div class="timeline-panel">
-                          <div class="media me-2 media-danger">
-                            KG
-                          </div>
-                          <div class="media-body">
-                            <h6 class="mb-1">Resport created successfully</h6>
-                            <small class="d-block">29 July 2020 - 02:26 PM</small>
-                          </div>
-                        </div>
-                      </li>
-                      <li>
-                        <div class="timeline-panel">
-                          <div class="media me-2 media-primary">
-                            <i class="fa fa-home"></i>
-                          </div>
-                          <div class="media-body">
-                            <h6 class="mb-1">Reminder : Treatment Time!</h6>
-                            <small class="d-block">29 July 2020 - 02:26 PM</small>
-                          </div>
-                        </div>
-                      </li>
-                    </ul>
-                  </div>
-                                    <a class="all-notification" href="javascript:void(0);">See all notifications <i class="ti-arrow-end"></i></a>
-                                </div>
-                            </li>
-              
-              
-              <li class="nav-item dropdown notification_dropdown">
-                                <a class="nav-link " href="javascript:void(0);" data-bs-toggle="dropdown">
-                   <svg xmlns="http://www.w3.org/2000/svg" width="23.262" height="24" viewbox="0 0 23.262 24">
-                    <g id="icon" transform="translate(-1565 90)">
-                    <path id="setting_1_" data-name="setting (1)" d="M30.45,13.908l-1-.822a1.406,1.406,0,0,1,0-2.171l1-.822a1.869,1.869,0,0,0,.432-2.385L28.911,4.293a1.869,1.869,0,0,0-2.282-.818l-1.211.454a1.406,1.406,0,0,1-1.88-1.086l-.213-1.276A1.869,1.869,0,0,0,21.475,0H17.533a1.869,1.869,0,0,0-1.849,1.567L15.47,2.842a1.406,1.406,0,0,1-1.88,1.086l-1.211-.454a1.869,1.869,0,0,0-2.282.818L8.126,7.707a1.869,1.869,0,0,0,.432,2.385l1,.822a1.406,1.406,0,0,1,0,2.171l-1,.822a1.869,1.869,0,0,0-.432,2.385L10.1,19.707a1.869,1.869,0,0,0,2.282.818l1.211-.454a1.406,1.406,0,0,1,1.88,1.086l.213,1.276A1.869,1.869,0,0,0,17.533,24h3.943a1.869,1.869,0,0,0,1.849-1.567l.213-1.276a1.406,1.406,0,0,1,1.88-1.086l1.211.454a1.869,1.869,0,0,0,2.282-.818l1.972-3.415a1.869,1.869,0,0,0-.432-2.385ZM27.287,18.77l-1.211-.454a3.281,3.281,0,0,0-4.388,2.533l-.213,1.276H17.533l-.213-1.276a3.281,3.281,0,0,0-4.388-2.533l-1.211.454L9.75,15.355l1-.822a3.281,3.281,0,0,0,0-5.067l-1-.822L11.721,5.23l1.211.454A3.281,3.281,0,0,0,17.32,3.151l.213-1.276h3.943l.213,1.276a3.281,3.281,0,0,0,4.388,2.533l1.211-.454,1.972,3.414h0l-1,.822a3.281,3.281,0,0,0,0,5.067l1,.822ZM19.5,7.375A4.625,4.625,0,1,0,24.129,12,4.63,4.63,0,0,0,19.5,7.375Zm0,7.375A2.75,2.75,0,1,1,22.254,12,2.753,2.753,0,0,1,19.5,14.75Z" transform="translate(1557.127 -90)"></path>
-                    </g>
-                  </svg>
-
-                  <span class="badge light text-white bg-primary rounded-circle">15</span>
-                                </a>
-                <div class="dropdown-menu dropdown-menu-end">
-                  <div id="DZ_W_TimeLine02" class="widget-timeline dlab-scroll style-1 ps ps--active-y p-3 height370">
-                                    <ul class="timeline">
-                                        <li>
-                                            <div class="timeline-badge primary"></div>
-                                            <a class="timeline-panel text-muted" href="javascript:void(0);">
-                                                <span>10 minutes ago</span>
-                                                <h6 class="mb-0">Youtube, a video-sharing website, goes live <strong class="text-primary">$500</strong>.</h6>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <div class="timeline-badge info">
-                                            </div>
-                                            <a class="timeline-panel text-muted" href="javascript:void(0);">
-                                                <span>20 minutes ago</span>
-                                                <h6 class="mb-0">New order placed <strong class="text-info">#XF-2356.</strong></h6>
-                        <p class="mb-0">Quisque a consequat ante Sit amet magna at volutapt...</p>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <div class="timeline-badge danger">
-                                            </div>
-                                            <a class="timeline-panel text-muted" href="javascript:void(0);">
-                                                <span>30 minutes ago</span>
-                                                <h6 class="mb-0">john just buy your product <strong class="text-warning">Sell $250</strong></h6>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <div class="timeline-badge success">
-                                            </div>
-                                            <a class="timeline-panel text-muted" href="javascript:void(0);">
-                                                <span>15 minutes ago</span>
-                                                <h6 class="mb-0">StumbleUpon is acquired by eBay. </h6>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <div class="timeline-badge warning">
-                                            </div>
-                                            <a class="timeline-panel text-muted" href="javascript:void(0);">
-                                                <span>20 minutes ago</span>
-                                                <h6 class="mb-0">Mashable, a news website and blog, goes live.</h6>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <div class="timeline-badge dark">
-                                            </div>
-                                            <a class="timeline-panel text-muted" href="javascript:void(0);">
-                                                <span>20 minutes ago</span>
-                                                <h6 class="mb-0">Mashable, a news website and blog, goes live.</h6>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                </div>
-              </li>
-                <li class="nav-item dropdown header-profile">
-                                <a class="nav-link" href="javascript:void(0);" role="button" data-bs-toggle="dropdown"> 
-        <!-- <?php if($basicinfo->em_image!='') {?> 
-        <img src="<?php echo base_url('assets/') ?>images/users/<?php echo $basicinfo->em_image ?>" width="20" alt="">
-      <?php  } else{ ?>
-        
-        <img src="<?php echo base_url('assets/') ?>images/profile/pic1.jpg" width="20" alt="">
-      <?php } ?> -->
-        
-        <img src="/assets/images/profile/pic1.jpg" width="20" alt="">
-                                    
-                                </a>
-                                <div class="dropdown-menu dropdown-menu-end">
-                                    <a href="" class="dropdown-item ai-icon">
-                                    <!-- <a href="<?php echo base_url('employee/view?I='.base64_encode($basicinfo->em_id)); ?>" class="dropdown-item ai-icon"> -->
-                                            <svg id="icon-user2" xmlns="http://www.w3.org/2000/svg" class="text-primary" width="18" height="18" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                                        <span class="ms-2">Profile </span>
-                                    </a>
-                                
-                                    <!-- <a href="<?php echo base_url(); ?>login/logout" class="dropdown-item ai-icon"> -->
-                                        <!-- <a href="<?php echo base_url(); ?>login/logout" class="dropdown-item ai-icon"> -->
-                                    <a href="/" class="dropdown-item ai-icon">
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="text-danger" width="18" height="18" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
-                                        <span class="ms-2" >Logout </span>
-                                    </a>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-        </nav>
+      <div class="alert alert-danger" id="flash-message">
+        <%= messages.error %>
       </div>
-    </div>
+      <% } else if (messages.success) { %>
+      <div class="alert alert-success" id="flash-message">
+        <%= messages.success %>
+      </div>
+      <% } %>
+      <div class="header-content">
+        <div class="nav-header">
+          <!-- <a href="<?php echo base_url(); ?>" class="brand-logo"> -->
+          <a href="" class="brand-logo">
+            <img src="/assets/images/favicon.png" alt="" style="height: 100%" />
+          </a>
+          <div class="nav-control">
+            <div class="hamburger">
+              <span class="line"></span><span class="line"></span
+              ><span class="line"></span>
+            </div>
+          </div>
+        </div>
+        <header id="header" class="header fixed-top d-flex align-items-center">
 
-    <script>
-      document.addEventListener('DOMContentLoaded', function () {
-        var flashMessage = document.getElementById('flash-message');
-  
-        // Check if the flash message element exists
-        if (flashMessage) {
-          // Automatically hide the flash message after 5 seconds
-          setTimeout(function () {
-            flashMessage.style.display = 'none';
-          }, 5000);
-        }
-      });
-    </script>
+          <div class="d-flex align-items-center justify-content-between">
+            <a href="#" class="logo d-flex align-items-center" style="text-decoration: none;" >
+              <img src="/assets/images/favicon.png" alt="">
+              <span class="d-none d-lg-block">Nightingale Care</span>
+            </a>
+            <!-- <i class="bi bi-list toggle-sidebar-btn"></i> -->
+          </div><!-- End Logo -->
+      
+       
+      
+          <nav class="header-nav ms-auto">
+            <ul class="d-flex align-items-center">
+      
+              <li class="nav-item d-block d-lg-none">
+                <a class="nav-link nav-icon search-bar-toggle " href="#">
+                  <!-- <i class="bi bi-search"></i> -->
+                </a>
+              </li><!-- End Search Icon-->
+      
+             
+      
+              <li class="nav-item dropdown pe-3">
+      
+                <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+                  <!-- <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle"> -->
+                  <span class="d-none d-md-block dropdown-toggle ps-2">Nightingale</span>
+                </a><!-- End Profile Iamge Icon -->
+      
+                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+                  <!-- <li class="dropdown-header">
+                    <h6>Kevin Anderson</h6>
+                    <span>Web Designer</span>
+                  </li>
+                  <li>
+                    <hr class="dropdown-divider">
+                  </li> -->
+      
+                  <!-- <li>
+                    <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
+                      <i class="bi bi-person"></i>
+                      <span>My Profile</span>
+                    </a>
+                  </li>
+                  <li>
+                    <hr class="dropdown-divider">
+                  </li> -->
+      
+                 
+      
+                  <li>
+                    <a class="dropdown-item d-flex align-items-center" href="/">
+                      <i class="bi bi-box-arrow-right"></i>
+                      <span>Sign Out</span>
+                    </a>
+                  </li>
+      
+                </ul><!-- End Profile Dropdown Items -->
+              </li><!-- End Profile Nav -->
+      
+            </ul>
+          </nav><!-- End Icons Navigation -->
+      
+        </header>
+        
+
+      <script>
+        document.addEventListener("DOMContentLoaded", function () {
+          var flashMessage = document.getElementById("flash-message");
+
+          // Check if the flash message element exists
+          if (flashMessage) {
+            // Automatically hide the flash message after 5 seconds
+            setTimeout(function () {
+              flashMessage.style.display = "none";
+            }, 5000);
+          }
+        });
+      </script>
+    </div>
+  </body>
+</html>

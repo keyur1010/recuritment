@@ -196,8 +196,65 @@ module.exports=(sequelize,DataTypes)=>{
         },
         advert_re:{
             type:DataTypes.INTEGER
-        }
-      
+        },
+        passport2:{
+            type:DataTypes.STRING
+        },
+        passport_file:{
+            type:DataTypes.STRING
+        },
+        visa1:{
+            type:DataTypes.STRING
+        },
+        visa_file:{
+            type:DataTypes.STRING
+        },
+        national_insurance1:{
+            type:DataTypes.STRING,
+        },
+        national_file:{
+            type:DataTypes.STRING,
+        },
+        dbs_certificate:{
+            type:DataTypes.STRING,
+        },
+        dbs_file:{
+            type:DataTypes.STRING,
+        },
+        add1:{
+            type:DataTypes.STRING,
+        },
+        num1:{
+            type:DataTypes.STRING,
+        },
+        file1:{
+            type:DataTypes.STRING,
+        },
+        add2:{
+            type:DataTypes.STRING,
+        },
+        num2:{
+            type:DataTypes.STRING,
+        },
+        file2:{
+            type:DataTypes.STRING,
+        },
+        profile_image1:{
+            type:DataTypes.STRING,
+        },
+        qualification:{
+            type:DataTypes.JSON,
+        },
+        marks:{
+            type:DataTypes.JSON,
+        },
+        fileMull:{
+            type:DataTypes.STRING,
+        },
+        // qualification:{
+        //     type:DataTypes.STRING,
+        // },
+
 
     });
     return clientPersonalModel

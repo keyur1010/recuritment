@@ -786,7 +786,7 @@
                   <div class="form-group col-md-3 col-sm-6">
                     <label>Post Code <i class="text-danger">*</i></label>
                     <input
-                      type="text"
+                      type="number"
                       class="form-control"
                       placeholder="Post code"
                       id="post_code"
@@ -948,7 +948,7 @@
                   <div class="form-group col-md-3 col-sm-4">
                     <label>Current Hourly Rate</label>
                     <input
-                      type="text"
+                      type="number"
                       class="form-control"
                       id="current_salary"
                       name="current_salary"
@@ -960,7 +960,7 @@
                   <div class="form-group col-md-3 col-sm-4">
                     <label>Desired Hourly Rate</label>
                     <input
-                      type="text"
+                      type="number"
                       placeholder="Desired Hourly Rate"
                       class="form-control"
                       id="desired_salary"
@@ -972,7 +972,7 @@
                   <div class="form-group col-md-3 col-sm-4">
                     <label>Notice Period</label>
                     <input
-                      type="text"
+                      type="number"
                       class="form-control"
                       placeholder="Notice Period"
                       id="notice_period"
@@ -1056,22 +1056,24 @@
                       <input
                         class="form-check-input"
                         type="radio"
+                        id="w_u_consider1"
                         name="w_u_consider"
                         value="Yes"
                         required
                       />
-                      <label class="form-check-label">Yes</label>
+                      <label class="form-check-label" for="w_u_consider1">Yes</label>
                     </div>
                     <div class="form-check form-check-inline">
                       <input
                         class="form-check-input"
                         type="radio"
+                        id="w_u_consider2"
                         name="w_u_consider"
                         value="No"
                         required
                       />
                       <!-- <input class="form-check-input" type="radio" name="w_u_consider" value="No" <?php echo set_radio('w_u_consider', 'No'); ?> required> -->
-                      <label class="form-check-label">No</label>
+                      <label class="form-check-label" for="w_u_consider2">No</label>
                     </div>
                   </div>
 

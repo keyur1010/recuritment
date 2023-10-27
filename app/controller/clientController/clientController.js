@@ -37,6 +37,15 @@ exports.clientPage = async (req, res) => {
     return res.redirect('/login')
   }
 };
+exports.candidate2=async(req,res)=>{
+  try {
+    console.log(req.session.candidate)
+    return res.render('./candidate2.ejs',{messages:req.flash()})
+  } catch (error) {
+    console.log(error)
+    req.flash('error','Something Went Wrong')
+  }
+}
 exports.clientLogin = async (req, res) => {
   try {
     const candidateBody = req.body;
@@ -104,24 +113,17 @@ exports.clientLogin = async (req, res) => {
           allIndustry:allIndustry,
           client_random:randomString
         })
-        
-       
-        
-          
-  
-  
-  
-  
+
+        req.session.candidate=addClient
         
         console.log("addClient----------------------->",addClient)
         req.flash('success','Your Request Send To Admin')
-        return res.redirect('/client/thanku')
+        return res.redirect('/client/candidate2')
       // }else{
     }else{
-req.flash('error','Email Already Exist')
-return res.redirect('/login')
+    req.flash('error','Email Already Exist')
+    return res.redirect('/login')
     }
-
   } catch (error) {
     console.log(error)
     req.flash('error','Something Went Wrong')
@@ -131,7 +133,77 @@ return res.redirect('/login')
 
 
 
+exports.savecomplianceInfo=async(req,res)=>{
+  try {
+    console.log(req.session.candidate)
+    const clientCheck=await clientPersonalModel.findOne({where:{id:req.session.candidate.id}})
+    console.log('---------clinetcheck',clientCheck)
+    const passport_file = req.files['passport_file'][0];
+    const visa_file = req.files['visa_file'][0];
+    const national_file = req.files['national_file'][0];
+    const dbs_file = req.files['dbs_file'][0];
+    const file1 = req.files['file1'][0];
+    const file2 = req.files['file2'][0];
+    const profile_image1 = req.files['profile_image1'][0];
+    const fileMull=req.files['fileMull']
+    const filenames = fileMull.map((file) => file.filename);
+    if(!clientCheck){
+      console.log('session expire')
+      req.flash('error','session expire')
+      return res.redirect('/login')
+    }else{
+      console.log('all ok continue process')
+    }
+    const comp=req.body
+    console.log('comp-->',comp)
+      // const filenames = [];
 
+  // Iterate over the uploaded files and save the filenames to the array
+  // for (const file of fileMull) {
+  //   filenames.push(file.filename);
+  // }
+    // console.log(req.file)
+    console.log(req.files)
+    const allQualification = {
+      qualification_name: req.body.qualification,
+    };
+    const allMarks = {
+      marks_name: req.body.marks,
+    };
+    // const allFileMull = {
+    //   marks: req.files.fileMull.filename,
+    // };
+    
+    const addClientMoreInformation=await clientPersonalModel.update({
+      passport2:comp.passport2,
+      passport_file:passport_file.filename,
+      visa1:comp.visa1,
+      visa_file:visa_file.filename,
+      national_insurance1:comp.national_insurance1,
+      national_file:national_file.filename,
+      dbs_certificate:comp.dbs_certificate,
+      dbs_file:dbs_file.filename,
+      add1:comp.add1,
+      num1:comp.num1,
+      file1:file1.filename,
+      add2:comp.add2,
+      num2:comp.num2,
+      file2:file2.filename,
+      profile_image1:profile_image1.filename,
+      qualification:allQualification,
+      marks:allMarks,
+      // fileMull: filenames.join(','), 
+
+    },{where:{id:3}})
+    console.log('addClientMoreInformation-------->',addClientMoreInformation)
+    req.flash('success','Form Is Successfully Submited ')
+    return res.redirect('/login')
+  } catch (error) {
+    console.log(error)
+    req.flash('error','Something Went Wrong')
+    return res.redirect('/login')
+  }
+}
 
 
 exports.thanku=async(req,res)=>{
@@ -144,7 +216,6 @@ exports.thanku=async(req,res)=>{
     return res.redirect('/login')
   }
 }
-
 
 
 

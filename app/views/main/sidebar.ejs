@@ -1,164 +1,130 @@
+<aside id="sidebar" class="sidebar">
+<%if(session.role=='Super Admin'){%>
 
-<div class="dlabnav">
-        <div class="dlabnav-scroll">
-            <div class="dropdown header-profile2 ">
-                <a class="nav-link " href="javascript:void(0);" role="button" data-bs-toggle="dropdown">
-                    <div class="header-info2 d-flex align-items-center">
+  <ul class="sidebar-nav" id="sidebar-nav">
+    
+      <li class="nav-item">
+        <a class="nav-link " href="/admin/adminDashboard">
+          <i class="bi bi-grid"></i>
+          <span>Dashboard</span>
+        </a>
+      </li><!-- End Dashboard Nav -->
 
-                        <!-- <?php if($basicinfo->em_image!='') {?> 
-                        <img src="<?php echo base_url('assets/') ?>images/users/<?php echo $basicinfo->em_image ?>"  alt="">
-                      <?php  } else{ ?>
-                        
-                        <img src="<?php echo base_url('assets/') ?>images/profile/pic1.jpg" alt="">
-                      <?php } ?> -->
-                        
-                        <img src="/assets/images/profile/pic1.jpg" alt="">
+      <li class="nav-item">
+        <a class="nav-link collapsed"  href="/admin/clientList">
+          <i class="bi bi-menu-button-wide"></i><span>Users</span>
+        </a>
+       
+      </li><!-- End Components Nav -->
 
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-journal-text"></i><span>Master</span><i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="/admin/adminDepartment">
+              <i class="bi bi-circle"></i><span>Department</span>
+            </a>
+          </li>
+          <li>
+            <a href="/admin/editCompany">
+              <i class="bi bi-circle"></i><span>Company Profile</span>
+            </a>
+          </li>
+          <li>
+            <a href="/admin/fin_years">
+              <i class="bi bi-circle"></i><span>Financial Year</span>
+            </a>
+          </li>
+          <li>
+            <a href="/admin/g_jobpage">
+              <i class="bi bi-circle"></i><span>Job Titles</span>
+            </a>
+          </li>
+          <li>
+            <a href="/admin/m_industry">
+              <i class="bi bi-circle"></i><span>Industry</span>
+            </a>
+          </li>
+          <li>
+            <a href="/admin/m_skillPage">
+              <i class="bi bi-circle"></i><span>Key Skills</span>
+            </a>
+          </li>
+          <li>
+            <a href="/admin/ad_ref_page">
+              <i class="bi bi-circle"></i><span>Advert Reference</span>
+            </a>
+          </li>
 
+        </ul>
+      </li><!-- End Forms Nav -->
 
-                        <div class="d-flex align-items-center sidebar-info">
-                            <div>
-                                <!-- <span class="font-w400 d-block"><?php echo $basicinfo->first_name . ' ' . $basicinfo->last_name; ?></span>
-                                <small class="text-end font-w400"><?php echo $basicinfo->em_role; ?></small>  -->
-                                <span class="font-w400 d-block"></span>
-                                <small class="text-end font-w400"></small>
-                            </div>	
-                            <i class="fas fa-chevron-down"></i>
-                        </div>
-                        
-                    </div>
-                </a>
-                <div class="dropdown-menu dropdown-menu-end">
-                    <a href="" class="dropdown-item ai-icon ">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="text-primary" width="18" height="18" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                        <span class="ms-2">Profile </span>
-                    </a>
-                
-                    <a href="/" class="dropdown-item ai-icon">
-                    <!-- <a href="<?php echo base_url(); ?>login/logout" class="dropdown-item ai-icon"> -->
-                    
-                        <svg xmlns="http://www.w3.org/2000/svg" class="text-danger" width="18" height="18" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
-                        <span class="ms-2">Logout </span>
-                    </a>
-                </div>
-            </div>
-            <% if(session.role=="Super Admin"){%>
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="/admin/candidateList">
+          <i class="bi bi-layout-text-window-reverse"></i><span>Candidate</span>
+        </a>
+       
+      </li><!-- End Tables Nav -->
 
-                <ul class="metismenu" id="menu">
-                    <!-- <li><a  href="<?php echo base_url('dashboard/Dashboard'); ?>" aria-expanded="false"> -->
-                        <li><a  href="/admin/admindashboard" aria-expanded="false">
-                            <i class="flaticon-025-dashboard"></i>
-                            <span class="nav-text">Dashboard</span>
-                        </a>
-                        
-                </li>
-                <li><a class="has-arrow " href="javascript:void()" aria-expanded="false">
-                    <i class="flaticon-093-waving"></i>
-                        <span class="nav-text">Users</span>
-                    </a>
-                    <ul aria-expanded="false">
-                        <!-- <li><a href="<?php echo base_url(); ?>employee/employees" >Users </a></li> -->
-                        <li><a href="/admin/adminEmployee" >Users </a></li>
-                    </ul>
-                </li>
-                <li><a class="has-arrow " href="javascript:void()" aria-expanded="false">
-                    <i class="flaticon-050-info"></i>
-                        <span class="nav-text">Master</span>
-                    </a>
-                    <ul aria-expanded="false">
-                        <li><a href="/admin/adminDepartment" >Department</a></li>
-                        <li ><a href="/admin/editCompany" >Company Profile</a></li>
-                      <li ><a href="/admin/fin_years" >Financial Year</a></li>
-                      <!-- <li ><a href="<?php echo base_url('clients/client_groups'); ?>" >Customer Group</a></li>
-                      <li ><a href="<?php echo base_url(); ?>clients" >Customer</a></li> -->
-                       <!-- <li ><a  href="<?php echo base_url(); ?>general/banks">Company Bank Accounts</a></li> -->
-                        <li><a class="has-arrow" href="javascript:void()" aria-expanded="false">General</a>
-                            <ul aria-expanded="false">
-                                <li><a href="/admin/g_jobpage">Job Titles</a></li>
-                                <li><a href="/admin/m_industry">Industry</a></li>
-                                <li><a href="/admin/m_skillPage">Key Skills</a></li>
-                                <li><a href="/admin/ad_ref_page">Advert Reference</a></li>
-                            </ul>
-                        </li>
-                        
-                    </ul>
-                </li>
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="/admin/adminEmployee">
+          <i class="bi bi-bar-chart"></i><span>Clients</span>
+        </a>
+      
+      </li><!-- End Charts Nav -->
 
-                <li><a class="has-arrow " href="javascript:void()" aria-expanded="false">
-                    <i class="fa fa-user"></i>
-                    <span class="nav-text">Candidate</span>
-                    </a>
-                    <ul aria-expanded="false">
-                        <li><a href="/admin/candidateList" >Applications </a></li>
-                    </ul>
-                </li>
+      <!-- <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
+          <i class="bi bi-gem"></i><span>Icons</span>
+        </a>
+      
+      </li>End Icons Nav -->
 
-                <li><a class="has-arrow " href="javascript:void()" aria-expanded="false">
-                        <i class="fa fa-user"></i>
-                        <span class="nav-text">Clients</span>
-                    </a>
-                    <ul aria-expanded="false">
-                        <li><a href="/admin/clientList" > Clients</a></li>
-                    </ul>
-                </li>
-                
-            </ul>
-            <%}else if(session.role=='Admin'){%>
-                <ul class="metismenu" id="menu">
-           
-           
+    
+      
+    </ul>
+    <%}else if(session.role=='Admin'){%>
 
-            
+      
+  <ul class="sidebar-nav" id="sidebar-nav">
+    
+   
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="/m_admin/clientAdd">
+        <i class="bi bi-bar-chart"></i><span>Clients</span>
+      </a>
+    
+    </li>
 
-                    <li><a class="has-arrow " href="javascript:void()" aria-expanded="false">
-                            <i class="fa fa-user"></i>
-                            <span class="nav-text">Clients</span>
-                        </a>
-                        <ul aria-expanded="false">
-                            <li><a href="/m_admin/clientAdd" > Clients</a></li>
-                        </ul>
-                    </li>
+   
+
+  
+    
+  </ul>
+
+    <%}else if(session.role=='Client'){%>
+      <ul class="sidebar-nav" id="sidebar-nav">
+    
+   
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="/client/recruitmentView">
+            <i class="bi bi-bar-chart"></i><span>Recruitment</span>
+          </a>
         
-                </ul>
-            <%}else if(session.role=='Client'){%>
-                <ul class="metismenu" id="menu">
-           
-           
-
-            
-
-                    <ul class="metismenu" id="menu">
-                        <li><a  href="/client/recruitmentView" aria-expanded="false">
-                                <i class="fa fa-user-plus"></i>
-                                <span class="nav-text">Recruitment</span>
-                            </a>
+        </li>
+    
+       
+    
+      
         
-                        </li>
-        
-                    </ul>
-                </ul>
-            <%}else if(session.role=='Candidate'){%>
-                <ul class="metismenu" id="menu"></ul>
-            <%}%>    
-                <!-- <ul class="metismenu" id="menu">
-                    <li><a  href="/recruitment/index" aria-expanded="false">
-                    <i class="fa fa-user-plus"></i>
-                    <span class="nav-text">Recruitment</span>
-                </a>
+      </ul>
 
-            </li>
-            
-        </ul> -->
 
-            <!-- <ul class="metismenu" id="menu">
-                <li><a  href="/fullcalendar/index" aria-expanded="false">
-                        <i class="fa fa-calendar"></i>
-                        <span class="nav-text">Calendar</span>
-                    </a>
+    <%}else if(session.role=='Candidate'){%>
 
-                </li>
 
-            </ul> -->
-            
-        </div>
-    </div>
+
+    <% } %>
+  </aside>
